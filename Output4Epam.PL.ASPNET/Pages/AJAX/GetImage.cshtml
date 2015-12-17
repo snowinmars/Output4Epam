@@ -1,0 +1,9 @@
+﻿@using Output4Epam.Providers
+
+@{
+	Guid id = Guid.Parse(Request["id"]);
+
+	byte[] imageArray = LogicProvider.LotLogic.GetImage(id);
+	Response.WriteBinary(imageArray, "image/png");
+	return;
+}

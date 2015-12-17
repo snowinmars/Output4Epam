@@ -1,0 +1,7 @@
+﻿@using Output4Epam.Providers
+
+@{
+	byte[] imageArray = LogicProvider.LotLogic.GetHeader();
+	Response.WriteBinary(imageArray, "image/png");
+	return;
+}
