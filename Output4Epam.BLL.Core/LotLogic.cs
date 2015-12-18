@@ -24,7 +24,7 @@ namespace Output4Epam.BLL.Core
 
 		public IEnumerable<Lot> GetAll()
 		{
-			throw new NotImplementedException();
+			return Common.Common.LotDao.GetAll(); // TODO make copy
 		}
 
 		public byte[] GetHeader()

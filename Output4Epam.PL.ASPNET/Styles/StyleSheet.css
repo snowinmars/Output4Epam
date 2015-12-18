@@ -10,6 +10,32 @@
 
 /*________________________________________*/
 
+.tooltip {
+	border-bottom: 1px dotted #0077AA;
+	cursor: help;
+}
+
+.tooltip::after {
+	z-index: 999;
+	background: rgba(0, 0, 0, 0.8);
+	border-radius: 8px 8px 8px 0px;
+	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+	color: #FFF;
+	content: attr(data-tooltip); /* Главная часть кода, определяющая содержимое всплывающей подсказки */
+	margin-top: -24px;
+	opacity: 0; /* Наш элемент прозрачен... */
+	padding: 3px 7px;
+	position: absolute;
+	visibility: hidden; /* ...и скрыт. */
+}
+		
+.tooltip:hover::after {
+	opacity: 1; /* Показываем его */
+	visibility: visible;
+}
+
+/*________________________________________*/
+
 .borderaround {
 	border: 1px solid black;
 	border-radius: 2px;
@@ -69,6 +95,7 @@ footer {
 	padding: 10px;
 	vertical-align: top;
 	width: 150px;
+	margin-top: 10px;
 }
 
 .leftmenu ul {
@@ -76,15 +103,27 @@ footer {
 	padding: 0;
 }
 
+.leftmenu ul li {
+	margin: 5px 0px;
+}
+
 .leftmenu ul li a {
 	text-decoration: none;
 	color: black;
 	font-size: 2.5ex;
+	margin-left: 1ex;
 }
+
+	.leftmenu ul li a:hover:before {
+		content: " >";
+		position:relative ;
+		left: -2ex;
+	}
 
 /*________________________________________*/
 
 .section {
+	margin-left: 200px;
 	position: absolute;
 	right: 40px;
 	left: 0;
@@ -94,7 +133,6 @@ footer {
 .section ul {
 	list-style-type: none;
 	padding: 0;
-	margin-left: 180px;
 }
 
 .section ul li {
@@ -115,14 +153,11 @@ footer {
 	border-radius: 10px;
 }
 
-.section img:hover {
-	outline: 2px solid blue;
-}
-
 .section .title,
 .section .info,
 .section .city,
 .section .cost,
+.section .postDate,
 .section .button,
 .section .categories {
 	display: inline-block;
@@ -135,7 +170,7 @@ footer {
 }
 
 .section .title:hover {
-	font-weight: bold;
+	color: #777;
 }
 
 .section .info {
@@ -152,9 +187,22 @@ footer {
 	font-size: 4ex;
 }
 
+	.section .cost:after {
+		content: "▼";
+		font-size: 1ex;
+	}
+
+	.section .cost:hover {
+		text-decoration: underline;
+	}
+
+.section .postDate {
+	top: 150px;
+}
+
 .section .button {
 	bottom: 0;
-	left: 315px;
+	left: 400px;
 
 	background-color: yellow;
 	padding: 5px 10px;

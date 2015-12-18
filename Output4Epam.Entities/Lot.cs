@@ -2,25 +2,35 @@
 
 namespace Output4Epam.Entities
 {
+	[Flags]
 	public enum LotTypes
 	{
 		None = 0,
 		Other = 1,
+		Cloth = 2,
+		Technic = 4,
+		Fun = 8,
 	}
 
 	public class Lot
 	{
-		public Lot(string title, string owner, string sity, int cost, LotTypes types = LotTypes.Other, DateTime postDate = default(DateTime))
+		public Lot(string title, string owner, string sity, int cost, string info, LotTypes types = LotTypes.Other, DateTime postDate = default(DateTime), Guid g = default(Guid))
 		{
-			this.Title = title;
-			this.Owner = owner;
-			this.Sity = sity;
+			this.Title = title; // lt 200
+			this.Owner = owner; // lt 200
+			this.Sity = sity; // lt 100
 			this.Cost = cost;
 			this.Types = types;
 			this.PostDate = postDate;
-			this.Id = Guid.NewGuid();
+			this.Info = info;
+				if (g == default(Guid))
+				{
+				g = Guid.NewGuid();
+				}
+			this.Id = g;
 		}
 
+		public string  Info { get; set; }
 		public DateTime PostDate { get; set; }
 		public Guid Id { get; set; }
 		public int Cost { get; set; }
