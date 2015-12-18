@@ -1,0 +1,17 @@
+﻿@using Output4Epam.Providers;
+
+@{ 
+	if (IsPost)
+	{
+
+	string login = Request["login"];
+	string password = Request["password"];
+
+	if(LogicProvider.RegUserLogic.Auth(login, password))
+	{
+		FormsAuthentication.SetAuthCookie(login, createPersistentCookie: true);
+	}
+	}
+	Response.Redirect("/Pages/Index.cshtml");
+	return;
+}

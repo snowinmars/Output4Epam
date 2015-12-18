@@ -12,6 +12,21 @@ namespace Output4Epam.BLL.Core
 			throw new NotImplementedException();
 		}
 
+		public bool Auth(string login, string password)
+		{
+			int hash = password.GetHashCode();
+
+			foreach (var item in Common.Common.RegUserDao.GetAll())
+			{
+				if ((item.Login == login) && (item.PasswordHash == hash))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		public void Dispose()
 		{
 			throw new NotImplementedException();
