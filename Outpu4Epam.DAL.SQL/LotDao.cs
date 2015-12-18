@@ -36,7 +36,7 @@ namespace Outpu4Epam.DAL.SQL
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * from [dbo].[LotTable]";
+				var query = "select * from [dbo].[LotTable] order by [PostDate]";
 				var command = new SqlCommand(query, connection);
 
 				connection.Open();

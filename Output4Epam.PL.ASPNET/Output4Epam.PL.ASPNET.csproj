@@ -111,6 +111,7 @@
     <Content Include="Pages\AJAX\GetHeader.cshtml" />
     <Content Include="Pages\AJAX\Login.cshtml" />
     <Content Include="Pages\AJAX\Dislogin.cshtml" />
+    <Content Include="Pages\StructureElements\TopButtons.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

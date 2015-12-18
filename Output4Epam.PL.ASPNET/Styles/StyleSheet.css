@@ -122,6 +122,24 @@ footer {
 
 /*________________________________________*/
 
+.topButtons {
+	position: relative;
+	left: 250px;
+	top: 5px;
+	font-size: 3ex;
+}
+
+.topButtons .topbutton{
+	margin: 5px 0 10px 5px;
+	padding: 5px 10px;
+}
+
+	.topButtons .selected {
+		background-color: #ccc;
+	}
+
+/*________________________________________*/
+
 .section {
 	margin-left: 200px;
 	position: absolute;
