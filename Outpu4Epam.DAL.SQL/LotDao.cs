@@ -15,7 +15,32 @@ namespace Outpu4Epam.DAL.SQL
 
 		public bool Add(Lot item)
 		{
-			throw new NotImplementedException();
+			string connectionString = Common.connectionString;
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "insert into [dbo].[LotTable] ([Id],[Title],[Owner],[Sity],[Cost],[Types],[PostDate],[Info]) values(@Id,@Title,@Owner,@Sity,@Cost,@Types,@PostDate,@Info);";
+
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@Id", item.Id.ToString());
+				command.Parameters.AddWithValue("@Title", item.Title);
+				command.Parameters.AddWithValue("@Owner", item.Owner);
+				command.Parameters.AddWithValue("@Sity", item.Sity);
+				command.Parameters.AddWithValue("@Cost", item.Cost);
+				command.Parameters.AddWithValue("@Types", item.Types);
+				command.Parameters.AddWithValue("@PostDate", item.PostDate);
+				command.Parameters.AddWithValue("@Info", item.Info);
+
+				connection.Open();
+				command.ExecuteNonQuery();
+			}
+
+			return true;
+		}
+
+		public void AddImage(Guid lotId, byte[] image)
+		{
+			File.WriteAllBytes(Path.Combine(Common.pathToWorkFolder, lotId.ToString() + ".png"), image);
 		}
 
 		public void Dispose()
@@ -25,7 +50,32 @@ namespace Outpu4Epam.DAL.SQL
 
 		public Lot Get(Guid Id)
 		{
-			throw new NotImplementedException();
+			string connectionString = Common.connectionString;
+			Lot lot = default(Lot);
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "select * from [dbo].[LotTable] where [dbo].[LotTable].[Id] = @Id order by [PostDate]";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@Id", Id);
+
+				connection.Open();
+				var reader = command.ExecuteReader();
+
+				while (reader.Read())
+				{
+					lot = new Lot((string)reader["Title"],
+							(string)reader["Owner"],
+							(string)reader["Sity"],
+							(int)reader["Cost"],
+							(string)reader["Info"],
+							(LotTypes)reader["Types"],
+							(DateTime)reader["PostDate"],
+							(Guid)reader["Id"]);
+				}
+			}
+
+			return lot;
 		}
 
 		public IEnumerable<Lot> GetAll()
@@ -85,10 +135,21 @@ namespace Outpu4Epam.DAL.SQL
 			return File.ReadAllBytes(path);
 		}
 
-
 		public bool Remove(Guid Id)
 		{
-			throw new NotImplementedException();
+			string connectionString = Common.connectionString;
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "delete from [dbo].[LotTable] where [dbo].[LotTable].[Id] == @Id";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@Id", Id);
+
+				connection.Open();
+				var reader = command.ExecuteNonQuery();
+			}
+
+			return true;
 		}
 
 		public void Set(Lot item)

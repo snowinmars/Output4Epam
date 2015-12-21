@@ -9,7 +9,7 @@ namespace Output4Epam.BLL.Core
 	{
 		public bool Add(RegUser item)
 		{
-			throw new NotImplementedException();
+			return Common.Common.RegUserDao.Add(item);
 		}
 
 		public bool Auth(string login, string password)
@@ -34,17 +34,22 @@ namespace Output4Epam.BLL.Core
 
 		public RegUser Get(Guid Id)
 		{
-			throw new NotImplementedException();
+			return Common.Common.RegUserDao.Get(Id);
 		}
 
 		public IEnumerable<RegUser> GetAll()
 		{
-			throw new NotImplementedException();
+			return Common.Common.RegUserDao.GetAll();
+		}
+
+		public RegUser GetByLogin(string login)
+		{
+			return Common.Common.RegUserDao.GetByLogin(login);
 		}
 
 		public bool Remove(Guid Id)
 		{
-			throw new NotImplementedException();
+			return Common.Common.RegUserDao.Remove(Id);
 		}
 
 		public void Set(RegUser item)

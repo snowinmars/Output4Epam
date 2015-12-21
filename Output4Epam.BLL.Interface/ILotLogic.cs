@@ -7,5 +7,6 @@ namespace Output4Epam.BLL.Interface
 	{
 		byte[] GetImage(Guid id);
 		byte[] GetHeader();
+		void AddImage(Guid lotId, byte[] image);
 	}
 }

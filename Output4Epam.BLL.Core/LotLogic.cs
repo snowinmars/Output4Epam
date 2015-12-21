@@ -2,6 +2,7 @@
 using Output4Epam.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Output4Epam.BLL.Core
 {
@@ -9,7 +10,12 @@ namespace Output4Epam.BLL.Core
 	{
 		public bool Add(Lot item)
 		{
-			throw new NotImplementedException();
+			return Common.Common.LotDao.Add(item);
+		}
+
+		public void AddImage(Guid lotId, byte[] image)
+		{
+			Common.Common.LotDao.AddImage(lotId, image);
 		}
 
 		public void Dispose()
@@ -19,7 +25,7 @@ namespace Output4Epam.BLL.Core
 
 		public Lot Get(Guid Id)
 		{
-			throw new NotImplementedException();
+			return Common.Common.LotDao.Get(Id);
 		}
 
 		public IEnumerable<Lot> GetAll()
@@ -48,7 +54,7 @@ namespace Output4Epam.BLL.Core
 
 		public bool Remove(Guid Id)
 		{
-			throw new NotImplementedException();
+			return Common.Common.LotDao.Remove(Id);
 		}
 
 		public void Set(Lot item)

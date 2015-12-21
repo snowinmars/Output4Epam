@@ -1,0 +1,24 @@
+﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
+@{
+	if (IsPost)
+	{
+		string title = Request["Title"];
+		Stream photo = Request.Files["Photo"].InputStream;
+		string sity = Request["Sity"];
+		int type = Int32.Parse(Request["Types"]);
+		int cost = Int32.Parse(Request["Cost"]);
+		string info = Request["Info"];
+
+		using (MemoryStream memStream = new MemoryStream((int)photo.Length))
+		{
+			photo.CopyTo(memStream);
+			Guid lotId = Guid.NewGuid();
+			LogicProvider.LotLogic.Add(new Lot(title, User.Identity.Name, sity, cost, info, (LotTypes)type, DateTime.Now, lotId));
+			LogicProvider.LotLogic.AddImage(lotId, memStream.ToArray());
+		}
+	}
+
+	Response.Redirect("/Pages/Index.cshtml");
+	return;
+}

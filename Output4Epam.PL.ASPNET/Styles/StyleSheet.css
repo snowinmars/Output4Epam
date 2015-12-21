@@ -94,14 +94,19 @@ footer {
 	display: inline-block;
 	padding: 10px;
 	vertical-align: top;
-	width: 150px;
+	width: 170px;
 	margin-top: 10px;
 }
 
 .leftmenu ul {
 	list-style-type: none;
 	padding: 0;
+	margin-bottom: 20px;
 }
+
+	.leftmenu ul:first-child {
+		border-bottom: 1px solid black;
+	}
 
 .leftmenu ul li {
 	margin: 5px 0px;
@@ -176,6 +181,7 @@ footer {
 .section .city,
 .section .cost,
 .section .postDate,
+.section .owner,
 .section .button,
 .section .categories {
 	display: inline-block;
@@ -218,6 +224,11 @@ footer {
 	top: 150px;
 }
 
+.section .owner{
+	top: -10px;
+	left: 300px;
+}
+
 .section .button {
 	bottom: 0;
 	left: 400px;
@@ -245,4 +256,14 @@ footer {
 	border-radius: 2px;
 	padding: 3px 5px;
 	margin-right: 5px;
+}
+
+/*________________________________________*/
+
+.addLot {
+
+}
+
+.addLot input {
+	display: block;
 }

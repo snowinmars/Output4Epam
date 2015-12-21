@@ -7,5 +7,6 @@ namespace Outpu4Epam.DAL.Interface
 		byte[] GetImage(Guid id);
 		byte[] GetImageDefault();
 		byte[] GetHeader();
+		void AddImage(Guid lotId, byte[] image);
 	}
 }

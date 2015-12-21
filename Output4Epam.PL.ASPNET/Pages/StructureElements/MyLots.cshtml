@@ -1,8 +1,17 @@
 ﻿@using Output4Epam.Providers
+@using System.Linq
+@using Output4Epam.Entities
+@using System.Collections.Generic
+@using System
+
+@{var myLotList = from item in LogicProvider.LotLogic.GetAll()
+			where item.Owner == User.Identity.Name
+			select item;
+}
 
 <section class="section">
 	<ul>
-		@foreach (var item in LogicProvider.LotLogic.GetAll())
+		@foreach (var item in myLotList)
 		{
 			<li>
 				<img src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" />
@@ -15,9 +24,9 @@
 				<p class="button">Подробнее</p>
 				@foreach (var type in @item.Types.ToString().Split(','))
 				{
-				<p class="categories" >
-					<span>@String.Join("", "#", type)</span>
-				</p>
+					<p class="categories">
+						<span>@String.Join("", "#", type)</span>
+					</p>
 				}
 			</li>
 		}

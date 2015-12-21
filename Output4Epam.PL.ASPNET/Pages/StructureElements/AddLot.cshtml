@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<meta charset="utf-8" />
+	<title>Yay</title>
+	<link href="~/Styles/StyleSheet.css" rel="stylesheet" />
+</head>
+<body>
+	@RenderPage("/Pages/StructureElements/HeadLogo.cshtml")
+	@RenderPage("/Pages/StructureElements/HelloForm.cshtml")
+	@RenderPage("/Pages/StructureElements/NavMenu.cshtml")
+	@RenderPage("/Pages/StructureElements/AddLotContent.cshtml")
+	@RenderPage("/Pages/StructureElements/FootLogo.cshtml")
+
+	<script src="~/Scripts/jquery-2.1.4.js"></script>
+	<script src="~/Scripts/MyScripts/JavaScript.js"></script>
+</body>
+</html>
