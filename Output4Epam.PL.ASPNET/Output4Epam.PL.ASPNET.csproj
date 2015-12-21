@@ -117,6 +117,7 @@
     <Content Include="Pages\AJAX\AddLot.cshtml" />
     <Content Include="Pages\StructureElements\ShowMyLots.cshtml" />
     <Content Include="Pages\StructureElements\MyLots.cshtml" />
+    <Content Include="Pages\AJAX\DeleteLot.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

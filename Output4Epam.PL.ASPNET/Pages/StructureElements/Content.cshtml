@@ -5,7 +5,7 @@
 		@foreach (var item in LogicProvider.LotLogic.GetAll())
 		{
 			<li>
-				<img src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" />
+				<p class="p"><img class="img" src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" /></p>
 				<p class="title">@item.Title.ToString()</p>
 				<p class="info">@item.Info</p>
 				<p class="city">г. @item.Sity</p>

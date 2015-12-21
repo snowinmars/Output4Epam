@@ -141,7 +141,7 @@ namespace Outpu4Epam.DAL.SQL
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "delete from [dbo].[LotTable] where [dbo].[LotTable].[Id] == @Id";
+				var query = "delete from [dbo].[LotTable] where [dbo].[LotTable].[Id] = @Id";
 				var command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@Id", Id);
 
