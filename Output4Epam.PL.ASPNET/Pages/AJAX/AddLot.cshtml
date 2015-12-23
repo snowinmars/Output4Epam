@@ -15,7 +15,7 @@
 			photo.CopyTo(memStream);
 			Guid lotId = Guid.NewGuid();
 			LogicProvider.LotLogic.Add(new Lot(title, User.Identity.Name, sity, cost, info, (LotTypes)type, DateTime.Now, lotId));
-			LogicProvider.LotLogic.AddImage(lotId, memStream.ToArray());
+			LogicProvider.LotLogic.AddImage(lotId, memStream);
 		}
 	}
 

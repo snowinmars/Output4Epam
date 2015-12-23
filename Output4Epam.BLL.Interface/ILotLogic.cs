@@ -1,5 +1,6 @@
 ﻿using Output4Epam.Entities;
 using System;
+using System.IO;
 
 namespace Output4Epam.BLL.Interface
 {
@@ -7,6 +8,6 @@ namespace Output4Epam.BLL.Interface
 	{
 		byte[] GetImage(Guid id);
 		byte[] GetHeader();
-		void AddImage(Guid lotId, byte[] image);
+		void AddImage(Guid lotId, Stream image);
 	}
 }

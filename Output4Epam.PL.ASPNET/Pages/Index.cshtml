@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Output4Epam.Providers
+
+@{
 	Layout = null;
 }
 
@@ -12,6 +14,10 @@
 	<link href="~/Styles/StyleSheet.css" rel="stylesheet" />
 </head>
 <body>
+	@{ 
+		FileStream sdf = new FileStream(@"C:\prg\Output4Epam\db\header.png", FileMode.Open);
+		LogicProvider.LotLogic.AddImage(Guid.NewGuid(), sdf);
+	}
 
 	@RenderPage("/Pages/StructureElements/HeadLogo.cshtml")
 	@RenderPage("/Pages/StructureElements/HelloForm.cshtml")

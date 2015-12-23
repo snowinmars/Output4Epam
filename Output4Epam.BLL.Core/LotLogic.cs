@@ -2,6 +2,7 @@
 using Output4Epam.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Output4Epam.BLL.Core
@@ -13,7 +14,7 @@ namespace Output4Epam.BLL.Core
 			return Common.Common.LotDao.Add(item);
 		}
 
-		public void AddImage(Guid lotId, byte[] image)
+		public void AddImage(Guid lotId, Stream image)
 		{
 			Common.Common.LotDao.AddImage(lotId, image);
 		}

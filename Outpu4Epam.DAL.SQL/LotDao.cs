@@ -38,9 +38,22 @@ namespace Outpu4Epam.DAL.SQL
 			return true;
 		}
 
-		public void AddImage(Guid lotId, byte[] image)
+		public void AddImage(Guid lotId, Stream image)
 		{
-			File.WriteAllBytes(Path.Combine(Common.pathToWorkFolder, lotId.ToString() + ".png"), image);
+			string connectionString = Common.connectionString;
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "insert into [dbo].[ImagesTable] ([ImageId],[LotId],[Image]) values (@ImageId, @LotId, @Image)";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@ImageId", Guid.NewGuid());
+				command.Parameters.AddWithValue("@LotId", lotId);
+				command.Parameters.AddWithValue("@Image", image);
+
+
+				connection.Open();
+				command.ExecuteNonQuery();
+			}
 		}
 
 		public void Dispose()
@@ -110,22 +123,46 @@ namespace Outpu4Epam.DAL.SQL
 
 		public byte[] GetHeader()
 		{
-			string path = Path.Combine(pathToWorkFolder, headerName);
+			string connectionString = Common.connectionString;
 
-			return File.ReadAllBytes(path);
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "select * from [dbo].[ImagesTable] where [LotId] = @LotId";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@LotId", default(Guid));
+
+				connection.Open();
+				var reader = command.ExecuteReader();
+
+				while (reader.Read())
+				{
+					return (byte[])reader["Image"];
+				}
+			}
+
+			return new byte[] { };
 		}
 
 		public byte[] GetImage(Guid id)
 		{
-			string path = String.Join("", Path.Combine(pathToWorkFolder, id.ToString()), ".png");
-			if (File.Exists(path))
+			string connectionString = Common.connectionString;
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				return File.ReadAllBytes(path);
+				var query = "select * from [dbo].[ImagesTable] where [LotId] = @LotId";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@LotId", id);
+
+				connection.Open();
+				var reader = command.ExecuteReader();
+
+				while (reader.Read())
+				{
+					return (byte[])reader["Image"];
+				}
 			}
-			else
-			{
-				return new byte[] { };
-			}
+
+			return new byte[] { };
 		}
 
 		public byte[] GetImageDefault()
