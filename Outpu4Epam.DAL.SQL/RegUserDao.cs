@@ -14,7 +14,7 @@ namespace Outpu4Epam.DAL.SQL
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "insert info [dbo].[RegUserTable] ([dbo].[RegUserTable].Id,[dbo].[RegUserTable].Login,[dbo].[RegUserTable].PasswordHash,[dbo].[RegUserTable].Role,[dbo].[RegUserTable].Money) values (@Id,@Login,@PasswordHash,@Role,@Money)";
+				var query = "insert into [dbo].[RegUserTable] ([Id],[Login],[PasswordHash],[Role],[Money]) values (@Id,@Login,@PasswordHash,@Role,@Money)";
 				var command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@Id", Guid.NewGuid());
 				command.Parameters.AddWithValue("@Login", item.Login);
@@ -93,7 +93,7 @@ namespace Outpu4Epam.DAL.SQL
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * from [dbo].[RegUserTable] where [dbo].[RegUserTable].[Login] == @Login";
+				var query = "select * from [dbo].[RegUserTable] where [dbo].[RegUserTable].[Login] = @Login";
 				var command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@Login", login);
 
@@ -102,7 +102,10 @@ namespace Outpu4Epam.DAL.SQL
 
 				while (reader.Read())
 				{
-					regUser = new RegUser((string)reader["Login"], (int)reader["PasswordHash"], (RoleScroll)reader["Roles"], (int)reader["Money"]);
+					regUser = new RegUser((string)reader["Login"],
+								(int)reader["PasswordHash"],
+								(RoleScroll)reader["Role"],
+								(int)reader["Money"]);
 				}
 			}
 

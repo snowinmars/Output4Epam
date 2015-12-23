@@ -1,5 +1,11 @@
 ﻿@using Output4Epam.Providers
 
+@{ 
+	Layout ="~/Pages/Index.cshtml";
+}
+
+@RenderPage("/Pages/StructureElements/TopButtons.cshtml")
+
 <section class="section">
 	<ul>
 		@foreach (var item in LogicProvider.LotLogic.GetAll())
@@ -12,7 +18,7 @@
 				<p class="cost">@(item.Cost) руб.</p>
 				<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.PostDate.ToString("dd.MM.yyyy")</p>
 				<p class="owner">posted by @(item.Owner)</p>
-				<p class="button">Подробнее</p>
+				<p class="button more">Подробнее</p>
 				@foreach (var type in @item.Types.ToString().Split(','))
 				{
 				<p class="categories" >

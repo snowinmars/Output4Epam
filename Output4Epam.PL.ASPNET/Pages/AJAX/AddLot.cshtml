@@ -9,14 +9,10 @@
 		int type = Int32.Parse(Request["Types"]);
 		int cost = Int32.Parse(Request["Cost"]);
 		string info = Request["Info"];
+		Guid lotId = Guid.NewGuid();
 
-		using (MemoryStream memStream = new MemoryStream((int)photo.Length))
-		{
-			photo.CopyTo(memStream);
-			Guid lotId = Guid.NewGuid();
-			LogicProvider.LotLogic.Add(new Lot(title, User.Identity.Name, sity, cost, info, (LotTypes)type, DateTime.Now, lotId));
-			LogicProvider.LotLogic.AddImage(lotId, memStream);
-		}
+		LogicProvider.LotLogic.Add(new Lot(title, User.Identity.Name, sity, cost, info, (LotTypes)type, DateTime.Now, lotId));
+		LogicProvider.LotLogic.AddImage(lotId, photo);
 	}
 
 	Response.Redirect("/Pages/Index.cshtml");

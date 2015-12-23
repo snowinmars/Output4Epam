@@ -9,8 +9,6 @@ namespace Outpu4Epam.DAL.SQL
 {
 	public class LotDao : ILotDao<Lot>
 	{
-		private string defaultImgName = "default.png";
-		private string headerName = "header.png";
 		private string pathToWorkFolder = Common.pathToWorkFolder;
 
 		public bool Add(Lot item)
@@ -129,7 +127,7 @@ namespace Outpu4Epam.DAL.SQL
 			{
 				var query = "select * from [dbo].[ImagesTable] where [LotId] = @LotId";
 				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@LotId", default(Guid));
+				command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000000"));
 
 				connection.Open();
 				var reader = command.ExecuteReader();
@@ -167,9 +165,24 @@ namespace Outpu4Epam.DAL.SQL
 
 		public byte[] GetImageDefault()
 		{
-			string path = Path.Combine(pathToWorkFolder, defaultImgName);
+			string connectionString = Common.connectionString;
 
-			return File.ReadAllBytes(path);
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "select * from [dbo].[ImagesTable] where [LotId] = @LotId";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000001"));
+
+				connection.Open();
+				var reader = command.ExecuteReader();
+
+				while (reader.Read())
+				{
+					return (byte[])reader["Image"];
+				}
+			}
+
+			return new byte[] { };
 		}
 
 		public bool Remove(Guid Id)

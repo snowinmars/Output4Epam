@@ -1,24 +1,20 @@
 ﻿@{
-    Layout = null;
+	Layout = "~/Pages/Index.cshtml";
 }
 
-<!DOCTYPE html>
+<section class="addLot section">
+	<p>enum. Hope, you know, what it is)</p>
+	Types: None = 0, Other = 1, Cloth = 2, Technic = 4, Fun = 8,
 
-<html>
-<head>
-	<meta name="viewport" content="width=device-width" />
-	<meta charset="utf-8" />
-	<title>Yay</title>
-	<link href="~/Styles/StyleSheet.css" rel="stylesheet" />
-</head>
-<body>
-	@RenderPage("/Pages/StructureElements/HeadLogo.cshtml")
-	@RenderPage("/Pages/StructureElements/HelloForm.cshtml")
-	@RenderPage("/Pages/StructureElements/NavMenu.cshtml")
-	@RenderPage("/Pages/StructureElements/AddLotContent.cshtml")
-	@RenderPage("/Pages/StructureElements/FootLogo.cshtml")
+	@RenderPage("/Pages/StructureElements/LotTypeCheckBoxes.cshtml")
 
-	<script src="~/Scripts/jquery-2.1.4.js"></script>
-	<script src="~/Scripts/MyScripts/JavaScript.js"></script>
-</body>
-</html>
+	<form enctype="multipart/form-data" method="post" action="~/Pages/AJAX/AddLot.cshtml">
+		Title: <input type="text" name="Title" value="" />
+		Photo: <input type="file" name="Photo" accept="image/png"/>
+		Sity: <input type="text" name="Sity" value="" />
+		Cost: <input type="text" name="Cost" value="" />
+		Types: <input type="text" name="Types" value="" />
+		Info: <input type="text" name="Info" value="" />
+		<button>Add</button>
+	</form>
+</section>

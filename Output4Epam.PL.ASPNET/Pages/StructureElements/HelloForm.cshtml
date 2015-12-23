@@ -8,10 +8,11 @@
 			}
 			else
 			{
-		<form action="~/Pages/AJAX/Login.cshtml" method="post">
+		<form method="post">
 			<input type="text" name="login">
 			<input type="password" name="password">
-			<button>Sign In</button>
+			<button formaction="/Pages/AJAX/Login.cshtml">Sign In</button>
+			<button formaction="/Pages/AJAX/Registration.cshtml">Sign Up</button>
 		</form>
 			}
 </div>

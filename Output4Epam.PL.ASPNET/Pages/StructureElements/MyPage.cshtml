@@ -1,0 +1,21 @@
+﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
+
+@{
+	Layout = "~/Pages/Index.cshtml";
+}
+
+@{ 
+	RegUser user = LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
+}
+
+<section class="section mypage">
+	<ul>
+		<li>
+			@*<p class="p"><img class="img" src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" /></p>*@
+
+			<p class="title">Hello, @user.Login</p>
+			<p class="info">Money: @user.Money</p>
+		</li>
+	</ul>
+</section>

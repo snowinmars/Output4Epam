@@ -47,6 +47,12 @@ namespace Output4Epam.BLL.Core
 			return Common.Common.RegUserDao.GetByLogin(login);
 		}
 
+		public bool Registrate(string login, string password)
+		{
+			RegUser regUser = new RegUser(login, password.GetHashCode(), RoleScroll.User, 0);
+			return Common.Common.RegUserDao.Add(regUser);
+		}
+
 		public bool Remove(Guid Id)
 		{
 			return Common.Common.RegUserDao.Remove(Id);

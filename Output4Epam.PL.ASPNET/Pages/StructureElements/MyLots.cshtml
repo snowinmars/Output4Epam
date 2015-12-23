@@ -4,10 +4,16 @@
 @using System.Collections.Generic
 @using System
 
+@{ 
+	Layout = "~/Pages/Index.cshtml";
+}
+
 @{var myLotList = from item in LogicProvider.LotLogic.GetAll()
 			where item.Owner == User.Identity.Name
 			select item;
 }
+
+@RenderPage("/Pages/StructureElements/TopButtons.cshtml")
 
 <section class="section">
 	<ul>

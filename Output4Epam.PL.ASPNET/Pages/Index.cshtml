@@ -1,32 +1,23 @@
-﻿@using Output4Epam.Providers
-
-@{
-	Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
 	<meta name="viewport" content="width=device-width" />
 	<meta charset="utf-8" />
 	<title>Yay</title>
-	<link href="~/Styles/StyleSheet.css" rel="stylesheet" />
+	<link href="~/Content/semantic.css" rel="stylesheet" />
+	<link href="~/Content/StyleSheet.css" rel="stylesheet" />
 </head>
 <body>
-	@{ 
-		FileStream sdf = new FileStream(@"C:\prg\Output4Epam\db\header.png", FileMode.Open);
-		LogicProvider.LotLogic.AddImage(Guid.NewGuid(), sdf);
-	}
-
 	@RenderPage("/Pages/StructureElements/HeadLogo.cshtml")
 	@RenderPage("/Pages/StructureElements/HelloForm.cshtml")
-	@RenderPage("/Pages/StructureElements/TopButtons.cshtml")
 	@RenderPage("/Pages/StructureElements/NavMenu.cshtml")
-	@RenderPage("/Pages/StructureElements/Content.cshtml")
+	@*@RenderPage("/Pages/StructureElements/Content.cshtml")*@
+	@RenderBody()
 	@RenderPage("/Pages/StructureElements/FootLogo.cshtml")
 
 	<script src="~/Scripts/jquery-2.1.4.js"></script>
+	<script src="~/Scripts/semantic.js"></script>
 	<script src="~/Scripts/MyScripts/JavaScript.js"></script>
 </body>
 </html>

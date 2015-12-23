@@ -6,5 +6,6 @@ namespace Output4Epam.BLL.Interface
 	{
 		bool Auth(string login, string password);
 		RegUser GetByLogin(string login);
+		bool Registrate(string login, string password);
 	}
 }
