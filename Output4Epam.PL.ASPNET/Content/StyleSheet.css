@@ -162,12 +162,12 @@ footer {
 	display: inline-block;
 }
 
-	.section ul {
+	.section .ul {
 		list-style-type: none;
 		padding: 0;
 	}
 
-		.section ul li {
+		.section .ul .li {
 			position: relative;
 			display: block;
 			height: 200px;
@@ -299,4 +299,15 @@ footer {
 .mypage .info {
 	position: absolute;
 	left: 10px;
+}
+
+/*________________________________________*/
+
+.checkboxes {
+	list-style: none;
+}
+
+.checkboxes .checkbox {
+	display: inline-block;
+	
 }

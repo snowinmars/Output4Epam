@@ -58,10 +58,6 @@
       <Project>{b70fb735-1787-4083-abd3-2eb7071f0a97}</Project>
       <Name>Output4Epam.BLL.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Output4Epam.Entities.Interface\Output4Epam.Entities.Interface.csproj">
-      <Project>{71394255-1ae8-440d-978b-7073bebb90ef}</Project>
-      <Name>Output4Epam.Entities.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Output4Epam.Entities\Output4Epam.Entities.csproj">
       <Project>{64cda2ce-ec2e-4136-9120-5eca8d0ce270}</Project>
       <Name>Output4Epam.Entities</Name>

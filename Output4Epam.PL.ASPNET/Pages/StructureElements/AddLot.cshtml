@@ -3,10 +3,22 @@
 }
 
 <section class="addLot section">
-	<p>enum. Hope, you know, what it is)</p>
-	Types: None = 0, Other = 1, Cloth = 2, Technic = 4, Fun = 8,
-
-	@RenderPage("/Pages/StructureElements/LotTypeCheckBoxes.cshtml")
+	<p>Choose category</p>
+	
+	<ul class="checkboxes">
+		<li>
+			<input class="checkbox" type="checkbox" name="opt1" /><label for="opt1">Other</label>
+		</li>
+		<li>
+			<input class="checkbox" type="checkbox" name="opt2" /><label for="opt2">Cloth</label>
+		</li>
+		<li>
+			<input class="checkbox" type="checkbox" name="opt3" /><label for="opt3">Technic</label>
+		</li>
+		<li>
+			<input class="checkbox" type="checkbox" name="opt4" /><label for="opt4">Fun</label>
+		</li>
+	</ul>
 
 	<form enctype="multipart/form-data" method="post" action="~/Pages/AJAX/AddLot.cshtml">
 		Title: <input type="text" name="Title" value="" />
