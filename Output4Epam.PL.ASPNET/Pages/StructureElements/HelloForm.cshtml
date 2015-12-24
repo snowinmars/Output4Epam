@@ -1,18 +1,21 @@
-﻿<div class="helloform">
-	@if (User.Identity.IsAuthenticated)
-	{
+﻿@if (User.Identity.IsAuthenticated)
+{
+	<div class="helloform">
 		<p>Hello, @User.Identity.Name</p>
 		<form action="~/Pages/AJAX/Dislogin.cshtml" method="post">
 			<button>Sign Out</button>
 		</form>
-			}
-			else
-			{
+	</div>
+}
+else
+{
+	<div class="helloform">
+
 		<form method="post">
 			<input type="text" name="login">
 			<input type="password" name="password">
 			<button formaction="/Pages/AJAX/Login.cshtml">Sign In</button>
 			<button formaction="/Pages/AJAX/Registration.cshtml">Sign Up</button>
 		</form>
-			}
-</div>
+	</div>
+}

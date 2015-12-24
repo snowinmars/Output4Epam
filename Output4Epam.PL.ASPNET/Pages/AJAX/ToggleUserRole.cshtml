@@ -1,0 +1,26 @@
+﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
+@using Newtonsoft.Json
+
+@{
+	string login = Request["Login"];
+	string action = Request["Action"];
+	RoleScroll role = RoleScroll.None;
+
+	switch (action)
+	{
+		case "ban":
+			role = RoleScroll.Ban;
+			break;
+		case "togglevip":
+			role = RoleScroll.VIP;
+			break;
+		case "toggleadmin":
+			role = RoleScroll.Admin;
+			break;
+		default:
+			break;
+	}
+
+	LogicProvider.RegUserLogic.ToggleRole(login, role);
+}

@@ -112,13 +112,66 @@ namespace Outpu4Epam.DAL.SQL
 			return regUser;
 		}
 
+		public string[] GetRolesForUser(string username)
+		{
+			List<string> asd = new List<string>();
+
+			string connectionString = Common.connectionString;
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "select * from [dbo].[RegUserTable] where [dbo].[RegUserTable].[Login] = @Username";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@Username", username);
+
+				connection.Open();
+				var reader = command.ExecuteReader();
+
+				while (reader.Read())
+				{
+					RoleScroll x = (RoleScroll)reader["Role"];
+					foreach (var item in x.ToString().Split(','))
+					{
+						asd.Add(item);
+					}
+				}
+			}
+
+			return asd.ToArray();
+		}
+
+		public bool IsUserInRole(string username, string roleName)
+		{
+			string connectionString = Common.connectionString;
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "select * from [dbo].[RegUserTable] where [dbo].[RegUserTable].[Login] = @Username";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@Username", username);
+
+				connection.Open();
+				var reader = command.ExecuteReader();
+
+				while (reader.Read())
+				{
+					RoleScroll x = (RoleScroll)reader["Role"];
+					if (x.HasFlag((RoleScroll)Enum.Parse(typeof(RoleScroll), roleName)))
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
 		public bool Remove(Guid Id)
 		{
 			string connectionString = Common.connectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "delete from [dbo].[RegUserTable] where [dbo].[RegUserTable].[Id] == @Id";
+				var query = "delete from [dbo].[RegUserTable] where [dbo].[RegUserTable].[Id] = @Id";
 				var command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@Id", Id);
 
@@ -129,9 +182,46 @@ namespace Outpu4Epam.DAL.SQL
 			return true;
 		}
 
+		public bool RemoveByLogin(string login)
+		{
+			string connectionString = Common.connectionString;
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "delete from [dbo].[RegUserTable] where [dbo].[RegUserTable].[Login] = @Login";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@Login", login);
+
+				connection.Open();
+				var reader = command.ExecuteNonQuery();
+			}
+
+			return true;
+		}
+
 		public void Set(RegUser item)
 		{
-			throw new NotImplementedException();
+			string connectionString = Common.connectionString;
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "update [dbo].[RegUserTable] set [dbo].[RegUserTable].[Role] = @Role where [dbo].[RegUserTable].[Login] = @Login";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@Login", item.Login);
+				command.Parameters.AddWithValue("@Role", item.Roles);
+
+				connection.Open();
+				var reader = command.ExecuteNonQuery();
+			}
+		}
+
+		public bool ToggleRole(string login, RoleScroll role)
+		{
+			RegUser regUser = this.GetByLogin(login);
+			regUser.Roles ^= role;
+			this.Set(regUser);
+
+			return true;
 		}
 	}
 }

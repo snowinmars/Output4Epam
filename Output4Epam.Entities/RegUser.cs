@@ -1,11 +1,15 @@
-﻿namespace Output4Epam.Entities
+﻿using System;
+
+namespace Output4Epam.Entities
 {
+	[Flags]
 	public enum RoleScroll
 	{
 		None = 0,
 		User = 1,
 		VIP = 2,
 		Admin = 4,
+		Ban = 8,
 	}
 
 	public class RegUser

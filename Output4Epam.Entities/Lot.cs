@@ -23,14 +23,14 @@ namespace Output4Epam.Entities
 			this.Types = types;
 			this.PostDate = postDate;
 			this.Info = info;
-				if (g == default(Guid))
-				{
+			if (g == default(Guid))
+			{
 				g = Guid.NewGuid();
-				}
+			}
 			this.Id = g;
 		}
 
-		public string  Info { get; set; }
+		public string Info { get; set; }
 		public DateTime PostDate { get; set; }
 		public Guid Id { get; set; }
 		public int Cost { get; set; }

@@ -47,6 +47,16 @@ namespace Output4Epam.BLL.Core
 			return Common.Common.RegUserDao.GetByLogin(login);
 		}
 
+		public string[] GetRolesForUser(string username)
+		{
+			return Common.Common.RegUserDao.GetRolesForUser(username);
+		}
+
+		public bool IsUserInRole(string username, string roleName)
+		{
+			return Common.Common.RegUserDao.IsUserInRole(username, roleName);
+		}
+
 		public bool Registrate(string login, string password)
 		{
 			RegUser regUser = new RegUser(login, password.GetHashCode(), RoleScroll.User, 0);
@@ -58,9 +68,19 @@ namespace Output4Epam.BLL.Core
 			return Common.Common.RegUserDao.Remove(Id);
 		}
 
+		public bool RemoveByLogin(string login)
+		{
+			return Common.Common.RegUserDao.RemoveByLogin(login);
+		}
+
 		public void Set(RegUser item)
 		{
 			throw new NotImplementedException();
+		}
+
+		public bool ToggleRole(string login, RoleScroll role)
+		{
+			return Common.Common.RegUserDao.ToggleRole(login, role);
 		}
 	}
 }

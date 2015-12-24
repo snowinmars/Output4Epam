@@ -4,39 +4,43 @@
 @using System.Collections.Generic
 @using System
 
-@{ 
+@{
 	Layout = "~/Pages/Index.cshtml";
 }
 
 @{var myLotList = from item in LogicProvider.LotLogic.GetAll()
 			where item.Owner == User.Identity.Name
 			select item;
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
 }
 
-@RenderPage("/Pages/StructureElements/TopButtons.cshtml")
+@if (isUser)
+{
+	@RenderPage("/Pages/StructureElements/TopButtons.cshtml")
 
-<section class="section">
-	<ul class="ul">
-		@foreach (var item in myLotList)
-		{
-			<li class="li">
-				<p class="p"><img class="img" src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" /></p>
-				<p class="title">@item.Title.ToString()</p>
-				<p class="info">@item.Info</p>
-				<p class="city">г. @item.Sity</p>
-				<p class="cost">@(item.Cost) руб.</p>
-				<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.PostDate.ToString("dd.MM.yyyy")</p>
-				<p class="owner">posted by @(item.Owner)</p>
-				<p class="button" id="@item.Id">Подробнее</p>
-				<p class="button delete" id="@item.Id">Удалить</p>
-				@foreach (var type in @item.Types.ToString().Split(','))
-				{
-					<p class="categories">
-						<span>@String.Join("", "#", type)</span>
-					</p>
-				}
-			</li>
-		}
-	</ul>
-	<div id="tooltip"></div>
-</section>
+	<section class="section">
+		<ul class="ul">
+			@foreach (var item in myLotList)
+			{
+				<li class="li">
+					<p class="p"><img class="img" src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" /></p>
+					<p class="title">@item.Title.ToString()</p>
+					<p class="info">@item.Info</p>
+					<p class="city">г. @item.Sity</p>
+					<p class="cost">@(item.Cost) руб.</p>
+					<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.PostDate.ToString("dd.MM.yyyy")</p>
+					<p class="owner">posted by @(item.Owner)</p>
+					<p class="button" id="@item.Id">Подробнее</p>
+					<p class="button delete" id="@item.Id">Удалить</p>
+					@foreach (var type in @item.Types.ToString().Split(','))
+					{
+						<p class="categories">
+							<span>@String.Join("", "#", type)</span>
+						</p>
+					}
+				</li>
+			}
+		</ul>
+		<div id="tooltip"></div>
+	</section>
+}

@@ -256,10 +256,29 @@ footer {
 		border-radius: 4px;
 		font-size: 3ex;
 		cursor: pointer;
+
+		width: 120px;
+		text-align: center;
 	}
 
 		.section .delete {
-			left: 520px;
+			left: 560px;
+		}
+
+		.section .removeuser {
+			left: 20px;
+		}
+
+		.section .banuser {
+			left: 180px;
+		}
+
+		.section .togglevipuser {
+			left: 340px;
+		}
+
+		.section .toggleadminuser {
+			left: 500px;
 		}
 
 		.section .button:hover {
@@ -309,5 +328,4 @@ footer {
 
 .checkboxes .checkbox {
 	display: inline-block;
-	
 }

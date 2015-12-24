@@ -1,0 +1,32 @@
+﻿@using Output4Epam.Providers
+
+@{ 
+	Layout = "~/Pages/Index.cshtml";
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "Admin");
+}
+
+@if (isAdmin)
+{
+	<section class="section">
+		<ul class="ul">
+			@foreach (var item in LogicProvider.RegUserLogic.GetAll())
+			{
+				<li class="li" data-login="@item.Login">
+					<p class="title">Login: @item.Login</p>
+					<p class="info">Roles: 
+						@foreach (var rolename in @LogicProvider.RegUserLogic.GetRolesForUser(item.Login))
+						{
+							<span>@rolename, </span>
+						}
+					</p>
+					<p class="cost">Has @item.Money руб.</p>
+					<p class="button removeuser" data-action="remove">Remove</p>
+					<p class="button banuser" data-action="ban">Ban</p>
+					<p class="button togglevipuser" data-action="togglevip">Toggle VIP</p>
+					<p class="button toggleadminuser" data-action="toggleadmin">Toggle admin</p>
+				</li>
+			}
+		</ul>
+		<div id="tooltip"></div>
+	</section>
+}

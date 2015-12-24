@@ -48,7 +48,6 @@ namespace Outpu4Epam.DAL.SQL
 				command.Parameters.AddWithValue("@LotId", lotId);
 				command.Parameters.AddWithValue("@Image", image);
 
-
 				connection.Open();
 				command.ExecuteNonQuery();
 			}

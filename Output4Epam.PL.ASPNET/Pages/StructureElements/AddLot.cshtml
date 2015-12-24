@@ -1,32 +1,40 @@
-﻿@{
+﻿@using Output4Epam.Providers
+
+@{
 	Layout = "~/Pages/Index.cshtml";
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
 }
 
-<section class="addLot section">
-	<p>Choose category</p>
-	
-	<ul class="checkboxes">
-		<li>
-			<input class="checkbox" type="checkbox" name="opt1" /><label for="opt1">Other</label>
-		</li>
-		<li>
-			<input class="checkbox" type="checkbox" name="opt2" /><label for="opt2">Cloth</label>
-		</li>
-		<li>
-			<input class="checkbox" type="checkbox" name="opt3" /><label for="opt3">Technic</label>
-		</li>
-		<li>
-			<input class="checkbox" type="checkbox" name="opt4" /><label for="opt4">Fun</label>
-		</li>
-	</ul>
+@if (isUser)
+{
+	<section class="addLot section">
 
-	<form enctype="multipart/form-data" method="post" action="~/Pages/AJAX/AddLot.cshtml">
-		Title: <input type="text" name="Title" value="" />
-		Photo: <input type="file" name="Photo" accept="image/png"/>
-		Sity: <input type="text" name="Sity" value="" />
-		Cost: <input type="text" name="Cost" value="" />
-		Types: <input type="text" name="Types" value="" />
-		Info: <input type="text" name="Info" value="" />
-		<button>Add</button>
-	</form>
-</section>
+		<p>Choose category</p>
+
+		<ul class="checkboxes">
+			<li>
+				<input class="checkbox" type="checkbox" name="opt1" /><label for="opt1">Other</label>
+			</li>
+			<li>
+				<input class="checkbox" type="checkbox" name="opt2" /><label for="opt2">Cloth</label>
+			</li>
+			<li>
+				<input class="checkbox" type="checkbox" name="opt3" /><label for="opt3">Technic</label>
+			</li>
+			<li>
+				<input class="checkbox" type="checkbox" name="opt4" /><label for="opt4">Fun</label>
+			</li>
+		</ul>
+		<button class="add">Add</button>
+
+
+		<form enctype="multipart/form-data" method="post" action="~/Pages/AJAX/AddLot.cshtml">
+			Title: <input type="text" name="Title" value="" />
+			Photo: <input type="file" name="Photo" accept="image/png" />
+			Sity: <input type="text" name="Sity" value="" />
+			Cost: <input type="text" name="Cost" value="" />
+			Types: <input type="text" name="Types" value="" />
+			Info: <input type="text" name="Info" value="" />
+		</form>
+	</section>
+}

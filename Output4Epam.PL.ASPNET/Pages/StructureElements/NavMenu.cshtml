@@ -1,13 +1,37 @@
-﻿<nav class="leftmenu borderaround">
+﻿@using Output4Epam.Providers
+
+@{
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "Admin");
+}
+
+<nav class="leftmenu borderaround">
 	<ul>
-		<li><a href="~/Pages/StructureElements/MyPage.cshtml">Личный кабинет</a></li>
+		@if (isUser)
+		{
+			<li><a href="~/Pages/StructureElements/MyPage.cshtml">Личный кабинет</a></li>
+		}
 		<li><a href="#">Фильтры</a></li>
 		<li><a href="#">Статистика</a></li>
 		<li><a href="#">Цветовая схема ▼</a></li>
 	</ul>
 
-	<ul>
-		<li><a href="~/Pages/StructureElements/AddLot">Добавить объявление</a></li>
-		<li><a href="~/Pages/StructureElements/MyLots">Мои объявления</a></li>
-	</ul>
+	@if (isUser)
+	{
+		<ul>
+			<li><a href="~/Pages/StructureElements/AddLot">Добавить объявление</a></li>
+			<li><a href="~/Pages/StructureElements/MyLots">Мои объявления</a></li>
+		</ul>
+	}
+	else
+	{
+		<p>Зарегестрируйтесь для больших возможностей.</p>
+	}
+
+	@if(isAdmin)
+	{
+		<ul>
+			<li><a href="~/Pages/StructureElements/AllUsers">Список юзеров</a></li>
+		</ul>
+	}
 </nav>

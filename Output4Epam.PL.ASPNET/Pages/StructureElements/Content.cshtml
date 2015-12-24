@@ -1,7 +1,7 @@
 ﻿@using Output4Epam.Providers
 
-@{ 
-	Layout ="~/Pages/Index.cshtml";
+@{
+	Layout = "~/Pages/Index.cshtml";
 }
 
 @RenderPage("/Pages/StructureElements/TopButtons.cshtml")
@@ -21,9 +21,9 @@
 				<p class="button more">Подробнее</p>
 				@foreach (var type in @item.Types.ToString().Split(','))
 				{
-				<p class="categories" >
-					<span>@String.Join("", "#", type)</span>
-				</p>
+					<p class="categories">
+						<span>@String.Join("", "#", type)</span>
+					</p>
 				}
 			</li>
 		}

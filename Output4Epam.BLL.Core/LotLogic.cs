@@ -3,7 +3,6 @@ using Output4Epam.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace Output4Epam.BLL.Core
 {
