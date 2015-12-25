@@ -4,7 +4,7 @@ namespace Output4Epam.BLL.Interface
 {
 	public interface ICRUD<T>
 	{
-		bool Add(T item); // create
+		bool Add(T item); // createc
 
 		T Get(Guid Id); // read
 

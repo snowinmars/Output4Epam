@@ -1,5 +1,7 @@
 ﻿using Output4Epam.Entities;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Output4Epam.BLL.Interface

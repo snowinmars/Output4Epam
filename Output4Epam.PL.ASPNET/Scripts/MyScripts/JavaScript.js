@@ -7,6 +7,8 @@
 			url: "/Pages/AJAX/DeleteLot.cshtml",
 			type: "post",
 			data: target.attr("id"),
+		}).success(function () {
+			target.closest("li").remove();
 		});
 	};
 
@@ -16,7 +18,7 @@
 
 	function more(e) {
 		var target = $(e.target);
-		var guid = $(e.target).closest("li").children("p").children("img").attr("src").split("=")[1];
+		var guid = target.closest("li").children("p").children("img").attr("src").split("=")[1];
 
 		location.href = "/Pages/StructureElements/ShowMore.cshtml" + "?id=" + guid;
 	};
@@ -25,12 +27,14 @@
 
 	function removeUser(e) {
 		var target = $(e.target);
-		var login = $(e.target).closest("li").children(".title").contents()[0].data.split(" ");
+		var login = target.closest("li").attr("data-login");
 
 		$.ajax({
 			url: "/Pages/AJAX/DeleteUser.cshtml",
 			type: "post",
 			data: login[1],
+		}).success(function () {
+			target.closest("li").remove();
 		});
 	}
 
@@ -40,8 +44,8 @@
 
 	function toggleUserRole(e) {
 		var target = $(e.target);
-		var login = $(e.target).closest("li").attr("data-login");
-		var action = $(e.target).attr("data-action");
+		var login = target.closest("li").attr("data-login");
+		var action = target.attr("data-action");
 		var datastr = {
 			"Login": login,
 			"Action": action,
@@ -51,7 +55,9 @@
 			url: "/Pages/AJAX/ToggleUserRole",
 			type: "post",
 			data: datastr,
-		});
+		}).success(function (a) {
+			a;
+		})
 	}
 
 
@@ -63,14 +69,17 @@
 	var group = $(".checkbox");
 
 	function add(e) {
-		var target = $(e.target);
+		var form = $(e.target).closest("form");
 		var i = 0;
+		var type = form.append('<input type="text" name="Types" value="">');
+		var count = 0;
 
-		for (i = 0; i < group.length; ++i)
+		for (i = 0; i < group.length; ++i) {
 			if (group[i].checked) {
-				alert('чекбокс включён');
-			} else {
-				alert('чекбокс отключён');
+				count += group[i].attr("data-enumValue");
 			}
+		}
+		type.attr("value", count);
+		form.submit();
 	}
 })();

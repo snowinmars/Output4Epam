@@ -1,4 +1,5 @@
 ﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
 
 @{
 	Layout = "~/Pages/Index.cshtml";
@@ -12,21 +13,13 @@
 		<p>Choose category</p>
 
 		<ul class="checkboxes">
-			<li>
-				<input class="checkbox" type="checkbox" name="opt1" /><label for="opt1">Other</label>
-			</li>
-			<li>
-				<input class="checkbox" type="checkbox" name="opt2" /><label for="opt2">Cloth</label>
-			</li>
-			<li>
-				<input class="checkbox" type="checkbox" name="opt3" /><label for="opt3">Technic</label>
-			</li>
-			<li>
-				<input class="checkbox" type="checkbox" name="opt4" /><label for="opt4">Fun</label>
-			</li>
+			@foreach (var item in Enum.GetValues(typeof(LotTypes)))
+			{
+				<li>
+					<input class="checkbox" type="checkbox" name="@item" data-enumValue="@((int)item)" /><label for="@item">@item</label>
+				</li>
+			}
 		</ul>
-		<button class="add">Add</button>
-
 
 		<form enctype="multipart/form-data" method="post" action="~/Pages/AJAX/AddLot.cshtml">
 			Title: <input type="text" name="Title" value="" />
@@ -36,5 +29,11 @@
 			Types: <input type="text" name="Types" value="" />
 			Info: <input type="text" name="Info" value="" />
 		</form>
+
+		<button class="add">Add</button>
 	</section>
+}
+else
+{
+	Response.Redirect("/Pages/StructureElements/Content");
 }

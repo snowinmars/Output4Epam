@@ -26,5 +26,6 @@ namespace Output4Epam.Entities
 		public int PasswordHash { get; set; }
 		public RoleScroll Roles { get; set; }
 		public int Money { get; set; }
+		
 	}
 }
