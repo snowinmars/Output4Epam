@@ -1,0 +1,368 @@
+﻿body {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	font-size: 14px;
+}
+
+/*________________________________________*/
+
+.tooltip {
+	border-bottom: 1px dotted #0077AA;
+	cursor: help;
+}
+
+	.tooltip::after {
+		z-index: 999;
+		background: rgba(0, 0, 0, 0.8);
+		border-radius: 8px 8px 8px 0px;
+		box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+		color: #FFF;
+		content: attr(data-tooltip); /* Главная часть кода, определяющая содержимое всплывающей подсказки */
+		margin-top: -24px;
+		opacity: 0; /* Наш элемент прозрачен... */
+		padding: 3px 7px;
+		position: absolute;
+		visibility: hidden; /* ...и скрыт. */
+	}
+
+	.tooltip:hover::after {
+		opacity: 1; /* Показываем его */
+		visibility: visible;
+	}
+
+/*________________________________________*/
+
+.borderaround {
+	border: 1px solid black;
+	border-radius: 2px;
+}
+
+/*________________________________________*/
+
+.headlogo {
+	position: relative;
+	display: block;
+	height: 6ex;
+	background-color: #B5E61D;
+	width: 100%;
+	height: 120px;
+}
+
+/*________________________________________*/
+
+.helloform {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 150px;
+	background-color: green;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+	.helloform input {
+		background-color: green;
+		border: 2px solid red;
+	}
+
+	.helloform button {
+		background-color: yellow;
+		border: 2px solid blue;
+		color: red;
+		font-weight: bold;
+		font-size: 2ex;
+		margin-top: 10px;
+		cursor: pointer;
+	}
+
+/*________________________________________*/
+
+footer {
+	position: absolute;
+	bottom: 0;
+	margin: 0 50%;
+	width: 100px;
+}
+
+/*________________________________________*/
+
+.leftmenu {
+	display: inline-block;
+	padding: 10px;
+	vertical-align: top;
+	width: 170px;
+	margin-top: 10px;
+}
+
+	.leftmenu ul {
+		list-style-type: none;
+		padding: 0;
+		margin-bottom: 20px;
+	}
+
+		.leftmenu ul:first-child {
+			border-bottom: 1px solid black;
+		}
+
+		.leftmenu ul li {
+			margin: 5px 0px;
+		}
+
+			.leftmenu ul li a {
+				text-decoration: none;
+				color: black;
+				font-size: 2.5ex;
+				margin-left: 1ex;
+			}
+
+				.leftmenu ul li a:hover:before {
+					content: " >";
+					position: relative;
+					left: -2ex;
+				}
+
+/*________________________________________*/
+
+.topButtons {
+	position: absolute;
+	left: 250px;
+	top: 125px;
+	font-size: 3ex;
+}
+
+	.topButtons .topbutton {
+		margin: 5px 0 10px 5px;
+		padding: 5px 10px;
+		cursor: pointer;
+	}
+
+		.topButtons .topbutton:hover {
+			background-color: #eee;
+		}
+
+	.topButtons .selected {
+		background-color: #ccc;
+	}
+
+		.topButtons .selected:hover {
+			background-color: #ccc;
+		}
+
+/*________________________________________*/
+
+.section {
+	margin-left: 200px;
+	top: 150px;
+	position: absolute;
+	right: 40px;
+	left: 0;
+	display: inline-block;
+}
+
+	.section .ul {
+		list-style-type: none;
+		padding: 0;
+	}
+
+		.section .ul .li {
+			position: relative;
+			display: block;
+			height: 200px;
+			width: 100%;
+			margin: 10px 0 0 20px;
+			background-color: red;
+			border-radius: 10px;
+		}
+
+	.section .p {
+		display: inline-block;
+		height: 180px;
+		width: 300px;
+	}
+
+		.section .p .img {
+			height: 90%;
+			width: auto;
+			margin: 10px;
+			border-radius: 10px;
+			cursor: pointer;
+		}
+
+	.section .title,
+	.section .info,
+	.section .city,
+	.section .cost,
+	.section .postDate,
+	.section .owner,
+	.section .button,
+	.section .categories {
+		display: inline-block;
+		position: absolute;
+	}
+
+	.section .title {
+		font-size: 4ex;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+
+		.section .title:hover {
+			color: #777;
+		}
+
+	.section .info {
+		top: 50px;
+	}
+
+	.section .city {
+		top: 110px;
+	}
+
+	.section .cost {
+		right: 20px;
+		font-size: 4ex;
+		cursor: pointer;
+	}
+
+		.section .cost:after {
+			content: "▼";
+			font-size: 1ex;
+		}
+
+		.section .cost:hover {
+			text-decoration: underline;
+		}
+
+	.section .postDate {
+		top: 150px;
+		cursor: help;
+	}
+
+	.section .owner {
+		top: -10px;
+		left: 300px;
+	}
+
+	.section .button {
+		bottom: 0;
+		left: 400px;
+		height: 20px;
+		background-color: yellow;
+		padding: 5px 10px;
+		border-radius: 4px;
+		font-size: 3ex;
+		cursor: pointer;
+		width: 120px;
+		text-align: center;
+	}
+
+	.section .delete {
+		left: 560px;
+	}
+
+	.section .removeuser {
+		left: 20px;
+	}
+
+	.section .banuser {
+		left: 180px;
+	}
+
+	.section .togglevipuser {
+		left: 340px;
+	}
+
+	.section .toggleadminuser {
+		left: 500px;
+	}
+
+	.section .button:hover {
+		background-color: orange;
+	}
+
+	.section .categories {
+		display: inline-block;
+		bottom: 0;
+		right: 20px;
+		margin-bottom: 10px;
+	}
+
+		.section .categories span {
+			background-color: white;
+			border-radius: 2px;
+			padding: 3px 5px;
+			margin-right: 5px;
+		}
+
+/*________________________________________*/
+
+.addLot {
+}
+
+	.addLot input {
+		display: block;
+	}
+
+/*________________________________________*/
+
+.mypage .title {
+	position: absolute;
+	left: 10px;
+}
+
+.mypage .info {
+	position: absolute;
+	left: 10px;
+}
+
+/*________________________________________*/
+
+.checkboxes {
+	list-style: none;
+}
+
+	.checkboxes .checkbox {
+		display: inline-block;
+	}
+
+/*________________________________________*/
+
+.popup {
+	display: none;
+	position: absolute;
+	width: 200px;
+	background-color: gray;
+	left: 210px;
+	z-index: 999;
+}
+
+	.popup:hover { /* due to brouser may not be able to cathc focus on .popup in a flash */
+		display: block;
+	}
+
+	.popup:focus {
+		display: block;
+	}
+
+.popuplink:focus + div {
+	display: block;
+}
+
+.popup p {
+	padding: 5px 5px 5px 10px;
+	border-top: 1px solid black;
+	margin: 0;
+}
+
+	.popup p:first-child {
+		border-top: 1px solid transparent;
+	}
+
+	.popup p:hover:before {
+		content: " >";
+		position: relative;
+		left: -2ex;
+	}

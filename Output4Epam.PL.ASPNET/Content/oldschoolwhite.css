@@ -16,20 +16,16 @@
 
 	.tooltip::after {
 		z-index: 999;
-		background: rgba(0, 0, 0, 0.8);
-		border-radius: 8px 8px 8px 0px;
-		box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
-		color: #FFF;
+		background: #000;
+		color: #fff;
 		content: attr(data-tooltip); /* Главная часть кода, определяющая содержимое всплывающей подсказки */
 		margin-top: -24px;
-		opacity: 0; /* Наш элемент прозрачен... */
 		padding: 3px 7px;
 		position: absolute;
 		visibility: hidden; /* ...и скрыт. */
 	}
 
 	.tooltip:hover::after {
-		opacity: 1; /* Показываем его */
 		visibility: visible;
 	}
 
@@ -46,9 +42,10 @@
 	position: relative;
 	display: block;
 	height: 6ex;
-	background-color: #B5E61D;
+	background-color: #fff;
 	width: 100%;
 	height: 120px;
+	display: none;
 }
 
 /*________________________________________*/
@@ -58,20 +55,22 @@
 	top: 0;
 	right: 0;
 	width: 150px;
-	background-color: green;
-	border-radius: 5px;
+	background-color: white;
 	padding: 10px;
+	border: 1px solid black;
+	color: black;
 }
 
 	.helloform input {
-		background-color: green;
-		border: 2px solid red;
+		background-color: white;
+	color: black;
+		border: 2px solid black;
 	}
 
 	.helloform button {
-		background-color: yellow;
-		border: 2px solid blue;
-		color: red;
+		background-color: white;
+		border: 2px solid black;
+		color: black;
 		font-weight: bold;
 		font-size: 2ex;
 		margin-top: 10px;
@@ -129,7 +128,7 @@ footer {
 .topButtons {
 	position: absolute;
 	left: 250px;
-	top: 125px;
+	top: 10px;
 	font-size: 3ex;
 }
 
@@ -139,23 +138,23 @@ footer {
 		cursor: pointer;
 	}
 
-	.topButtons .topbutton:hover {
-		background-color: #eee;
-	}
+		.topButtons .topbutton:hover {
+			text-decoration: underline;
+		}
 
 	.topButtons .selected {
-		background-color: #ccc;
+		text-decoration: underline;
 	}
 
-	.topButtons .selected:hover {
-		background-color: #ccc;
-	}
+		.topButtons .selected:hover {
+			text-decoration: underline;
+		}
 
 /*________________________________________*/
 
 .section {
 	margin-left: 200px;
-	top: 150px;
+	top: 100px;
 	position: absolute;
 	right: 40px;
 	left: 0;
@@ -173,8 +172,8 @@ footer {
 			height: 200px;
 			width: 100%;
 			margin: 10px 0 0 20px;
-			background-color: red;
-			border-radius: 10px;
+			background-color: white;
+			border: 1px solid black;
 		}
 
 	.section .p {
@@ -187,8 +186,6 @@ footer {
 			height: 90%;
 			width: auto;
 			margin: 10px;
-			border-radius: 10px;
-
 			cursor: pointer;
 		}
 
@@ -251,39 +248,38 @@ footer {
 		bottom: 0;
 		left: 400px;
 		height: 20px;
-		background-color: yellow;
+		background-color: white;
 		padding: 5px 10px;
-		border-radius: 4px;
 		font-size: 3ex;
 		cursor: pointer;
-
 		width: 120px;
 		text-align: center;
+		border: 1px solid black;
 	}
 
-		.section .delete {
-			left: 560px;
-		}
+	.section .delete {
+		left: 560px;
+	}
 
-		.section .removeuser {
-			left: 20px;
-		}
+	.section .removeuser {
+		left: 20px;
+	}
 
-		.section .banuser {
-			left: 180px;
-		}
+	.section .banuser {
+		left: 180px;
+	}
 
-		.section .togglevipuser {
-			left: 340px;
-		}
+	.section .togglevipuser {
+		left: 340px;
+	}
 
-		.section .toggleadminuser {
-			left: 500px;
-		}
+	.section .toggleadminuser {
+		left: 500px;
+	}
 
-		.section .button:hover {
-			background-color: orange;
-		}
+	.section .button:hover {
+		background-color: orange;
+	}
 
 	.section .categories {
 		display: inline-block;
@@ -326,6 +322,46 @@ footer {
 	list-style: none;
 }
 
-.checkboxes .checkbox {
-	display: inline-block;
+	.checkboxes .checkbox {
+		display: inline-block;
+	}
+
+/*________________________________________*/
+
+.popup {
+	display: none;
+	position: absolute;
+	width: 200px;
+	background-color: white;
+	left: 210px;
+	z-index: 999;
+	border: 1px solid black;
 }
+
+	.popup:hover { /* due to brouser may not be able to cathc focus on .popup in a flash */
+		display: block;
+	}
+
+	.popup:focus {
+		display: block;
+	}
+
+.popuplink:focus + div {
+	display: block;
+}
+
+.popup p {
+	padding: 5px 5px 5px 10px;
+	border-top: 1px solid black;
+	margin: 0;
+}
+
+	.popup p:first-child {
+		border-top: 1px solid transparent;
+	}
+
+	.popup p:hover:before {
+		content: " >";
+		position: relative;
+		left: -2ex;
+	}

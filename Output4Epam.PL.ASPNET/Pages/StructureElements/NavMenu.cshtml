@@ -11,9 +11,24 @@
 		{
 			<li><a href="~/Pages/StructureElements/MyPage.cshtml">Личный кабинет</a></li>
 		}
-		<li><a href="#">Фильтры</a></li>
+		<li>
+			<a href="#" class="popuplink" tabindex="1">Фильтры</a>
+			<div class="popup" tabindex="3">
+				<p class="topbutton orderByName" data-action="orderByName">Name</p>
+				<p class="topbutton orderByDate selected" data-action="orderByDate">Date</p>
+				<p class="topbutton orderByOrder" data-action="orderByOrder">Owner</p>
+			</div>
+		</li>
 		<li><a href="#">Статистика</a></li>
-		<li><a href="#">Цветовая схема ▼</a></li>
+		<li>
+			<a href="#" class="popuplink" tabindex="2">Цветовая схема ▼</a>
+			<div class="popup" tabindex="4	">
+				<p name="colorsheme" data-type="testing">Test...</p>
+				<p name="colorsheme" data-type="oldschoolwhite">xZx_OldSkul_xZx</p>
+				<p name="colorsheme" data-type="oldschoolblack">xZx_OldSkul_BlazZzk_xZx</p>
+				<p name="colorsheme" data-type="space">Space</p>
+			</div>
+		</li>
 	</ul>
 
 	@if (isUser)

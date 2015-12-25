@@ -98,6 +98,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\oldschoolblack.css" />
+    <Content Include="Content\oldschoolwhite.css" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <Content Include="Default.cshtml" />
@@ -135,8 +137,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\MyScripts\JavaScript.js" />
-    <Content Include="Content\StyleSheet.css" />
-    <Content Include="Web.config" />
+    <Content Include="Content\testing.css" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">

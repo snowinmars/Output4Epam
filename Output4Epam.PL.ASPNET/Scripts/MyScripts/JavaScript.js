@@ -1,4 +1,6 @@
-﻿(function () {
+﻿/// <reference path="C:\prg\Output4Epam\Output4Epam.PL.ASPNET\Content/SetStyle.cshtml" />
+/// <reference path="C:\prg\Output4Epam\Output4Epam.PL.ASPNET\Content/SetStyle.cshtml" />
+(function () {
 	$(".delete").click(deleteLot);
 
 	function deleteLot(e) {
@@ -12,6 +14,8 @@
 		});
 	};
 
+/*________________________________________*/
+
 	$(".more").click(more);
 	$(".p").click(more);
 	$(".title").click(more);
@@ -22,6 +26,8 @@
 
 		location.href = "/Pages/StructureElements/ShowMore.cshtml" + "?id=" + guid;
 	};
+
+/*________________________________________*/
 
 	$(".removeuser").click(removeUser);
 
@@ -37,6 +43,8 @@
 			target.closest("li").remove();
 		});
 	}
+
+/*________________________________________*/
 
 	$(".banuser").click(toggleUserRole);
 	$(".togglevipuser").click(toggleUserRole);
@@ -55,10 +63,12 @@
 			url: "/Pages/AJAX/ToggleUserRole",
 			type: "post",
 			data: datastr,
-		}).success(function (a) {
+		}).success(function (a) { // TODO
 			a;
 		})
 	}
+
+/*________________________________________*/
 
 	$(".orderByName").click(writeGet);
 	$(".orderByDate").click(writeGet);
@@ -76,6 +86,37 @@
 		});
 	}
 
+/*________________________________________*/
+
+	$("[name=colorsheme]").click(changetheme);
+	
+	function changetheme(e) {
+		var target = $(e.target);
+
+		var theme = $("[name=stylesheet]");
+		loadjscssfile("/Content/" + target.data("type") + ".css", "css");
+	}
+
+	// I'm afraid to touch this stuff due to I spent five hours to find this working stuff. Due to my code on jQuery didn't rerender page.
+	function loadjscssfile(filename, filetype) {
+		if (filetype == "js") { //if filename is a external JavaScript file
+			var fileref = document.createElement('script');
+			fileref.setAttribute("type", "text/javascript");
+			fileref.setAttribute("src", filename);
+		}
+		else if (filetype == "css") { //if filename is an external CSS file
+			var fileref = document.createElement("link");
+			fileref.setAttribute("rel", "stylesheet");
+			fileref.setAttribute("type", "text/css");
+			fileref.setAttribute("href", filename);
+			fileref.setAttribute("id", "stylesheet");
+		}
+		$("#stylesheet").remove();
+
+		if (typeof fileref != "undefined")
+			document.getElementsByTagName("head")[0].appendChild(fileref);
+	}
+/*________________________________________*/
 
 
 	// TODO : this f to another file
