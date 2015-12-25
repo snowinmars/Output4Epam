@@ -1,14 +1,43 @@
 ﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
 
 @{
 	Layout = "~/Pages/Index.cshtml";
+	string order = Request["order"];
+	IEnumerable<Lot> collection = default(IEnumerable<Lot>);
+
+	if ((order == String.Empty) || (order == null))
+	{
+		order = "orderByDate";
+	}
+
+	switch (order)
+	{
+		case "orderByDate":
+			collection = from item in LogicProvider.LotLogic.GetAll() // dunno how to sort in another way
+				     orderby item.PostDate                             // yea, I know about method Filter(), but...
+				     select item;
+			break;
+		case "orderByName":
+			collection = from item in LogicProvider.LotLogic.GetAll()
+				     orderby item.Title
+				     select item;
+			break;
+		case "orderByOwner":
+			collection = from item in LogicProvider.LotLogic.GetAll()
+				     orderby item.Owner
+				     select item;
+			break;
+		default:
+			break;
+	}
 }
 
 @RenderPage("/Pages/StructureElements/TopButtons.cshtml")
 
 <section class="section">
 	<ul class="ul">
-		@foreach (var item in LogicProvider.LotLogic.GetAll())
+		@foreach (var item in collection)
 		{
 			<li class="li">
 				<p class="p"><img class="img" src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" /></p>

@@ -60,7 +60,21 @@
 		})
 	}
 
+	$(".orderByName").click(writeGet);
+	$(".orderByDate").click(writeGet);
+	$(".orderByOwner").click(writeGet);
 
+	function writeGet(e) {
+		var target = $(e.target);
+		var action = target.data("action");
+		var thispage = location.href;
+
+		$.ajax({
+			url: thispage,
+			type: "get",
+			data: action,
+		});
+	}
 
 
 
@@ -69,17 +83,19 @@
 	var group = $(".checkbox");
 
 	function add(e) {
-		var form = $(e.target).closest("form");
+		var form = $("form");
 		var i = 0;
-		var type = form.append('<input type="text" name="Types" value="">');
+		form.append('<input type="text" name="Types" value="">');
+		var type = form.children("[name=Types]")
 		var count = 0;
 
 		for (i = 0; i < group.length; ++i) {
 			if (group[i].checked) {
-				count += group[i].attr("data-enumValue");
+				count += $(group[i]).data("enumvalue");
 			}
 		}
-		type.attr("value", count);
+		type.val(count);
 		form.submit();
+		type.remove();
 	}
 })();
