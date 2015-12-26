@@ -8,17 +8,62 @@
 	Layout = "~/Pages/Index.cshtml";
 }
 
-@{var myLotList = from item in LogicProvider.LotLogic.GetAll()
-			where item.Owner == User.Identity.Name
-			select item;
+@{
 	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
-}
 
+
+	string order = Request["orderby"];
+	string filter = Request["filterby"];
+	IEnumerable<Lot> myLotList = default(IEnumerable<Lot>);
+
+	if ((filter != String.Empty) || (filter != null))
+	{
+		myLotList = from item in LogicProvider.LotLogic.GetAll()
+			    where item.Types.HasFlag((LotTypes)Enum.Parse(typeof(LotTypes), filter))
+			    where item.Owner == User.Identity.Name
+			    select item;
+	}
+
+	if (((order == String.Empty) || (order == null)) &&
+		((filter == String.Empty) || (filter == null)))
+	{
+		order = "orderByDate";
+	}
+
+	switch (order)
+	{
+		case "orderByDate":
+			myLotList = from item in LogicProvider.LotLogic.GetAll() // dunno how to sort in another way
+				    where item.Owner == User.Identity.Name
+				    orderby item.PostDate                             // yea, I know about method Filter(), but...
+				    select item;
+			break;
+		case "orderByName":
+			myLotList = from item in LogicProvider.LotLogic.GetAll()
+				    where item.Owner == User.Identity.Name
+				    orderby item.Title
+				    select item;
+			break;
+		case "orderByOwner":
+			myLotList = from item in LogicProvider.LotLogic.GetAll()
+				    where item.Owner == User.Identity.Name
+				    orderby item.Owner
+				    select item;
+			break;
+		default:
+			break;
+	}
+}
+S
 @if (isUser)
 {
 	@RenderPage("/Pages/StructureElements/TopButtons.cshtml")
 
 	<section class="section">
+		@if (!myLotList.Any())
+		{
+			@RenderPage("/Pages/StructureElements/NothingFound.cshtml");
+		}
 		<ul class="ul">
 			@foreach (var item in myLotList)
 			{

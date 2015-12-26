@@ -124,6 +124,7 @@
     <Content Include="Pages\StructureElements\AllUsers.cshtml" />
     <Content Include="Pages\AJAX\DeleteUser.cshtml" />
     <Content Include="Pages\AJAX\ToggleUserRole.cshtml" />
+    <Content Include="Pages\StructureElements\NothingFound.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

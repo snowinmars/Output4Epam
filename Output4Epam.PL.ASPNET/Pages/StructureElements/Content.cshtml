@@ -47,9 +47,8 @@
 <section class="section">
 		@if (!collection.Any())
 		{
-			<p class="info">Nothing, absolutly nothing.</p>
+			@RenderPage("/Pages/StructureElements/NothingFound.cshtml");
 		}
-
 	<ul>
 		@foreach (var item in collection)
 		{
