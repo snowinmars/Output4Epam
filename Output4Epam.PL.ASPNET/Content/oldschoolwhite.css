@@ -161,19 +161,19 @@ footer {
 	display: inline-block;
 }
 
-	.section .ul {
+.section ul {
 		list-style-type: none;
 		padding: 0;
 	}
 
-		.section .ul .li {
+		.section ul li {
 			position: relative;
 			display: block;
 			height: 200px;
 			width: 100%;
 			margin: 10px 0 0 20px;
-			background-color: white;
-			border: 1px solid black;
+			background-color: black;
+			border: 1px solid white;
 		}
 
 	.section .p {
@@ -214,7 +214,13 @@ footer {
 	.section .info {
 		top: 50px;
 	}
+			.section .info .role:after {
+			content: ", ";
+		}
 
+		.section .info .role:last-child:after {
+			content: "";
+		}
 	.section .city {
 		top: 110px;
 	}

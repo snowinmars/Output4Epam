@@ -3,7 +3,7 @@
 
 @{
 	Layout = "~/Pages/Index.cshtml";
-	string order = Request["order"];
+	string order = Request["orderby"];
 	IEnumerable<Lot> collection = default(IEnumerable<Lot>);
 
 	if ((order == String.Empty) || (order == null))

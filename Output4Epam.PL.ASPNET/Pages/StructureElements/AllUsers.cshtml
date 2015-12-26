@@ -8,15 +8,15 @@
 @if (isAdmin)
 {
 	<section class="section">
-		<ul class="ul">
+		<ul>
 			@foreach (var item in LogicProvider.RegUserLogic.GetAll())
 			{
-				<li class="li" data-login="@item.Login">
+				<li data-login="@item.Login">
 					<p class="title">Login: @item.Login</p>
 					<p class="info">Roles: 
 						@foreach (var rolename in @LogicProvider.RegUserLogic.GetRolesForUser(item.Login))
 						{
-							<span>@rolename, </span>
+							<span class="role">@rolename</span>
 						}
 					</p>
 					<p class="cost">Has @item.Money руб.</p>

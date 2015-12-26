@@ -51,7 +51,10 @@
 	$(".toggleadminuser").click(toggleUserRole);
 
 	function toggleUserRole(e) {
+		var i = 0;
+		var length = 0;
 		var target = $(e.target);
+		var roles = target.closest("li").children(".info")[0];
 		var login = target.closest("li").attr("data-login");
 		var action = target.attr("data-action");
 		var datastr = {
@@ -59,13 +62,23 @@
 			"Action": action,
 		}
 
-		$.ajax({
+		var rutrnroleslist = $.ajax({
+			async: false,
 			url: "/Pages/AJAX/ToggleUserRole",
 			type: "post",
 			data: datastr,
-		}).success(function (a) { // TODO
-			a;
-		})
+		}).responseText;
+		rutrnroleslist = rutrnroleslist.slice(0, rutrnroleslist.length - 1).split(",");
+
+		length = roles.children.length;
+		for (i = 0; i < length; ++i) {
+			roles.children[0].remove();
+		}
+
+		$(roles).append("<span>" + rutrnroleslist[0].trim() + "</span>");
+		for (i = 1; i < rutrnroleslist.length; ++i) {
+			$(roles).append("<span>, " + rutrnroleslist[i].trim() + "</span>");
+		}
 	}
 
 /*________________________________________*/
@@ -79,11 +92,8 @@
 		var action = target.data("action");
 		var thispage = location.href;
 
-		$.ajax({
-			url: thispage,
-			type: "get",
-			data: action,
-		});
+		//location.href = location.hostname + location.pathname + "?orderby=" + action;
+		location.search = "orderby=" + action;
 	}
 
 /*________________________________________*/
