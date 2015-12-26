@@ -266,8 +266,8 @@ footer {
 		border: 1px solid white;
 	}
 
-	.section .delete {
-		left: 560px;
+	.section .button:hover {
+		background-color: #222;
 	}
 
 	.section .removeuser {
@@ -284,10 +284,6 @@ footer {
 
 	.section .toggleadminuser {
 		left: 500px;
-	}
-
-	.section .button:hover {
-		background-color: orange;
 	}
 
 	.section .categories {

@@ -30,7 +30,6 @@
 					<p class="cost">@(item.Cost) руб.</p>
 					<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.PostDate.ToString("dd.MM.yyyy")</p>
 					<p class="owner">posted by @(item.Owner)</p>
-					<p class="button" id="@item.Id">Подробнее</p>
 					<p class="button delete" id="@item.Id">Удалить</p>
 					@foreach (var type in @item.Types.ToString().Split(','))
 					{

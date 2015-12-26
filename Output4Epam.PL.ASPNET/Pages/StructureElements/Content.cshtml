@@ -4,9 +4,18 @@
 @{
 	Layout = "~/Pages/Index.cshtml";
 	string order = Request["orderby"];
+	string filter = Request["filterby"];
 	IEnumerable<Lot> collection = default(IEnumerable<Lot>);
 
-	if ((order == String.Empty) || (order == null))
+	if ((filter != String.Empty) || (filter != null))
+	{
+		collection = from item in LogicProvider.LotLogic.GetAll()
+			     where item.Types.HasFlag((LotTypes)Enum.Parse(typeof(LotTypes), filter))
+			     select item;
+	}
+
+	if (((order == String.Empty) || (order == null)) &&
+		((filter == String.Empty) || (filter == null)))
 	{
 		order = "orderByDate";
 	}
@@ -36,10 +45,15 @@
 @RenderPage("/Pages/StructureElements/TopButtons.cshtml")
 
 <section class="section">
-	<ul class="ul">
+		@if (!collection.Any())
+		{
+			<p class="info">Nothing, absolutly nothing.</p>
+		}
+
+	<ul>
 		@foreach (var item in collection)
 		{
-			<li class="li">
+			<li>
 				<p class="p"><img class="img" src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" /></p>
 				<p class="title">@item.Title.ToString()</p>
 				<p class="info">@item.Info</p>
@@ -47,7 +61,6 @@
 				<p class="cost">@(item.Cost) руб.</p>
 				<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.PostDate.ToString("dd.MM.yyyy")</p>
 				<p class="owner">posted by @(item.Owner)</p>
-				<p class="button more">Подробнее</p>
 				@foreach (var type in @item.Types.ToString().Split(','))
 				{
 					<p class="categories">

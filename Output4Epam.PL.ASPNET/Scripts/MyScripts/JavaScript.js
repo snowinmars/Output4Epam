@@ -14,7 +14,7 @@
 		});
 	};
 
-/*________________________________________*/
+	/*________________________________________*/
 
 	$(".more").click(more);
 	$(".p").click(more);
@@ -27,7 +27,7 @@
 		location.href = "/Pages/StructureElements/ShowMore.cshtml" + "?id=" + guid;
 	};
 
-/*________________________________________*/
+	/*________________________________________*/
 
 	$(".removeuser").click(removeUser);
 
@@ -44,7 +44,7 @@
 		});
 	}
 
-/*________________________________________*/
+	/*________________________________________*/
 
 	$(".banuser").click(toggleUserRole);
 	$(".togglevipuser").click(toggleUserRole);
@@ -81,7 +81,7 @@
 		}
 	}
 
-/*________________________________________*/
+	/*________________________________________*/
 
 	$(".orderByName").click(writeGet);
 	$(".orderByDate").click(writeGet);
@@ -91,15 +91,30 @@
 		var target = $(e.target);
 		var action = target.data("action");
 		var thispage = location.href;
+		$(".selected").toggleClass("selected");
+		target.toggleClass("selected");
 
 		//location.href = location.hostname + location.pathname + "?orderby=" + action;
 		location.search = "orderby=" + action;
 	}
 
-/*________________________________________*/
+	/*________________________________________*/
+
+	$(".filter").click(filter);
+
+	function filter(e) {
+		var target = $(e.target);
+		var action = target.data("action");
+		var thispage = location.href;
+
+		//location.href = location.hostname + location.pathname + "?orderby=" + action;
+		location.search = "filterby=" + action;
+	}
+
+	/*________________________________________*/
 
 	$("[name=colorsheme]").click(changetheme);
-	
+
 	function changetheme(e) {
 		var target = $(e.target);
 
@@ -126,8 +141,7 @@
 		if (typeof fileref != "undefined")
 			document.getElementsByTagName("head")[0].appendChild(fileref);
 	}
-/*________________________________________*/
-
+	/*________________________________________*/
 
 	// TODO : this f to another file
 	$(".add").click(add);

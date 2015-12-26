@@ -172,8 +172,8 @@ footer {
 			height: 200px;
 			width: 100%;
 			margin: 10px 0 0 20px;
-			background-color: black;
-			border: 1px solid white;
+			background-color: white;
+			border: 1px solid black;
 		}
 
 	.section .p {
@@ -263,8 +263,8 @@ footer {
 		border: 1px solid black;
 	}
 
-	.section .delete {
-		left: 560px;
+	.section .button:hover {
+		background-color: #eee;
 	}
 
 	.section .removeuser {
@@ -281,10 +281,6 @@ footer {
 
 	.section .toggleadminuser {
 		left: 500px;
-	}
-
-	.section .button:hover {
-		background-color: orange;
 	}
 
 	.section .categories {
