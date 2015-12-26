@@ -10,15 +10,27 @@
 	{
 		public bool Add(Lot item)
 		{
+			if ((item.Cost <= 0) ||
+				(item.Info.Length > 500) ||
+				(item.Owner.Length > 50) ||
+				(item.PostDate > DateTime.Now) ||
+				(item.Sity.Length > 100) ||
+				(item.Title.Length > 200))
+			{
+				throw new ArgumentException("Uncorrect parameters");
+			}
+
 			return Common.Common.LotDao.Add(item);
 		}
 
 		public void AddImage(Guid lotId, Stream image)
 		{
+			// TODO stream size
+
 			Common.Common.LotDao.AddImage(lotId, image);
 		}
 
-		public void Dispose()
+		void IDisposable.Dispose()
 		{
 			throw new NotImplementedException();
 		}
@@ -59,6 +71,15 @@
 
 		public void Set(Lot item)
 		{
+			if ((item.Cost <= 0) ||
+				(item.Info.Length > 500) ||
+				(item.Owner.Length > 50) ||
+				(item.PostDate > DateTime.Now) ||
+				(item.Sity.Length > 100) ||
+				(item.Title.Length > 200))
+			{
+				throw new ArgumentException("Uncorrect parameters");
+			}
 			throw new NotImplementedException();
 		}
 	}

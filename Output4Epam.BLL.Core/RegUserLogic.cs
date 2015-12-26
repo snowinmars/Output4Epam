@@ -4,11 +4,22 @@
 	using System.Collections.Generic;
 	using Output4Epam.BLL.Interface;
 	using Output4Epam.Entities;
-
+	using System.Text.RegularExpressions;
 	public class RegUserLogic : IRegUserLogic
 	{
 		public bool Add(RegUser item)
 		{
+			string regexQuery = @"\b[a-zA-Z_]\b";
+			Regex regex = new Regex(regexQuery);
+			Match match = regex.Match(item.Login);
+
+			if ((item.Login.Length > 50) ||
+				(item.Money < 0) ||
+				(!match.Success))
+			{
+				throw new ArgumentException("Uncorrect parameters");
+			}
+
 			return Common.Common.RegUserDao.Add(item);
 		}
 
@@ -27,7 +38,7 @@
 			return false;
 		}
 
-		public void Dispose()
+		void IDisposable.Dispose()
 		{
 			throw new NotImplementedException();
 		}
@@ -59,6 +70,30 @@
 
 		public bool Registrate(string login, string password)
 		{
+			string regexQuery = @"\b[a-zA-Z_]\b";
+			Regex regex = new Regex(regexQuery);
+			Match match = regex.Match(login);
+
+			if ((login.Length > 50) ||
+				(!match.Success))
+			{
+				throw new ArgumentException("Uncorrect parameters");
+			}
+
+
+
+			regexQuery = @"\b[a-zA-Z0-9`~!@#$%^&*()-=_+\|/?.>,<':;]\b";
+			regex = new Regex(regexQuery);
+			match = regex.Match(password);
+
+			if ((password.Length > 100) ||
+				(!match.Success))
+			{
+				throw new ArgumentException("Uncorrect parameters");
+			}
+
+
+
 			RegUser regUser = new RegUser(login, password.GetHashCode(), RoleScroll.User, 0);
 			return Common.Common.RegUserDao.Add(regUser);
 		}
@@ -75,6 +110,17 @@
 
 		public void Set(RegUser item)
 		{
+			string regexQuery = @"\b[a-zA-Z_]\b";
+			Regex regex = new Regex(regexQuery);
+			Match match = regex.Match(item.Login);
+
+			if ((item.Login.Length > 50) ||
+				(item.Money < 0) ||
+				(!match.Success))
+			{
+				throw new ArgumentException("Uncorrect parameters");
+			}
+
 			throw new NotImplementedException();
 		}
 
