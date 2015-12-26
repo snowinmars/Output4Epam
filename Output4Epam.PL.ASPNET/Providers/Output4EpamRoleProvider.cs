@@ -1,10 +1,12 @@
-﻿using System;
-using System.Web.Security;
-
-namespace Output4Epam.Providers
+﻿namespace Output4Epam.Providers
 {
+	using System;
+	using System.Web.Security;
+
 	public class Output4EpamRoleProvider : RoleProvider
 	{
+		private string applicationName;
+
 		public override string ApplicationName
 		{
 			get
@@ -14,7 +16,7 @@ namespace Output4Epam.Providers
 
 			set
 			{
-				throw new NotImplementedException();
+				this.applicationName = value; // TODO to ask
 			}
 		}
 

@@ -1,6 +1,6 @@
 ﻿@using Output4Epam.Providers
 
-@{ 
+@{
 	Layout = "~/Pages/Index.cshtml";
 	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "Admin");
 }
@@ -8,12 +8,13 @@
 @if (isAdmin)
 {
 	<section class="section">
-		<ul>
+		<ul class="userlist">
 			@foreach (var item in LogicProvider.RegUserLogic.GetAll())
 			{
-				<li data-login="@item.Login">
+				<li class="userlistitem" data-login="@item.Login">
 					<p class="title">Login: @item.Login</p>
-					<p class="info">Roles: 
+					<p class="info">
+						Roles:
 						@foreach (var rolename in @LogicProvider.RegUserLogic.GetRolesForUser(item.Login))
 						{
 							<span class="role">@rolename</span>

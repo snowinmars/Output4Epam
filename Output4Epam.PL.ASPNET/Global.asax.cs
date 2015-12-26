@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Output4Epam
+﻿namespace Output4Epam
 {
+	using System;
+
 	public class Global : System.Web.HttpApplication
 	{
 		protected void Application_Start(object sender, EventArgs e)

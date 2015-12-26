@@ -162,12 +162,12 @@ footer {
 	display: inline-block;
 }
 
-.section ul {
+	.section .userlist {
 		list-style-type: none;
 		padding: 0;
 	}
 
-		.section ul li {
+		.section .userlist .userlistitem {
 			position: relative;
 			display: block;
 			height: 200px;
@@ -216,13 +216,15 @@ footer {
 	.section .info {
 		top: 50px;
 	}
-			.section .info .role:after {
+
+		.section .info .role:after {
 			content: ", ";
 		}
 
 		.section .info .role:last-child:after {
 			content: "";
 		}
+
 	.section .city {
 		top: 110px;
 	}
@@ -260,14 +262,15 @@ footer {
 		padding: 5px 10px;
 		border-radius: 4px;
 		font-size: 3ex;
+		color: black;
 		cursor: pointer;
 		width: 120px;
 		text-align: center;
 	}
 
-	.section .button:hover {
-		background-color: orange;
-	}
+		.section .button:hover {
+			background-color: orange;
+		}
 
 	.section .removeuser {
 		left: 20px;
@@ -285,7 +288,11 @@ footer {
 		left: 500px;
 	}
 
-	
+	.section .add {
+		background-color: red;
+		left: 0px;
+		bottom: -60px;
+	}
 
 	.section .categories {
 		display: inline-block;
@@ -304,11 +311,23 @@ footer {
 /*________________________________________*/
 
 .addLot {
+	left: 200px;
+	margin: 15px;
 }
 
 	.addLot input {
 		display: block;
+		margin-top: 5px;
 	}
+
+	.addLot .checkboxes {
+		position: absolute;
+		left: 200px;
+	}
+
+		.addLot .checkboxes .checkboxitem {
+			margin: 10px;
+		}
 
 /*________________________________________*/
 

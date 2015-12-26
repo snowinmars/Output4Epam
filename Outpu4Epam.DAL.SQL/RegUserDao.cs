@@ -1,16 +1,16 @@
-﻿using Outpu4Epam.DAL.Interface;
-using Output4Epam.Entities;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-
-namespace Outpu4Epam.DAL.SQL
+﻿namespace Outpu4Epam.DAL.SQL
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Data.SqlClient;
+	using Outpu4Epam.DAL.Interface;
+	using Output4Epam.Entities;
+
 	public class RegUserDao : IRegUserDao<RegUser>
 	{
 		public bool Add(RegUser item)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -34,16 +34,16 @@ namespace Outpu4Epam.DAL.SQL
 			throw new NotImplementedException();
 		}
 
-		public RegUser Get(Guid Id)
+		public RegUser Get(Guid id)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 			RegUser regUser = default(RegUser);
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				var query = "select * from [dbo].[RegUserTable] where [dbo].[RegUserTable].[Id] = @Id order by [PostDate]";
 				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Id", Id);
+				command.Parameters.AddWithValue("@Id", id);
 
 				connection.Open();
 				var reader = command.ExecuteReader();
@@ -64,7 +64,7 @@ namespace Outpu4Epam.DAL.SQL
 		{
 			List<RegUser> userList = new List<RegUser>(36);
 
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -88,7 +88,7 @@ namespace Outpu4Epam.DAL.SQL
 
 		public RegUser GetByLogin(string login)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 			RegUser regUser = default(RegUser);
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
@@ -116,7 +116,7 @@ namespace Outpu4Epam.DAL.SQL
 		{
 			List<string> asd = new List<string>();
 
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -142,7 +142,7 @@ namespace Outpu4Epam.DAL.SQL
 
 		public bool IsUserInRole(string username, string roleName)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -162,18 +162,19 @@ namespace Outpu4Epam.DAL.SQL
 					}
 				}
 			}
+
 			return false;
 		}
 
-		public bool Remove(Guid Id)
+		public bool Remove(Guid id)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				var query = "delete from [dbo].[RegUserTable] where [dbo].[RegUserTable].[Id] = @Id";
 				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Id", Id);
+				command.Parameters.AddWithValue("@Id", id);
 
 				connection.Open();
 				var reader = command.ExecuteNonQuery();
@@ -184,7 +185,7 @@ namespace Outpu4Epam.DAL.SQL
 
 		public bool RemoveByLogin(string login)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -201,7 +202,7 @@ namespace Outpu4Epam.DAL.SQL
 
 		public void Set(RegUser item)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{

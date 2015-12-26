@@ -1,9 +1,12 @@
 ﻿@using Output4Epam.Providers
 
 @{
-	Guid id = Guid.Parse(Request.Form.ToString());
+	if (IsPost)
+	{
+		Guid id = Guid.Parse(Request.Form.ToString());
 
-	LogicProvider.LotLogic.Remove(id);
-	Response.Redirect("/Pages/StructureElements/MyLots.cshtml");
-	return;
+		LogicProvider.LotLogic.Remove(id);
+		Response.Redirect("/Pages/StructureElements/MyLots.cshtml");
+		return;
+	}
 }

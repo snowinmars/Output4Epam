@@ -1,10 +1,10 @@
-﻿using System.Configuration;
-
-namespace Outpu4Epam.DAL.SQL
+﻿namespace Outpu4Epam.DAL.SQL
 {
+	using System.Configuration;
+
 	internal class Common
 	{
-		internal static string pathToWorkFolder = ConfigurationManager.AppSettings["DAL_SQL_pathToWorkFolder"];
-		internal static string connectionString = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+		internal static string ConnectionString { get; } = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+		internal static string PathToWorkFolder { get; } = ConfigurationManager.AppSettings["DAL_SQL_pathToWorkFolder"];
 	}
 }

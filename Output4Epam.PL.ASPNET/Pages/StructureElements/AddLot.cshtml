@@ -15,7 +15,7 @@
 		<ul class="checkboxes">
 			@foreach (var item in Enum.GetValues(typeof(LotTypes)))
 			{
-				<li>
+				<li class="checkboxitem">
 					<input class="checkbox" type="checkbox" name="@item" data-enumValue="@((int)item)" /><label for="@item">@item</label>
 				</li>
 			}
@@ -29,7 +29,7 @@
 			Info: <input type="text" name="Info" value="" />
 		</form>
 
-		<button class="add">Add</button>
+		<p class="button add">Добавить</p>
 	</section>
 }
 else

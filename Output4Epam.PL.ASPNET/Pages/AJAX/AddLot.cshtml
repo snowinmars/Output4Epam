@@ -4,14 +4,22 @@
 	if (IsPost)
 	{
 		string title = Request["Title"];
-		Stream photo = Request.Files["Photo"].InputStream;
 		string sity = Request["Sity"];
-		int type = Int32.Parse(Request["Types"]);
 		int cost = Int32.Parse(Request["Cost"]);
 		string info = Request["Info"];
+		int type = Int32.Parse(Request["Types"]);
 		Guid lotId = Guid.NewGuid();
+		Stream photo = Request.Files["Photo"].InputStream;
 
-		LogicProvider.LotLogic.Add(new Lot(title, User.Identity.Name, sity, cost, info, (LotTypes)type, DateTime.Now, lotId));
+		LogicProvider.LotLogic.Add(new Lot(title,
+							User.Identity.Name,
+							sity,
+							cost,
+							info,
+							(LotTypes)type,
+							DateTime.Now,
+							lotId));
+
 		LogicProvider.LotLogic.AddImage(lotId, photo);
 	}
 

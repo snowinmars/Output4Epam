@@ -1,11 +1,11 @@
-﻿using Output4Epam.BLL.Interface;
-using Output4Epam.Entities;
-using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace Output4Epam.BLL.Core
+﻿namespace Output4Epam.BLL.Core
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using Output4Epam.BLL.Interface;
+	using Output4Epam.Entities;
+
 	public class LotLogic : ILotLogic
 	{
 		public bool Add(Lot item)
@@ -23,9 +23,9 @@ namespace Output4Epam.BLL.Core
 			throw new NotImplementedException();
 		}
 
-		public Lot Get(Guid Id)
+		public Lot Get(Guid id)
 		{
-			return Common.Common.LotDao.Get(Id);
+			return Common.Common.LotDao.Get(id);
 		}
 
 		public IEnumerable<Lot> GetAll()
@@ -52,9 +52,9 @@ namespace Output4Epam.BLL.Core
 			return a;
 		}
 
-		public bool Remove(Guid Id)
+		public bool Remove(Guid id)
 		{
-			return Common.Common.LotDao.Remove(Id);
+			return Common.Common.LotDao.Remove(id);
 		}
 
 		public void Set(Lot item)

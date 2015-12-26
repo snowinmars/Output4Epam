@@ -1,19 +1,19 @@
-﻿using Outpu4Epam.DAL.Interface;
-using Output4Epam.Entities;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.IO;
-
-namespace Outpu4Epam.DAL.SQL
+﻿namespace Outpu4Epam.DAL.SQL
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Data.SqlClient;
+	using System.IO;
+	using Outpu4Epam.DAL.Interface;
+	using Output4Epam.Entities;
+
 	public class LotDao : ILotDao<Lot>
 	{
-		private string pathToWorkFolder = Common.pathToWorkFolder;
+		private string pathToWorkFolder = Common.PathToWorkFolder;
 
 		public bool Add(Lot item)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -38,7 +38,7 @@ namespace Outpu4Epam.DAL.SQL
 
 		public void AddImage(Guid lotId, Stream image)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -58,16 +58,16 @@ namespace Outpu4Epam.DAL.SQL
 			throw new NotImplementedException();
 		}
 
-		public Lot Get(Guid Id)
+		public Lot Get(Guid id)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 			Lot lot = default(Lot);
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				var query = "select * from [dbo].[LotTable] where [dbo].[LotTable].[Id] = @Id order by [PostDate]";
 				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Id", Id);
+				command.Parameters.AddWithValue("@Id", id);
 
 				connection.Open();
 				var reader = command.ExecuteReader();
@@ -92,7 +92,7 @@ namespace Outpu4Epam.DAL.SQL
 		{
 			List<Lot> lotList = new List<Lot>(36);
 
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -108,7 +108,7 @@ namespace Outpu4Epam.DAL.SQL
 								(string)((reader["Owner"]).ToString()),
 								(string)reader["Sity"],
 								(int)reader["Cost"],
-								(reader["Info"] == DBNull.Value ? "" : (string)reader["Info"]),
+								(reader["Info"] == DBNull.Value ? String.Empty : (string)reader["Info"]),
 								(LotTypes)reader["Types"],
 								(DateTime)reader["PostDate"],
 								(Guid)reader["Id"]));
@@ -120,7 +120,7 @@ namespace Outpu4Epam.DAL.SQL
 
 		public byte[] GetHeader()
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -142,7 +142,7 @@ namespace Outpu4Epam.DAL.SQL
 
 		public byte[] GetImage(Guid id)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -164,7 +164,7 @@ namespace Outpu4Epam.DAL.SQL
 
 		public byte[] GetImageDefault()
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -184,15 +184,15 @@ namespace Outpu4Epam.DAL.SQL
 			return new byte[] { };
 		}
 
-		public bool Remove(Guid Id)
+		public bool Remove(Guid id)
 		{
-			string connectionString = Common.connectionString;
+			string connectionString = Common.ConnectionString;
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				var query = "delete from [dbo].[LotTable] where [dbo].[LotTable].[Id] = @Id";
 				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Id", Id);
+				command.Parameters.AddWithValue("@Id", id);
 
 				connection.Open();
 				var reader = command.ExecuteNonQuery();

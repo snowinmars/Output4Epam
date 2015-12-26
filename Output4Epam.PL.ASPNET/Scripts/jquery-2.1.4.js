@@ -49,7 +49,7 @@ var concat = arr.concat;
 
 var push = arr.push;
 
-var indexOf = arr.indexOf;
+var MainLayoutOf = arr.MainLayoutOf;
 
 var class2type = {};
 
@@ -312,7 +312,7 @@ jQuery.extend({
 			// If the code includes a valid, prologue position
 			// strict mode pragma, execute code by injecting a
 			// script tag into the document.
-			if ( code.indexOf("use strict") === 1 ) {
+			if ( code.MainLayoutOf("use strict") === 1 ) {
 				script = document.createElement("script");
 				script.text = code;
 				document.head.appendChild( script ).parentNode.removeChild( script );
@@ -411,7 +411,7 @@ jQuery.extend({
 	},
 
 	inArray: function( elem, arr, i ) {
-		return arr == null ? -1 : indexOf.call( arr, elem, i );
+		return arr == null ? -1 : MainLayoutOf.call( arr, elem, i );
 	},
 
 	merge: function( first, second ) {
@@ -602,9 +602,9 @@ var i,
 	push_native = arr.push,
 	push = arr.push,
 	slice = arr.slice,
-	// Use a stripped-down indexOf as it's faster than native
-	// http://jsperf.com/thor-indexof-vs-for/5
-	indexOf = function( list, elem ) {
+	// Use a stripped-down MainLayoutOf as it's faster than native
+	// http://jsperf.com/thor-MainLayoutof-vs-for/5
+	MainLayoutOf = function( list, elem ) {
 		var i = 0,
 			len = list.length;
 		for ( ; i < len; i++ ) {
@@ -918,10 +918,10 @@ function addHandle( attrs, handler ) {
 function siblingCheck( a, b ) {
 	var cur = b && a,
 		diff = cur && a.nodeType === 1 && b.nodeType === 1 &&
-			( ~b.sourceIndex || MAX_NEGATIVE ) -
-			( ~a.sourceIndex || MAX_NEGATIVE );
+			( ~b.sourceMainLayout || MAX_NEGATIVE ) -
+			( ~a.sourceMainLayout || MAX_NEGATIVE );
 
-	// Use IE sourceIndex if available on both nodes
+	// Use IE sourceMainLayout if available on both nodes
 	if ( diff ) {
 		return diff;
 	}
@@ -969,12 +969,12 @@ function createPositionalPseudo( fn ) {
 		argument = +argument;
 		return markFunction(function( seed, matches ) {
 			var j,
-				matchIndexes = fn( [], seed.length, argument ),
-				i = matchIndexes.length;
+				matchMainLayoutes = fn( [], seed.length, argument ),
+				i = matchMainLayoutes.length;
 
-			// Match elements found at the specified indexes
+			// Match elements found at the specified MainLayoutes
 			while ( i-- ) {
-				if ( seed[ (j = matchIndexes[i]) ] ) {
+				if ( seed[ (j = matchMainLayoutes[i]) ] ) {
 					seed[j] = !(matches[j] = seed[j]);
 				}
 			}
@@ -1316,7 +1316,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 
 			// Maintain original order
 			return sortInput ?
-				( indexOf( sortInput, a ) - indexOf( sortInput, b ) ) :
+				( MainLayoutOf( sortInput, a ) - MainLayoutOf( sortInput, b ) ) :
 				0;
 		}
 
@@ -1343,7 +1343,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 				aup ? -1 :
 				bup ? 1 :
 				sortInput ?
-				( indexOf( sortInput, a ) - indexOf( sortInput, b ) ) :
+				( MainLayoutOf( sortInput, a ) - MainLayoutOf( sortInput, b ) ) :
 				0;
 
 		// If the nodes are siblings, we can do a quick check
@@ -1594,8 +1594,8 @@ Expr = Sizzle.selectors = {
 				// Get excess from tokenize (recursively)
 				(excess = tokenize( unquoted, true )) &&
 				// advance to the next closing parenthesis
-				(excess = unquoted.indexOf( ")", unquoted.length - excess ) - unquoted.length) ) {
-				// excess is a negative index
+				(excess = unquoted.MainLayoutOf( ")", unquoted.length - excess ) - unquoted.length) ) {
+				// excess is a negative MainLayout
 				match[0] = match[0].slice( 0, excess );
 				match[2] = unquoted.slice( 0, excess );
 			}
@@ -1640,10 +1640,10 @@ Expr = Sizzle.selectors = {
 
 				return operator === "=" ? result === check :
 					operator === "!=" ? result !== check :
-					operator === "^=" ? check && result.indexOf( check ) === 0 :
-					operator === "*=" ? check && result.indexOf( check ) > -1 :
+					operator === "^=" ? check && result.MainLayoutOf( check ) === 0 :
+					operator === "*=" ? check && result.MainLayoutOf( check ) > -1 :
 					operator === "$=" ? check && result.slice( -check.length ) === check :
-					operator === "~=" ? ( " " + result.replace( rwhitespace, " " ) + " " ).indexOf( check ) > -1 :
+					operator === "~=" ? ( " " + result.replace( rwhitespace, " " ) + " " ).MainLayoutOf( check ) > -1 :
 					operator === "|=" ? result === check || result.slice( 0, check.length + 1 ) === check + "-" :
 					false;
 			};
@@ -1662,7 +1662,7 @@ Expr = Sizzle.selectors = {
 				} :
 
 				function( elem, context, xml ) {
-					var cache, outerCache, node, diff, nodeIndex, start,
+					var cache, outerCache, node, diff, nodeMainLayout, start,
 						dir = simple !== forward ? "nextSibling" : "previousSibling",
 						parent = elem.parentNode,
 						name = ofType && elem.nodeName.toLowerCase(),
@@ -1688,35 +1688,35 @@ Expr = Sizzle.selectors = {
 
 						// non-xml :nth-child(...) stores cache data on `parent`
 						if ( forward && useCache ) {
-							// Seek `elem` from a previously-cached index
+							// Seek `elem` from a previously-cached MainLayout
 							outerCache = parent[ expando ] || (parent[ expando ] = {});
 							cache = outerCache[ type ] || [];
-							nodeIndex = cache[0] === dirruns && cache[1];
+							nodeMainLayout = cache[0] === dirruns && cache[1];
 							diff = cache[0] === dirruns && cache[2];
-							node = nodeIndex && parent.childNodes[ nodeIndex ];
+							node = nodeMainLayout && parent.childNodes[ nodeMainLayout ];
 
-							while ( (node = ++nodeIndex && node && node[ dir ] ||
+							while ( (node = ++nodeMainLayout && node && node[ dir ] ||
 
 								// Fallback to seeking `elem` from the start
-								(diff = nodeIndex = 0) || start.pop()) ) {
-								// When found, cache indexes on `parent` and break
+								(diff = nodeMainLayout = 0) || start.pop()) ) {
+								// When found, cache MainLayoutes on `parent` and break
 								if ( node.nodeType === 1 && ++diff && node === elem ) {
-									outerCache[ type ] = [ dirruns, nodeIndex, diff ];
+									outerCache[ type ] = [ dirruns, nodeMainLayout, diff ];
 									break;
 								}
 							}
 
-						// Use previously-cached element index if available
+						// Use previously-cached element MainLayout if available
 						} else if ( useCache && (cache = (elem[ expando ] || (elem[ expando ] = {}))[ type ]) && cache[0] === dirruns ) {
 							diff = cache[1];
 
 						// xml :nth-child(...) or :nth-last-child(...) or :nth(-last)?-of-type(...)
 						} else {
 							// Use the same loop as above to seek `elem` from the start
-							while ( (node = ++nodeIndex && node && node[ dir ] ||
-								(diff = nodeIndex = 0) || start.pop()) ) {
+							while ( (node = ++nodeMainLayout && node && node[ dir ] ||
+								(diff = nodeMainLayout = 0) || start.pop()) ) {
 								if ( ( ofType ? node.nodeName.toLowerCase() === name : node.nodeType === 1 ) && ++diff ) {
-									// Cache the index of each encountered element
+									// Cache the MainLayout of each encountered element
 									if ( useCache ) {
 										(node[ expando ] || (node[ expando ] = {}))[ type ] = [ dirruns, diff ];
 									}
@@ -1760,7 +1760,7 @@ Expr = Sizzle.selectors = {
 							matched = fn( seed, argument ),
 							i = matched.length;
 						while ( i-- ) {
-							idx = indexOf( seed, matched[i] );
+							idx = MainLayoutOf( seed, matched[i] );
 							seed[ idx ] = !( matches[ idx ] = matched[i] );
 						}
 					}) :
@@ -1814,7 +1814,7 @@ Expr = Sizzle.selectors = {
 		"contains": markFunction(function( text ) {
 			text = text.replace( runescape, funescape );
 			return function( elem ) {
-				return ( elem.textContent || elem.innerText || getText( elem ) ).indexOf( text ) > -1;
+				return ( elem.textContent || elem.innerText || getText( elem ) ).MainLayoutOf( text ) > -1;
 			};
 		}),
 
@@ -1838,7 +1838,7 @@ Expr = Sizzle.selectors = {
 						elem.lang :
 						elem.getAttribute("xml:lang") || elem.getAttribute("lang")) ) {
 						elemLang = elemLang.toLowerCase();
-						return elemLang === lang || elemLang.indexOf( lang + "-" ) === 0;
+						return elemLang === lang || elemLang.MainLayoutOf( lang + "-" ) === 0;
 					}
 				} while ( (elem = elem.parentNode) && elem.nodeType === 1 );
 				return false;
@@ -1856,7 +1856,7 @@ Expr = Sizzle.selectors = {
 		},
 
 		"focus": function( elem ) {
-			return elem === document.activeElement && (!document.hasFocus || document.hasFocus()) && !!(elem.type || elem.href || ~elem.tabIndex);
+			return elem === document.activeElement && (!document.hasFocus || document.hasFocus()) && !!(elem.type || elem.href || ~elem.tabMainLayout);
 		},
 
 		// Boolean properties
@@ -1879,7 +1879,7 @@ Expr = Sizzle.selectors = {
 			// Accessing this property makes selected-by-default
 			// options in Safari work properly
 			if ( elem.parentNode ) {
-				elem.parentNode.selectedIndex;
+				elem.parentNode.selectedMainLayout;
 			}
 
 			return elem.selected === true;
@@ -1932,44 +1932,44 @@ Expr = Sizzle.selectors = {
 			return [ 0 ];
 		}),
 
-		"last": createPositionalPseudo(function( matchIndexes, length ) {
+		"last": createPositionalPseudo(function( matchMainLayoutes, length ) {
 			return [ length - 1 ];
 		}),
 
-		"eq": createPositionalPseudo(function( matchIndexes, length, argument ) {
+		"eq": createPositionalPseudo(function( matchMainLayoutes, length, argument ) {
 			return [ argument < 0 ? argument + length : argument ];
 		}),
 
-		"even": createPositionalPseudo(function( matchIndexes, length ) {
+		"even": createPositionalPseudo(function( matchMainLayoutes, length ) {
 			var i = 0;
 			for ( ; i < length; i += 2 ) {
-				matchIndexes.push( i );
+				matchMainLayoutes.push( i );
 			}
-			return matchIndexes;
+			return matchMainLayoutes;
 		}),
 
-		"odd": createPositionalPseudo(function( matchIndexes, length ) {
+		"odd": createPositionalPseudo(function( matchMainLayoutes, length ) {
 			var i = 1;
 			for ( ; i < length; i += 2 ) {
-				matchIndexes.push( i );
+				matchMainLayoutes.push( i );
 			}
-			return matchIndexes;
+			return matchMainLayoutes;
 		}),
 
-		"lt": createPositionalPseudo(function( matchIndexes, length, argument ) {
+		"lt": createPositionalPseudo(function( matchMainLayoutes, length, argument ) {
 			var i = argument < 0 ? argument + length : argument;
 			for ( ; --i >= 0; ) {
-				matchIndexes.push( i );
+				matchMainLayoutes.push( i );
 			}
-			return matchIndexes;
+			return matchMainLayoutes;
 		}),
 
-		"gt": createPositionalPseudo(function( matchIndexes, length, argument ) {
+		"gt": createPositionalPseudo(function( matchMainLayoutes, length, argument ) {
 			var i = argument < 0 ? argument + length : argument;
 			for ( ; ++i < length; ) {
-				matchIndexes.push( i );
+				matchMainLayoutes.push( i );
 			}
-			return matchIndexes;
+			return matchMainLayoutes;
 		})
 	}
 };
@@ -2231,7 +2231,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 				i = matcherOut.length;
 				while ( i-- ) {
 					if ( (elem = matcherOut[i]) &&
-						(temp = postFinder ? indexOf( seed, elem ) : preMap[i]) > -1 ) {
+						(temp = postFinder ? MainLayoutOf( seed, elem ) : preMap[i]) > -1 ) {
 						seed[temp] = !(results[temp] = elem);
 					}
 				}
@@ -2265,7 +2265,7 @@ function matcherFromTokens( tokens ) {
 			return elem === checkContext;
 		}, implicitRelative, true ),
 		matchAnyContext = addCombinator( function( elem ) {
-			return indexOf( checkContext, elem ) > -1;
+			return MainLayoutOf( checkContext, elem ) > -1;
 		}, implicitRelative, true ),
 		matchers = [ function( elem, context, xml ) {
 			var ret = ( !leadingRelative && ( xml || context !== outermostContext ) ) || (
@@ -2381,7 +2381,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 						}
 					}
 
-					// Discard index placeholder values to get only actual matches
+					// Discard MainLayout placeholder values to get only actual matches
 					setMatched = condense( setMatched );
 				}
 
@@ -2619,7 +2619,7 @@ function winnow( elements, qualifier, not ) {
 	}
 
 	return jQuery.grep( elements, function( elem ) {
-		return ( indexOf.call( qualifier, elem ) >= 0 ) !== not;
+		return ( MainLayoutOf.call( qualifier, elem ) >= 0 ) !== not;
 	});
 }
 
@@ -2862,7 +2862,7 @@ jQuery.fn.extend({
 			for ( cur = this[i]; cur && cur !== context; cur = cur.parentNode ) {
 				// Always skip document fragments
 				if ( cur.nodeType < 11 && (pos ?
-					pos.index(cur) > -1 :
+					pos.MainLayout(cur) > -1 :
 
 					// Don't pass non-elements to Sizzle
 					cur.nodeType === 1 &&
@@ -2877,19 +2877,19 @@ jQuery.fn.extend({
 	},
 
 	// Determine the position of an element within the set
-	index: function( elem ) {
-		// No argument, return index in parent
+	MainLayout: function( elem ) {
+		// No argument, return MainLayout in parent
 		if ( !elem ) {
 			return ( this[ 0 ] && this[ 0 ].parentNode ) ? this.first().prevAll().length : -1;
 		}
 
-		// Index in selector
+		// MainLayout in selector
 		if ( typeof elem === "string" ) {
-			return indexOf.call( jQuery( elem ), this[ 0 ] );
+			return MainLayoutOf.call( jQuery( elem ), this[ 0 ] );
 		}
 
 		// Locate the position of the desired element
-		return indexOf.call( this,
+		return MainLayoutOf.call( this,
 
 			// If it receives a jQuery object, the first element is used
 			elem.jquery ? elem[ 0 ] : elem
@@ -3034,8 +3034,8 @@ jQuery.Callbacks = function( options ) {
 		firingStart,
 		// End of the loop when firing
 		firingLength,
-		// Index of currently firing callback (modified by remove if needed)
-		firingIndex,
+		// MainLayout of currently firing callback (modified by remove if needed)
+		firingMainLayout,
 		// Actual callback list
 		list = [],
 		// Stack of fire calls for repeatable lists
@@ -3044,12 +3044,12 @@ jQuery.Callbacks = function( options ) {
 		fire = function( data ) {
 			memory = options.memory && data;
 			fired = true;
-			firingIndex = firingStart || 0;
+			firingMainLayout = firingStart || 0;
 			firingStart = 0;
 			firingLength = list.length;
 			firing = true;
-			for ( ; list && firingIndex < firingLength; firingIndex++ ) {
-				if ( list[ firingIndex ].apply( data[ 0 ], data[ 1 ] ) === false && options.stopOnFalse ) {
+			for ( ; list && firingMainLayout < firingLength; firingMainLayout++ ) {
+				if ( list[ firingMainLayout ].apply( data[ 0 ], data[ 1 ] ) === false && options.stopOnFalse ) {
 					memory = false; // To prevent further calls using add
 					break;
 				}
@@ -3104,16 +3104,16 @@ jQuery.Callbacks = function( options ) {
 			remove: function() {
 				if ( list ) {
 					jQuery.each( arguments, function( _, arg ) {
-						var index;
-						while ( ( index = jQuery.inArray( arg, list, index ) ) > -1 ) {
-							list.splice( index, 1 );
-							// Handle firing indexes
+						var MainLayout;
+						while ( ( MainLayout = jQuery.inArray( arg, list, MainLayout ) ) > -1 ) {
+							list.splice( MainLayout, 1 );
+							// Handle firing MainLayoutes
 							if ( firing ) {
-								if ( index <= firingLength ) {
+								if ( MainLayout <= firingLength ) {
 									firingLength--;
 								}
-								if ( index <= firingIndex ) {
-									firingIndex--;
+								if ( MainLayout <= firingMainLayout ) {
+									firingMainLayout--;
 								}
 							}
 						}
@@ -3731,7 +3731,7 @@ jQuery.fn.extend({
 						// The attrs elements can be null (#14894)
 						if ( attrs[ i ] ) {
 							name = attrs[ i ].name;
-							if ( name.indexOf( "data-" ) === 0 ) {
+							if ( name.MainLayoutOf( "data-" ) === 0 ) {
 								name = jQuery.camelCase( name.slice(5) );
 								dataAttr( elem, name, data[ name ] );
 							}
@@ -3800,7 +3800,7 @@ jQuery.fn.extend({
 				// *... In the case of properties that might _actually_
 				// have dashes, we need to also store a copy of that
 				// unchanged property.
-				if ( key.indexOf("-") !== -1 && data !== undefined ) {
+				if ( key.MainLayoutOf("-") !== -1 && data !== undefined ) {
 					data_user.set( this, key, value );
 				}
 			});
@@ -4204,13 +4204,13 @@ jQuery.event = {
 			return;
 		}
 
-		if ( type.indexOf(".") >= 0 ) {
+		if ( type.MainLayoutOf(".") >= 0 ) {
 			// Namespaced trigger; create a regexp to match event type in handle()
 			namespaces = type.split(".");
 			type = namespaces.shift();
 			namespaces.sort();
 		}
-		ontype = type.indexOf(":") < 0 && "on" + type;
+		ontype = type.MainLayoutOf(":") < 0 && "on" + type;
 
 		// Caller can pass in a jQuery.Event object, Object, or just an event type string
 		event = event[ jQuery.expando ] ?
@@ -4390,7 +4390,7 @@ jQuery.event = {
 
 						if ( matches[ sel ] === undefined ) {
 							matches[ sel ] = handleObj.needsContext ?
-								jQuery( sel, this ).index( cur ) >= 0 :
+								jQuery( sel, this ).MainLayout( cur ) >= 0 :
 								jQuery.find( sel, this, null, [ cur ] ).length;
 						}
 						if ( matches[ sel ] ) {
@@ -5275,10 +5275,10 @@ jQuery.fn.extend({
 		if ( isFunction ||
 				( l > 1 && typeof value === "string" &&
 					!support.checkClone && rchecked.test( value ) ) ) {
-			return this.each(function( index ) {
-				var self = set.eq( index );
+			return this.each(function( MainLayout ) {
+				var self = set.eq( MainLayout );
 				if ( isFunction ) {
-					args[ 0 ] = value.call( this, index, self.html() );
+					args[ 0 ] = value.call( this, MainLayout, self.html() );
 				}
 				self.domManip( args, callback );
 			});
@@ -5486,7 +5486,7 @@ function curCSS( elem, name, computed ) {
 
 	return ret !== undefined ?
 		// Support: IE
-		// IE returns zIndex value as an integer.
+		// IE returns zMainLayout value as an integer.
 		ret + "" :
 		ret;
 }
@@ -5745,21 +5745,21 @@ function getWidthOrHeight( elem, name, extra ) {
 function showHide( elements, show ) {
 	var display, elem, hidden,
 		values = [],
-		index = 0,
+		MainLayout = 0,
 		length = elements.length;
 
-	for ( ; index < length; index++ ) {
-		elem = elements[ index ];
+	for ( ; MainLayout < length; MainLayout++ ) {
+		elem = elements[ MainLayout ];
 		if ( !elem.style ) {
 			continue;
 		}
 
-		values[ index ] = data_priv.get( elem, "olddisplay" );
+		values[ MainLayout ] = data_priv.get( elem, "olddisplay" );
 		display = elem.style.display;
 		if ( show ) {
 			// Reset the inline display of this element to learn if it is
 			// being hidden by cascaded rules or not
-			if ( !values[ index ] && display === "none" ) {
+			if ( !values[ MainLayout ] && display === "none" ) {
 				elem.style.display = "";
 			}
 
@@ -5767,7 +5767,7 @@ function showHide( elements, show ) {
 			// in a stylesheet to whatever the default browser style is
 			// for such an element
 			if ( elem.style.display === "" && isHidden( elem ) ) {
-				values[ index ] = data_priv.access( elem, "olddisplay", defaultDisplay(elem.nodeName) );
+				values[ MainLayout ] = data_priv.access( elem, "olddisplay", defaultDisplay(elem.nodeName) );
 			}
 		} else {
 			hidden = isHidden( elem );
@@ -5780,13 +5780,13 @@ function showHide( elements, show ) {
 
 	// Set the display of most of the elements in a second loop
 	// to avoid the constant reflow
-	for ( index = 0; index < length; index++ ) {
-		elem = elements[ index ];
+	for ( MainLayout = 0; MainLayout < length; MainLayout++ ) {
+		elem = elements[ MainLayout ];
 		if ( !elem.style ) {
 			continue;
 		}
 		if ( !show || elem.style.display === "none" || elem.style.display === "" ) {
-			elem.style.display = show ? values[ index ] || "" : "none";
+			elem.style.display = show ? values[ MainLayout ] || "" : "none";
 		}
 	}
 
@@ -5820,7 +5820,7 @@ jQuery.extend({
 		"order": true,
 		"orphans": true,
 		"widows": true,
-		"zIndex": true,
+		"zMainLayout": true,
 		"zoom": true
 	},
 
@@ -5870,7 +5870,7 @@ jQuery.extend({
 
 			// Support: IE9-11+
 			// background-* props affect original clone's values
-			if ( !support.clearCloneStyle && value === "" && name.indexOf( "background" ) === 0 ) {
+			if ( !support.clearCloneStyle && value === "" && name.MainLayoutOf( "background" ) === 0 ) {
 				style[ name ] = "inherit";
 			}
 
@@ -6231,10 +6231,10 @@ function genFx( type, includeWidth ) {
 function createTween( value, prop, animation ) {
 	var tween,
 		collection = ( tweeners[ prop ] || [] ).concat( tweeners[ "*" ] ),
-		index = 0,
+		MainLayout = 0,
 		length = collection.length;
-	for ( ; index < length; index++ ) {
-		if ( (tween = collection[ index ].call( animation, prop, value )) ) {
+	for ( ; MainLayout < length; MainLayout++ ) {
+		if ( (tween = collection[ MainLayout ].call( animation, prop, value )) ) {
 			// We're done with this property
 			return tween;
 		}
@@ -6374,21 +6374,21 @@ function defaultPrefilter( elem, props, opts ) {
 }
 
 function propFilter( props, specialEasing ) {
-	var index, name, easing, value, hooks;
+	var MainLayout, name, easing, value, hooks;
 
 	// camelCase, specialEasing and expand cssHook pass
-	for ( index in props ) {
-		name = jQuery.camelCase( index );
+	for ( MainLayout in props ) {
+		name = jQuery.camelCase( MainLayout );
 		easing = specialEasing[ name ];
-		value = props[ index ];
+		value = props[ MainLayout ];
 		if ( jQuery.isArray( value ) ) {
 			easing = value[ 1 ];
-			value = props[ index ] = value[ 0 ];
+			value = props[ MainLayout ] = value[ 0 ];
 		}
 
-		if ( index !== name ) {
+		if ( MainLayout !== name ) {
 			props[ name ] = value;
-			delete props[ index ];
+			delete props[ MainLayout ];
 		}
 
 		hooks = jQuery.cssHooks[ name ];
@@ -6397,11 +6397,11 @@ function propFilter( props, specialEasing ) {
 			delete props[ name ];
 
 			// Not quite $.extend, this won't overwrite existing keys.
-			// Reusing 'index' because we have the correct "name"
-			for ( index in value ) {
-				if ( !( index in props ) ) {
-					props[ index ] = value[ index ];
-					specialEasing[ index ] = easing;
+			// Reusing 'MainLayout' because we have the correct "name"
+			for ( MainLayout in value ) {
+				if ( !( MainLayout in props ) ) {
+					props[ MainLayout ] = value[ MainLayout ];
+					specialEasing[ MainLayout ] = easing;
 				}
 			}
 		} else {
@@ -6413,7 +6413,7 @@ function propFilter( props, specialEasing ) {
 function Animation( elem, properties, options ) {
 	var result,
 		stopped,
-		index = 0,
+		MainLayout = 0,
 		length = animationPrefilters.length,
 		deferred = jQuery.Deferred().always( function() {
 			// Don't match elem in the :animated selector
@@ -6429,11 +6429,11 @@ function Animation( elem, properties, options ) {
 				// Archaic crash bug won't allow us to use `1 - ( 0.5 || 0 )` (#12497)
 				temp = remaining / animation.duration || 0,
 				percent = 1 - temp,
-				index = 0,
+				MainLayout = 0,
 				length = animation.tweens.length;
 
-			for ( ; index < length ; index++ ) {
-				animation.tweens[ index ].run( percent );
+			for ( ; MainLayout < length ; MainLayout++ ) {
+				animation.tweens[ MainLayout ].run( percent );
 			}
 
 			deferred.notifyWith( elem, [ animation, percent, remaining ]);
@@ -6461,7 +6461,7 @@ function Animation( elem, properties, options ) {
 				return tween;
 			},
 			stop: function( gotoEnd ) {
-				var index = 0,
+				var MainLayout = 0,
 					// If we are going to the end, we want to run all the tweens
 					// otherwise we skip this part
 					length = gotoEnd ? animation.tweens.length : 0;
@@ -6469,8 +6469,8 @@ function Animation( elem, properties, options ) {
 					return this;
 				}
 				stopped = true;
-				for ( ; index < length ; index++ ) {
-					animation.tweens[ index ].run( 1 );
+				for ( ; MainLayout < length ; MainLayout++ ) {
+					animation.tweens[ MainLayout ].run( 1 );
 				}
 
 				// Resolve when we played the last frame; otherwise, reject
@@ -6486,8 +6486,8 @@ function Animation( elem, properties, options ) {
 
 	propFilter( props, animation.opts.specialEasing );
 
-	for ( ; index < length ; index++ ) {
-		result = animationPrefilters[ index ].call( animation, elem, props, animation.opts );
+	for ( ; MainLayout < length ; MainLayout++ ) {
+		result = animationPrefilters[ MainLayout ].call( animation, elem, props, animation.opts );
 		if ( result ) {
 			return result;
 		}
@@ -6524,11 +6524,11 @@ jQuery.Animation = jQuery.extend( Animation, {
 		}
 
 		var prop,
-			index = 0,
+			MainLayout = 0,
 			length = props.length;
 
-		for ( ; index < length ; index++ ) {
-			prop = props[ index ];
+		for ( ; MainLayout < length ; MainLayout++ ) {
+			prop = props[ MainLayout ];
 			tweeners[ prop ] = tweeners[ prop ] || [];
 			tweeners[ prop ].unshift( callback );
 		}
@@ -6619,27 +6619,27 @@ jQuery.fn.extend({
 
 		return this.each(function() {
 			var dequeue = true,
-				index = type != null && type + "queueHooks",
+				MainLayout = type != null && type + "queueHooks",
 				timers = jQuery.timers,
 				data = data_priv.get( this );
 
-			if ( index ) {
-				if ( data[ index ] && data[ index ].stop ) {
-					stopQueue( data[ index ] );
+			if ( MainLayout ) {
+				if ( data[ MainLayout ] && data[ MainLayout ].stop ) {
+					stopQueue( data[ MainLayout ] );
 				}
 			} else {
-				for ( index in data ) {
-					if ( data[ index ] && data[ index ].stop && rrun.test( index ) ) {
-						stopQueue( data[ index ] );
+				for ( MainLayout in data ) {
+					if ( data[ MainLayout ] && data[ MainLayout ].stop && rrun.test( MainLayout ) ) {
+						stopQueue( data[ MainLayout ] );
 					}
 				}
 			}
 
-			for ( index = timers.length; index--; ) {
-				if ( timers[ index ].elem === this && (type == null || timers[ index ].queue === type) ) {
-					timers[ index ].anim.stop( gotoEnd );
+			for ( MainLayout = timers.length; MainLayout--; ) {
+				if ( timers[ MainLayout ].elem === this && (type == null || timers[ MainLayout ].queue === type) ) {
+					timers[ MainLayout ].anim.stop( gotoEnd );
 					dequeue = false;
-					timers.splice( index, 1 );
+					timers.splice( MainLayout, 1 );
 				}
 			}
 
@@ -6656,7 +6656,7 @@ jQuery.fn.extend({
 			type = type || "fx";
 		}
 		return this.each(function() {
-			var index,
+			var MainLayout,
 				data = data_priv.get( this ),
 				queue = data[ type + "queue" ],
 				hooks = data[ type + "queueHooks" ],
@@ -6674,17 +6674,17 @@ jQuery.fn.extend({
 			}
 
 			// Look for any active animations, and finish them
-			for ( index = timers.length; index--; ) {
-				if ( timers[ index ].elem === this && timers[ index ].queue === type ) {
-					timers[ index ].anim.stop( true );
-					timers.splice( index, 1 );
+			for ( MainLayout = timers.length; MainLayout--; ) {
+				if ( timers[ MainLayout ].elem === this && timers[ MainLayout ].queue === type ) {
+					timers[ MainLayout ].anim.stop( true );
+					timers.splice( MainLayout, 1 );
 				}
 			}
 
 			// Look for any animations in the old queue and finish them
-			for ( index = 0; index < length; index++ ) {
-				if ( queue[ index ] && queue[ index ].finish ) {
-					queue[ index ].finish.call( this );
+			for ( MainLayout = 0; MainLayout < length; MainLayout++ ) {
+				if ( queue[ MainLayout ] && queue[ MainLayout ].finish ) {
+					queue[ MainLayout ].finish.call( this );
 				}
 			}
 
@@ -6769,7 +6769,7 @@ jQuery.fx.speeds = {
 };
 
 // Based off of the plugin by Clint Helfers, with permission.
-// http://blindsignals.com/index.php/2009/07/jquery-delay/
+// http://blindsignals.com/MainLayout.php/2009/07/jquery-delay/
 jQuery.fn.delay = function( time, type ) {
 	time = jQuery.fx ? jQuery.fx.speeds[ time ] || time : time;
 	type = type || "fx";
@@ -6794,7 +6794,7 @@ jQuery.fn.delay = function( time, type ) {
 	support.checkOn = input.value !== "";
 
 	// Support: IE<=11+
-	// Must access selectedIndex to make default options select
+	// Must access selectedMainLayout to make default options select
 	support.optSelected = opt.selected;
 
 	// Support: Android<=2.3
@@ -6985,10 +6985,10 @@ jQuery.extend({
 	},
 
 	propHooks: {
-		tabIndex: {
+		tabMainLayout: {
 			get: function( elem ) {
-				return elem.hasAttribute( "tabindex" ) || rfocusable.test( elem.nodeName ) || elem.href ?
-					elem.tabIndex :
+				return elem.hasAttribute( "tabMainLayout" ) || rfocusable.test( elem.nodeName ) || elem.href ?
+					elem.tabMainLayout :
 					-1;
 			}
 		}
@@ -7000,7 +7000,7 @@ if ( !support.optSelected ) {
 		get: function( elem ) {
 			var parent = elem.parentNode;
 			if ( parent && parent.parentNode ) {
-				parent.parentNode.selectedIndex;
+				parent.parentNode.selectedMainLayout;
 			}
 			return null;
 		}
@@ -7008,7 +7008,7 @@ if ( !support.optSelected ) {
 }
 
 jQuery.each([
-	"tabIndex",
+	"tabMainLayout",
 	"readOnly",
 	"maxLength",
 	"cellSpacing",
@@ -7051,7 +7051,7 @@ jQuery.fn.extend({
 				if ( cur ) {
 					j = 0;
 					while ( (clazz = classes[j++]) ) {
-						if ( cur.indexOf( " " + clazz + " " ) < 0 ) {
+						if ( cur.MainLayoutOf( " " + clazz + " " ) < 0 ) {
 							cur += clazz + " ";
 						}
 					}
@@ -7094,7 +7094,7 @@ jQuery.fn.extend({
 					j = 0;
 					while ( (clazz = classes[j++]) ) {
 						// Remove *all* instances
-						while ( cur.indexOf( " " + clazz + " " ) >= 0 ) {
+						while ( cur.MainLayoutOf( " " + clazz + " " ) >= 0 ) {
 							cur = cur.replace( " " + clazz + " ", " " );
 						}
 					}
@@ -7162,7 +7162,7 @@ jQuery.fn.extend({
 			i = 0,
 			l = this.length;
 		for ( ; i < l; i++ ) {
-			if ( this[i].nodeType === 1 && (" " + this[i].className + " ").replace(rclass, " ").indexOf( className ) >= 0 ) {
+			if ( this[i].nodeType === 1 && (" " + this[i].className + " ").replace(rclass, " ").MainLayoutOf( className ) >= 0 ) {
 				return true;
 			}
 		}
@@ -7250,20 +7250,20 @@ jQuery.extend({
 			get: function( elem ) {
 				var value, option,
 					options = elem.options,
-					index = elem.selectedIndex,
-					one = elem.type === "select-one" || index < 0,
+					MainLayout = elem.selectedMainLayout,
+					one = elem.type === "select-one" || MainLayout < 0,
 					values = one ? null : [],
-					max = one ? index + 1 : options.length,
-					i = index < 0 ?
+					max = one ? MainLayout + 1 : options.length,
+					i = MainLayout < 0 ?
 						max :
-						one ? index : 0;
+						one ? MainLayout : 0;
 
 				// Loop through all the selected options
 				for ( ; i < max; i++ ) {
 					option = options[ i ];
 
 					// IE6-9 doesn't update selected after form reset (#2551)
-					if ( ( option.selected || i === index ) &&
+					if ( ( option.selected || i === MainLayout ) &&
 							// Don't return options that are disabled or in a disabled optgroup
 							( support.optDisabled ? !option.disabled : option.getAttribute( "disabled" ) === null ) &&
 							( !option.parentNode.disabled || !jQuery.nodeName( option.parentNode, "optgroup" ) ) ) {
@@ -7298,7 +7298,7 @@ jQuery.extend({
 
 				// Force browsers to behave consistently when non-matching value is set
 				if ( !optionSet ) {
-					elem.selectedIndex = -1;
+					elem.selectedMainLayout = -1;
 				}
 				return values;
 			}
@@ -8248,7 +8248,7 @@ function buildParams( prefix, obj, traditional, add ) {
 				// Treat each array item as a scalar.
 				add( prefix, v );
 			} else {
-				// Item is non-scalar (array or object), encode its numeric index.
+				// Item is non-scalar (array or object), encode its numeric MainLayout.
 				buildParams( prefix + "[" + ( typeof v === "object" ? i : "" ) + "]", v, traditional, add );
 			}
 		});
@@ -8534,7 +8534,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 	var callbackName, overwritten, responseContainer,
 		jsonProp = s.jsonp !== false && ( rjsonp.test( s.url ) ?
 			"url" :
-			typeof s.data === "string" && !( s.contentType || "" ).indexOf("application/x-www-form-urlencoded") && rjsonp.test( s.data ) && "data"
+			typeof s.data === "string" && !( s.contentType || "" ).MainLayoutOf("application/x-www-form-urlencoded") && rjsonp.test( s.data ) && "data"
 		);
 
 	// Handle iff the expected data type is "jsonp" or we have a parameter to set
@@ -8638,7 +8638,7 @@ jQuery.fn.load = function( url, params, callback ) {
 
 	var selector, type, response,
 		self = this,
-		off = url.indexOf(" ");
+		off = url.MainLayoutOf(" ");
 
 	if ( off >= 0 ) {
 		selector = jQuery.trim( url.slice( off ) );
@@ -8723,7 +8723,7 @@ jQuery.offset = {
 		curCSSTop = jQuery.css( elem, "top" );
 		curCSSLeft = jQuery.css( elem, "left" );
 		calculatePosition = ( position === "absolute" || position === "fixed" ) &&
-			( curCSSTop + curCSSLeft ).indexOf("auto") > -1;
+			( curCSSTop + curCSSLeft ).MainLayoutOf("auto") > -1;
 
 		// Need to be able to calculate position if either
 		// top or left is auto and position is either absolute or fixed

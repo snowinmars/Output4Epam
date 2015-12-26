@@ -1,10 +1,10 @@
-﻿using Output4Epam.BLL.Interface;
-using Output4Epam.Entities;
-using System;
-using System.Collections.Generic;
-
-namespace Output4Epam.BLL.Core
+﻿namespace Output4Epam.BLL.Core
 {
+	using System;
+	using System.Collections.Generic;
+	using Output4Epam.BLL.Interface;
+	using Output4Epam.Entities;
+
 	public class RegUserLogic : IRegUserLogic
 	{
 		public bool Add(RegUser item)
@@ -32,9 +32,9 @@ namespace Output4Epam.BLL.Core
 			throw new NotImplementedException();
 		}
 
-		public RegUser Get(Guid Id)
+		public RegUser Get(Guid id)
 		{
-			return Common.Common.RegUserDao.Get(Id);
+			return Common.Common.RegUserDao.Get(id);
 		}
 
 		public IEnumerable<RegUser> GetAll()
@@ -63,9 +63,9 @@ namespace Output4Epam.BLL.Core
 			return Common.Common.RegUserDao.Add(regUser);
 		}
 
-		public bool Remove(Guid Id)
+		public bool Remove(Guid id)
 		{
-			return Common.Common.RegUserDao.Remove(Id);
+			return Common.Common.RegUserDao.Remove(id);
 		}
 
 		public bool RemoveByLogin(string login)

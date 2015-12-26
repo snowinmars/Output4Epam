@@ -1,7 +1,7 @@
-﻿using Output4Epam.Entities;
-
-namespace Output4Epam.BLL.Interface
+﻿namespace Output4Epam.BLL.Interface
 {
+	using Output4Epam.Entities;
+
 	public interface IRegUserLogic : ILogic<RegUser>
 	{
 		bool Auth(string login, string password);
@@ -13,7 +13,9 @@ namespace Output4Epam.BLL.Interface
 		bool IsUserInRole(string username, string roleName);
 
 		bool Registrate(string login, string password);
+
 		bool RemoveByLogin(string login);
+
 		bool ToggleRole(string login, RoleScroll role);
 	}
 }

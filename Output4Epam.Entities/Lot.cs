@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Output4Epam.Entities
+﻿namespace Output4Epam.Entities
 {
+	using System;
+
 	[Flags]
 	public enum LotTypes
 	{
@@ -30,13 +30,13 @@ namespace Output4Epam.Entities
 			this.Id = g;
 		}
 
-		public string Info { get; set; }
-		public DateTime PostDate { get; set; }
-		public Guid Id { get; set; }
 		public int Cost { get; set; }
-		public LotTypes Types { get; set; }
+		public Guid Id { get; set; }
+		public string Info { get; set; }
 		public string Owner { get; set; }
+		public DateTime PostDate { get; set; }
 		public string Sity { get; set; }
 		public string Title { get; set; }
+		public LotTypes Types { get; set; }
 	}
 }

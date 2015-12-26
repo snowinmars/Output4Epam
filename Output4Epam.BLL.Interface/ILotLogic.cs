@@ -1,17 +1,15 @@
-﻿using Output4Epam.Entities;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-
-namespace Output4Epam.BLL.Interface
+﻿namespace Output4Epam.BLL.Interface
 {
+	using System;
+	using System.IO;
+	using Output4Epam.Entities;
+
 	public interface ILotLogic : ILogic<Lot>
 	{
-		byte[] GetImage(Guid id);
+		void AddImage(Guid lotId, Stream image);
 
 		byte[] GetHeader();
 
-		void AddImage(Guid lotId, Stream image);
+		byte[] GetImage(Guid id);
 	}
 }

@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Output4Epam.Entities
+﻿namespace Output4Epam.Entities
 {
+	using System;
+
 	[Flags]
 	public enum RoleScroll
 	{
@@ -23,9 +23,8 @@ namespace Output4Epam.Entities
 		}
 
 		public string Login { get; set; }
+		public int Money { get; set; }
 		public int PasswordHash { get; set; }
 		public RoleScroll Roles { get; set; }
-		public int Money { get; set; }
-		
 	}
 }

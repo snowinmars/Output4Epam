@@ -1,16 +1,16 @@
-﻿using System;
-using System.IO;
-
-namespace Outpu4Epam.DAL.Interface
+﻿namespace Outpu4Epam.DAL.Interface
 {
+	using System;
+	using System.IO;
+
 	public interface ILotDao<Lot> : IDao<Lot>
 	{
-		byte[] GetImage(Guid id);
-
-		byte[] GetImageDefault();
+		void AddImage(Guid lotId, Stream image);
 
 		byte[] GetHeader();
 
-		void AddImage(Guid lotId, Stream image);
+		byte[] GetImage(Guid id);
+
+		byte[] GetImageDefault();
 	}
 }
