@@ -126,7 +126,7 @@
 			{
 				var query = "select * from [dbo].[ImagesTable] where [LotId] = @LotId";
 				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000000"));
+				command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000002"));
 
 				connection.Open();
 				var reader = command.ExecuteReader();

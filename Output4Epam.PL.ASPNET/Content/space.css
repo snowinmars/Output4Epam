@@ -1,0 +1,463 @@
+/*	Colors: blood 		#d11c33		rgb(209,28,51)
+		black_true	#000		rgb(0,0,0)
+		blue_bl		#1d084b		rgb(29,8,75)
+		bj		#d7915d
+		purple		#bb1d94
+
+*/
+
+/*_________________________________________________________________________________________________________________*/
+
+body {
+	background: radial-gradient(at 65% 10%, rgb(209,28,51), rgb(29,8,75), rgb(0,0,0));
+	background-attachment: fixed;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	font-size: 14px;
+	color: white;
+}
+
+/*_________________________________________________________________________________________________________________*/
+
+.tooltip {
+	top: -243px;
+	left: 170px;
+	width: 20px;
+	position: relative;
+	font-size: 12px;
+	cursor: help;
+}
+
+	.tooltip::after {
+		z-index: 999;
+		background: rgba(29, 8, 75, 0.8);
+		border-radius: 8px 8px 8px 0px;
+		box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.9);
+		color: #fff;
+		content: attr(data-tooltip);
+		margin-top: -24px;
+		opacity: 0;
+		padding: 3px 7px;
+		left: 60px;
+		top: -15px;
+		position: absolute;
+		visibility: hidden;
+	}
+
+	.tooltip:hover::after {
+		opacity: 0.8;
+		visibility: visible;
+	}
+
+/*_________________________________________________________________________________________________________________*/
+
+.borderaround {
+	background: radial-gradient(at 80% 20%, rgba(256, 10, 100, 1), rgba(29,8,75,0));
+	border-radius: 10px;
+	color: #fff;
+	padding: 10px;
+	border: 1px solid transparent;
+}
+
+/*_________________________________________________________________________________________________________________*/
+
+.headlogo {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 150px;
+}
+
+/*_________________________________________________________________________________________________________________*/
+
+.helloform {
+	position: absolute;
+	top: 15px;
+	left: 8px;
+	width: 200px;
+	background: radial-gradient(at 100% 20%, rgba(256, 10, 100, 0.7), rgba(29,8,75,0));
+	border-radius: 10px;
+	padding: 7px;
+	color: #fff;
+}
+
+	.helloform input {
+		background: #bb1d94;
+		background: radial-gradient(at 80%, #1d084b, #000);
+		color: #fff;
+		border: 2px solid #fcf0f0;
+		font-weight: normal;
+		font-size: 11px;
+		color: #fff;
+	}
+
+		.helloform input:hover {
+			border: 2px solid;
+			border-color: #bb1d94;
+		}
+
+	.helloform button {
+		background: #bb1d94;
+		background: radial-gradient(at 80%, #1d084b, #000);
+		color: #fff;
+		font-weight: bold;
+		font-size: 15px;
+		margin-top: 10px;
+		color: #fff;
+	}
+
+		.helloform button:hover {
+			border: 2px solid;
+			border-color: #bb1d94;
+			color: #bb1d94;
+		}
+
+/*_________________________________________________________________________________________________________________*/
+
+footer {
+	position: absolute;
+	bottom: 0;
+	margin: 0 40%;
+	width: 100px;
+}
+
+/*_________________________________________________________________________________________________________________*/
+
+.leftmenu {
+	position: absolute;
+	vertical-align: top;
+	width: 194px;
+	left: 8px;
+	margin-top: -40px;
+}
+
+	.leftmenu ul {
+		list-style-type: none;
+		margin-bottom: 15px;
+	}
+
+		.leftmenu ul:first-child {
+			border-bottom: 2px solid #fcf0f0;
+		}
+
+		.leftmenu ul li {
+			margin: 10px 0px;
+		}
+
+			.leftmenu ul li a {
+				text-decoration: none;
+				color: #fcf0f0;
+				font-size: 14px;
+			}
+
+				.leftmenu ul li a:hover:before {
+					content: " >";
+					position: relative;
+					left: -2px;
+				}
+
+/*_________________________________________________________________________________________________________________*/
+
+.topButtons {
+	position: absolute;
+	left: 250px;
+	top: 100px;
+	font-size: 20px;
+	width: 400px;
+}
+
+	.topButtons .topbutton {
+		margin-bottom: 10px;
+		/*padding: 5px 10px;*/
+		cursor: pointer;
+	}
+
+	.topButtons .topbutton:after {
+		content: "/";
+		margin-left: 5px;
+	}
+
+		.topButtons .topbutton:last-child:after {
+			content: "";
+		}
+
+		.topButtons .topbutton:hover {
+			color: #bb1d94;
+		}
+
+	.topButtons .selected {
+		text-decoration: underline;
+	}
+
+		.topButtons .selected:hover {
+			text-decoration: underline;
+		}
+
+/*____________________________________________________SECTION________________________________________________________________*/
+
+.section {
+	margin-left: 230px;
+	position: absolute;
+	left: 0;
+	top: 120px;
+	right: 40px;
+	left: 0;
+	display: inline-block;
+}
+
+	.section .userlist {
+		margin-left: 10px;
+		background: linear-gradient(to right, rgba(29,8,75,0.8), transparent);
+		color: #fff;
+		list-style-type: none;
+	}
+
+		.section .userlist .userlistitem {
+			position: relative;
+			display: block;
+			height: 150px;
+			width: 100%;
+			border-radius: 10px;
+			margin: 10px 0 10px 0;
+		}
+		
+	.section .p {
+		display: inline-block;
+		height: 140px;
+		width: 240px;
+	}
+
+		.section .p .img {
+			height: 90%;
+			width: auto;
+			overflow: inherit;
+			border-radius: 10px;
+			cursor: pointer;
+			border: 2px solid transparent;
+		}
+
+			.section .p .img:hover {
+				border: 2px solid #bb1d94;
+			}
+
+	.section .title,
+	.section .info,
+	.section .city,
+	.section .cost,
+	.section .postDate,
+	.section .owner,
+	.section .button,
+	.section .categories {
+		display: inline-block;
+		position: absolute;
+	}
+
+	.section .title {
+		top: 0px;
+		left: 250px;
+		font-size: 20px;
+	}
+
+		.section .title:hover {
+			color: #bb1d94;
+		}
+
+	.section .info {
+		top: 35px;
+		left: 250px;
+		font-size: 12px;
+	}
+
+		.section .info .role:after {
+			content: ", ";
+		}
+
+		.section .info .role:last-child:after {
+			content: "";
+		}
+
+	.section .city {
+		top: 120px;
+		left: 330px;
+		font-size: 12px;
+	}
+
+	.section .cost {
+		top: 50px;
+		left: 250px;
+		font-size: 23px;
+		cursor: pointer;
+	}
+
+		.section .cost:hover {
+			color: #bb1d94;
+		}
+
+	.section .postDate {
+		top: 120px;
+		left: 250px;
+		cursor: help;
+	}
+
+	.section .owner {
+		top: 120px;
+		left: 400px;
+		margin-right: 50px;
+		font-size: 12px;
+	}
+
+	.section .button {
+		top: -320px;
+		left: 460px;
+		width: 120px;
+		font-size: 12px;
+		cursor: pointer;
+		text-align: center;
+		border: 2px solid #991d94;
+		border-radius: 10px;
+		padding: 5px 0 5px 0;
+	}
+	 
+		.section .button:hover {
+			color: #bb1d94;
+		}
+
+	.section .removeuser {
+		top: 0px;
+		left: -30px;
+	}
+
+	.section .banuser {
+		top: 0px;
+		left: 100px;
+	}
+
+	.section .togglevipuser {
+		top: 40px;
+		left: -30px;
+	}
+
+	.section .toggleadminuser {
+		top: 40px;
+		left: 100px;
+	}
+
+	.section .add {
+		top: 250px;
+		left: 0px;
+	}
+
+	.section .categories { /* Теги */
+		display: inline-block;
+		background-color: #1d084b;
+		top: 120px;
+		right: 0px;
+		margin: 10px;
+		font-size: 12px;
+	}
+
+		.section .categories span {
+			border-radius: 2px;
+			padding: 3px 5px;
+			margin-right: 5px;
+		}
+
+/*_________________________________________________ADD LOT_____________________________________________________________*/
+
+.addLot {
+	left: 220px;
+	margin: 15px;
+}
+
+	.addLot input {
+		display: block;
+		margin-top: 5px;
+	}
+
+	.addLot .checkboxes {
+		position: absolute;
+		left: 200px;
+	}
+
+		.addLot .checkboxes .checkboxitem {
+			margin: 10px;
+		}
+
+			.addLot input {
+		background: #bb1d94;
+		background: radial-gradient(at 80%, #1d084b, #000);
+		color: #fff;
+		border: 2px solid #fcf0f0;
+		font-weight: normal;
+		font-size: 11px;
+		color: #fff;
+	}
+
+		.addLot input:hover {
+			border: 2px solid;
+			border-color: #bb1d94;
+		}
+/*________________________________________*/
+
+.mypage .title {
+	position: absolute;
+	left: 10px;
+}
+
+.mypage .info {
+	position: absolute;
+	left: 10px;
+}
+
+/*________________________________________*/
+
+.checkboxes {
+	list-style: none;
+}
+
+	.checkboxes .checkbox {
+		display: inline-block;
+	}
+
+/*________________________________________*/
+
+.popup {
+	display: none;
+	position: absolute;
+	width: 200px;
+	background-color: black;
+	left: 210px;
+	z-index: 999;
+	border: 1px solid white;
+}
+
+	.popup:hover { /* due to brouser may not be able to cathc focus on .popup in a flash */
+		display: block;
+	}
+
+	.popup:focus {
+		display: block;
+	}
+
+.popuplink:focus + div {
+	display: block;
+}
+
+.popup p {
+	padding: 5px 5px 5px 10px;
+	border-top: 1px solid white;
+	margin: 0;
+}
+
+	.popup p:first-child {
+		border-top: 1px solid transparent;
+	}
+
+	.popup p:hover:before {
+		content: " >";
+		position: relative;
+		left: -2ex;
+	}

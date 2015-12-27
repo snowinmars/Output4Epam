@@ -104,6 +104,7 @@
   <ItemGroup>
     <Content Include="Content\oldschoolblack.css" />
     <Content Include="Content\oldschoolwhite.css" />
+    <Content Include="Content\space.css" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <Content Include="Default.cshtml" />
