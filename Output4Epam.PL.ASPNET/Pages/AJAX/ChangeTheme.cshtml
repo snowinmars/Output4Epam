@@ -1,0 +1,17 @@
+﻿@using Output4Epam.Entities
+@using Output4Epam.Providers
+@{
+	if (IsPost)
+	{
+
+		string login = Request["Login"];
+		string type = Request["Type"];
+
+		RegUser regUser = LogicProvider.RegUserLogic.GetByLogin(login);
+		regUser.ColorSheme = type;
+		LogicProvider.RegUserLogic.Set(regUser);
+		Response.Write(type);
+	}
+	Response.Redirect("/Pages/StructureElements/MyPage.cshtml");
+	return;
+}

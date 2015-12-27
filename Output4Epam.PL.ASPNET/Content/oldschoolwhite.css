@@ -176,6 +176,38 @@ footer {
 			border: 1px solid black;
 		}
 
+	.section .mypagelist {
+	list-style-type: none;
+	padding: 0;
+	}
+
+		.section .mypagelist .mypagelistitem {
+			position: relative;
+			display: block;
+			height: 100px;
+			width: 100%;
+			margin: 10px 0 0 20px;
+			background-color: white;
+			border: 1px solid black;
+		}
+
+		.section .mypagelist .colorshemeradioitem {
+			height: auto;
+		}
+
+			.section .mypagelist .colorshemeradioitem input {
+				position: relative;
+				top: 8px;
+			}
+
+			.section .mypagelist .colorshemeradioitem label {
+				display: block;
+				position: relative;
+				left: 30px;
+				top: -12px;
+			}
+
+
 	.section .p {
 		display: inline-block;
 		height: 180px;

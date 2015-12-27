@@ -5,8 +5,6 @@
 
 	public class Output4EpamRoleProvider : RoleProvider
 	{
-		private string applicationName;
-
 		public override string ApplicationName
 		{
 			get

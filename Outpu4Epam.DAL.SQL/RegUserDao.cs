@@ -14,13 +14,22 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "insert into [dbo].[RegUserTable] ([Id],[Login],[PasswordHash],[Role],[Money]) values (@Id,@Login,@PasswordHash,@Role,@Money)";
+				var query = "insert into [dbo].[RegUserTable] ([Id],[Login],[PasswordHash],[Role],[Money],[ColorSheme]) values (@Id,@Login,@PasswordHash,@Role,@Money,@ColorSheme)";
 				var command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@Id", Guid.NewGuid());
 				command.Parameters.AddWithValue("@Login", item.Login);
 				command.Parameters.AddWithValue("@PasswordHash", item.PasswordHash);
 				command.Parameters.AddWithValue("@Role", item.Roles);
 				command.Parameters.AddWithValue("@Money", item.Money);
+				
+				if (item.ColorSheme == String.Empty)
+				{
+					command.Parameters.AddWithValue("@ColorSheme", DBNull.Value);
+				}
+				else
+				{
+					command.Parameters.AddWithValue("@ColorSheme", item.ColorSheme);
+				}
 
 				connection.Open();
 				var reader = command.ExecuteNonQuery();
@@ -53,7 +62,8 @@
 					regUser = new RegUser((string)reader["Login"],
 								(int)reader["PasswordHash"],
 								(RoleScroll)reader["Role"],
-								(int)reader["Money"]);
+								(int)reader["Money"],
+								(string)reader["ColorSheme"]);
 				}
 			}
 
@@ -76,10 +86,17 @@
 
 				while (reader.Read())
 				{
+					string colorSheme = "";
+					if (reader["ColorSheme"] != DBNull.Value)
+					{
+						colorSheme = (string)reader["ColorSheme"];
+					}
+
 					userList.Add(new RegUser((string)reader["Login"],
 								(int)reader["PasswordHash"],
 								(RoleScroll)reader["Role"],
-								(int)reader["Money"]));
+								(int)reader["Money"],
+								colorSheme));
 				}
 			}
 
@@ -102,10 +119,17 @@
 
 				while (reader.Read())
 				{
+					string colorSheme = "";
+					if (reader["ColorSheme"] != DBNull.Value)
+					{
+						colorSheme = (string)reader["ColorSheme"];
+					}
+
 					regUser = new RegUser((string)reader["Login"],
 								(int)reader["PasswordHash"],
 								(RoleScroll)reader["Role"],
-								(int)reader["Money"]);
+								(int)reader["Money"],
+								colorSheme);
 				}
 			}
 
@@ -206,10 +230,13 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "update [dbo].[RegUserTable] set [dbo].[RegUserTable].[Role] = @Role where [dbo].[RegUserTable].[Login] = @Login";
+				var query = "update [dbo].[RegUserTable] set [Login] = @login , [PasswordHash] = @passwordHash , [Role] = @Role , [Money] = @Money , [ColorSheme] = @ColorSheme where [dbo].[RegUserTable].[Login] = @Login";
 				var command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@Login", item.Login);
+				command.Parameters.AddWithValue("@PasswordHash", item.PasswordHash);
 				command.Parameters.AddWithValue("@Role", item.Roles);
+				command.Parameters.AddWithValue("@Money", item.Money);
+				command.Parameters.AddWithValue("@ColorSheme", item.ColorSheme);
 
 				connection.Open();
 				var reader = command.ExecuteNonQuery();

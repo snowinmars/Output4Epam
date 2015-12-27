@@ -171,9 +171,9 @@
 
 	// TODO : this f to another file
 	$(".add").click(add);
-	var group = $(".checkbox");
 
 	function add(e) {
+		var group = $(".checkbox");
 		var form = $("form");
 		var i = 0;
 		form.append('<input type="text" name="Types" value="">');
@@ -189,4 +189,32 @@
 		form.submit();
 		type.remove();
 	}
+
+	$("[name=settheme]").click(settheme);
+
+	function settheme(e) {
+		var target = $(e.target);
+		var group = $(".radiobox");
+		var i = 0;
+		var datastr = "";
+
+		for (i = 0; i < group.length; ++i) {
+			if (group[i].checked) {
+				break;
+			}
+		}
+
+		datastr = {
+			"Type": $(group[i]).data("shemename"),
+			"Login": target.closest("ul").data("userlogin"),
+		};
+
+		$.ajax({
+			url: "/Pages/AJAX/ChangeTheme.cshtml",
+			type: "post",
+			data: datastr,
+		}).success(function (r) {
+			loadjscssfile("/Content/" + $(group[i]).data("shemename") + ".css", "css");
+		});
+	};
 })();

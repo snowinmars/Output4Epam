@@ -1,4 +1,5 @@
 ﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
 <!DOCTYPE html>
 
 <html>
@@ -6,7 +7,19 @@
 	<meta name="viewport" content="width=device-width" />
 	<meta charset="utf-8" />
 	<title>Yay</title>
-	<link id="stylesheet" name="stylesheet" href="~/Content/OldSchoolBlack.css" rel="stylesheet" />
+
+	@{
+		string colorShemeHref = "/Content/oldschoolblack.css";
+		if (User.Identity.IsAuthenticated)
+		{
+			RegUser user = LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
+			if (user.ColorSheme != String.Empty)
+			{
+				colorShemeHref = "/Content/" + user.ColorSheme + ".css";
+			}
+		}
+	}
+	<link id="stylesheet" name="stylesheet" href=@colorShemeHref rel="stylesheet" />
 </head>
 <body>
 	<!-- TODO to ask logo? -->

@@ -10,7 +10,7 @@
 	{
 		public bool Add(RegUser item)
 		{
-			string regexQuery = @"\b[a-zA-Z_]\b";
+			string regexQuery = @"[a-zA-Z_]";
 			Regex regex = new Regex(regexQuery);
 			Match match = regex.Match(item.Login);
 
@@ -71,7 +71,7 @@
 
 		public bool Registrate(string login, string password)
 		{
-			string regexQuery = @"\b[a-zA-Z_]\b";
+			string regexQuery = @"[a-zA-Z_]";
 			Regex regex = new Regex(regexQuery);
 			Match match = regex.Match(login);
 
@@ -83,7 +83,7 @@
 
 
 
-			regexQuery = @"\b[a-zA-Z0-9`~!@#$%^&*()-=_+\|/?.>,<':;]\b";
+			regexQuery = @"[a-zA-Z0-9`~!@#$%^&*()-=_+\|/?.>,<':;]";
 			regex = new Regex(regexQuery);
 			match = regex.Match(password);
 
@@ -111,7 +111,7 @@
 
 		public void Set(RegUser item)
 		{
-			string regexQuery = @"\b[a-zA-Z_]\b";
+			string regexQuery = @"[a-zA-Z_]";
 			Regex regex = new Regex(regexQuery);
 			Match match = regex.Match(item.Login);
 
@@ -122,7 +122,7 @@
 				throw new ArgumentException("Uncorrect parameters");
 			}
 
-			throw new NotImplementedException();
+			Common.Common.RegUserDao.Set(item);
 		}
 
 		public bool ToggleRole(string login, RoleScroll role)
