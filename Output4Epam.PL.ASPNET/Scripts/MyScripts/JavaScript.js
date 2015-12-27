@@ -31,12 +31,14 @@
 
 	function removeUser(e) {
 		var target = $(e.target);
-		var login = target.closest("li").attr("data-login");
+		var login = target.closest("li").data("login");
 
 		$.ajax({
 			url: "/Pages/AJAX/DeleteUser.cshtml",
 			type: "post",
-			data: login[1],
+			data: {
+				"Login": login,
+			}
 		}).success(function () {
 			target.closest("li").remove();
 		});
@@ -197,6 +199,7 @@
 		var group = $(".radiobox");
 		var i = 0;
 		var datastr = "";
+		var headimg;
 
 		for (i = 0; i < group.length; ++i) {
 			if (group[i].checked) {
@@ -206,7 +209,7 @@
 
 		datastr = {
 			"Type": $(group[i]).data("shemename"),
-			"Login": target.closest("ul").data("userlogin"),
+			"Login": target.siblings("ul").data("userlogin"),
 		};
 
 		$.ajax({
@@ -215,6 +218,10 @@
 			data: datastr,
 		}).success(function (r) {
 			loadjscssfile("/Content/" + $(group[i]).data("shemename") + ".css", "css");
+			//headimg = $("header").children("a").children("img");
+			//tmp = headimg;
+			//headimg.remove();
+			//$("header").append(tmp);
 		});
 	};
 })();

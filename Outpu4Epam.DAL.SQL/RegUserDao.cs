@@ -21,7 +21,7 @@
 				command.Parameters.AddWithValue("@PasswordHash", item.PasswordHash);
 				command.Parameters.AddWithValue("@Role", item.Roles);
 				command.Parameters.AddWithValue("@Money", item.Money);
-				
+
 				if (item.ColorSheme == String.Empty)
 				{
 					command.Parameters.AddWithValue("@ColorSheme", DBNull.Value);
@@ -156,7 +156,7 @@
 					RoleScroll x = (RoleScroll)reader["Role"];
 					foreach (var item in x.ToString().Split(','))
 					{
-						asd.Add(item);
+						asd.Add(item.Trim());
 					}
 				}
 			}

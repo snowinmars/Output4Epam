@@ -2,10 +2,11 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text.RegularExpressions;
 	using Output4Epam.BLL.Interface;
 	using Output4Epam.Entities;
-	using System.Text.RegularExpressions;
-	using System.Linq;
+
 	public class RegUserLogic : IRegUserLogic
 	{
 		public bool Add(RegUser item)
@@ -81,8 +82,6 @@
 				throw new ArgumentException("Uncorrect parameters");
 			}
 
-
-
 			regexQuery = @"[a-zA-Z0-9`~!@#$%^&*()-=_+\|/?.>,<':;]";
 			regex = new Regex(regexQuery);
 			match = regex.Match(password);
@@ -92,8 +91,6 @@
 			{
 				throw new ArgumentException("Uncorrect parameters");
 			}
-
-
 
 			RegUser regUser = new RegUser(login, password.GetHashCode(), RoleScroll.User, 0);
 			return Common.Common.RegUserDao.Add(regUser);

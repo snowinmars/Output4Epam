@@ -75,12 +75,12 @@ S
 					<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.PostDate.ToString("dd.MM.yyyy")</p>
 					<p class="owner">posted by @(item.Owner)</p>
 					<p class="button delete" id="@item.Id">Удалить</p>
+						<p class="categories">
 					@foreach (var type in @item.Types.ToString().Split(','))
 					{
-						<p class="categories">
 							<span>@String.Join("", "#", type)</span>
-						</p>
 					}
+						</p>
 				</li>
 			}
 		</ul>

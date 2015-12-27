@@ -7,7 +7,7 @@
 	{
 		void AddImage(Guid lotId, Stream image);
 
-		byte[] GetHeader();
+		byte[] GetHeader(string colorsheme);
 
 		byte[] GetImage(Guid id);
 

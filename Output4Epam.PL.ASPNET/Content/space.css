@@ -175,10 +175,10 @@ footer {
 		cursor: pointer;
 	}
 
-	.topButtons .topbutton:after {
-		content: "/";
-		margin-left: 5px;
-	}
+		.topButtons .topbutton:after {
+			content: "/";
+			margin-left: 5px;
+		}
 
 		.topButtons .topbutton:last-child:after {
 			content: "";
@@ -223,10 +223,10 @@ footer {
 			border-radius: 10px;
 			margin: 10px 0 10px 0;
 		}
-		
-			.section .mypagelist {
-	list-style-type: none;
-	padding: 0;
+
+	.section .mypagelist {
+		list-style-type: none;
+		padding: 0;
 	}
 
 		.section .mypagelist .mypagelistitem {
@@ -333,13 +333,13 @@ footer {
 
 	.section .owner {
 		top: 120px;
-		left: 400px;
+		left: 600px;
 		margin-right: 50px;
 		font-size: 12px;
 	}
 
 	.section .button {
-		top: -320px;
+		bottom: 0;
 		left: 460px;
 		width: 120px;
 		font-size: 12px;
@@ -348,8 +348,10 @@ footer {
 		border: 2px solid #991d94;
 		border-radius: 10px;
 		padding: 5px 0 5px 0;
+
+		
 	}
-	 
+
 		.section .button:hover {
 			color: #bb1d94;
 		}
@@ -415,7 +417,7 @@ footer {
 			margin: 10px;
 		}
 
-			.addLot input {
+	.addLot input {
 		background: #bb1d94;
 		background: radial-gradient(at 80%, #1d084b, #000);
 		color: #fff;

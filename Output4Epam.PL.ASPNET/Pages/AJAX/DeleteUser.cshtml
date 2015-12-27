@@ -4,7 +4,7 @@
 @{
 	if (IsPost)
 	{
-		string login = Request.Form.ToString();
+		string login = Request["Login"];
 
 		LogicProvider.RegUserLogic.RemoveByLogin(login);
 	}

@@ -3,9 +3,10 @@
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
+	using System.Linq;
 	using Output4Epam.BLL.Interface;
 	using Output4Epam.Entities;
-	using System.Linq;
+
 	public class LotLogic : ILotLogic
 	{
 		public bool Add(Lot item)
@@ -50,9 +51,9 @@
 			return Common.Common.LotDao.GetAll().ToList();
 		}
 
-		public byte[] GetHeader()
+		public byte[] GetHeader(string colorsheme)
 		{
-			return Common.Common.LotDao.GetHeader();
+			return Common.Common.LotDao.GetHeader(colorsheme);
 		}
 
 		public byte[] GetImage(Guid id)

@@ -1,7 +1,31 @@
 ﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
 
 @{
-	byte[] imageArray = LogicProvider.LotLogic.GetHeader();
+
+	string colorsheme = default(string);
+
+	if (User.Identity.IsAuthenticated)
+	{
+		RegUser regUser = LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
+
+		if (regUser.ColorSheme == String.Empty)
+		{
+			colorsheme = "oldschoolblack";
+		}
+		else
+		{
+			colorsheme = regUser.ColorSheme;
+		}
+
+	}
+	else
+	{
+		colorsheme = "oldschoolblack";
+	}
+
+	byte[] imageArray = LogicProvider.LotLogic.GetHeader(colorsheme);
+
 	Response.WriteBinary(imageArray, "image/png");
 	return;
 }

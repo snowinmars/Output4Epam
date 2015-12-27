@@ -3,6 +3,9 @@
 
 @{
 	Layout = "~/Pages/Index.cshtml";
+
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "Admin");
+
 	string order = Request["orderby"];
 	string filter = Request["filterby"];
 	IEnumerable<Lot> collection = default(IEnumerable<Lot>);
@@ -60,12 +63,16 @@
 				<p class="cost">@(item.Cost) руб.</p>
 				<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.PostDate.ToString("dd.MM.yyyy")</p>
 				<p class="owner">posted by @(item.Owner)</p>
-				@foreach (var type in @item.Types.ToString().Split(','))
+				@if (isAdmin)
 				{
-					<p class="categories">
-						<span>@String.Join("", "#", type)</span>
-					</p>
+					<p class="button delete" id="@item.Id">Удалить</p>
 				}
+				<p class="categories">
+					@foreach (var type in @item.Types.ToString().Split(','))
+				{
+						<span>@String.Join("", "#", type)</span>
+				}
+				</p>
 			</li>
 		}
 	</ul>

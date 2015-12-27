@@ -45,7 +45,6 @@
 	background-color: #fff;
 	width: 100%;
 	height: 120px;
-	display: none;
 }
 
 /*________________________________________*/
@@ -177,8 +176,8 @@ footer {
 		}
 
 	.section .mypagelist {
-	list-style-type: none;
-	padding: 0;
+		list-style-type: none;
+		padding: 0;
 	}
 
 		.section .mypagelist .mypagelistitem {
@@ -206,7 +205,6 @@ footer {
 				left: 30px;
 				top: -12px;
 			}
-
 
 	.section .p {
 		display: inline-block;

@@ -9,6 +9,13 @@
 	<title>Yay</title>
 
 	@{
+		bool banned = false;
+
+		if (LogicProvider.RegUserLogic.GetRolesForUser(User.Identity.Name).Contains(RoleScroll.Ban.ToString()))
+		{
+			banned = true;
+		}
+
 		string colorShemeHref = "/Content/oldschoolblack.css";
 		if (User.Identity.IsAuthenticated)
 		{
@@ -19,6 +26,12 @@
 			}
 		}
 	}
+
+	@if (banned)
+	{
+		Response.Redirect("/Pages/ErrorPages/403.cshtml");
+	}
+
 	<link id="stylesheet" name="stylesheet" href=@colorShemeHref rel="stylesheet" />
 </head>
 <body>

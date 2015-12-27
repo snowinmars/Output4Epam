@@ -118,7 +118,7 @@
 			return lotList;
 		}
 
-		public byte[] GetHeader()
+		public byte[] GetHeader(string colorsheme)
 		{
 			string connectionString = Common.ConnectionString;
 
@@ -126,7 +126,24 @@
 			{
 				var query = "select * from [dbo].[ImagesTable] where [LotId] = @LotId";
 				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000002"));
+
+				switch (colorsheme)
+				{
+					case "testing":
+						command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000000"));
+						break;
+					case "space":
+						command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000002"));
+						break;
+					case "oldschoolwhite":
+						command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000003"));
+						break;
+					case "oldschoolblack":
+						command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000004"));
+						break;
+					default:
+						break;
+				}
 
 				connection.Open();
 				var reader = command.ExecuteReader();

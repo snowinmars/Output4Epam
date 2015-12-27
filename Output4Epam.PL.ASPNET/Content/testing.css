@@ -177,9 +177,9 @@ footer {
 			border: 1px solid white;
 		}
 
-			.section .mypagelist {
-	list-style-type: none;
-	padding: 0;
+	.section .mypagelist {
+		list-style-type: none;
+		padding: 0;
 	}
 
 		.section .mypagelist .mypagelistitem {
@@ -237,7 +237,7 @@ footer {
 	.section .title {
 		font-size: 4ex;
 		text-decoration: underline;
-		cursor: pointer;
+		cursor: pointer; /* TODO to ask wtf*/
 	}
 
 		.section .title:hover {

@@ -134,6 +134,7 @@
     <Content Include="Pages\ErrorPageLayout.cshtml" />
     <Content Include="Pages\ErrorPages\501.cshtml" />
     <Content Include="Pages\AJAX\ChangeTheme.cshtml" />
+    <Content Include="Pages\ErrorPages\403.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
