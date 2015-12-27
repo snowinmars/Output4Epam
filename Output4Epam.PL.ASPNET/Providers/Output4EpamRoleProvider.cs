@@ -11,12 +11,12 @@
 		{
 			get
 			{
-				return "Output4Epam";
+				throw new NotImplementedException();
 			}
 
 			set
 			{
-				this.applicationName = value; // TODO to ask
+				throw new NotImplementedException(); // TODO to ask
 			}
 		}
 

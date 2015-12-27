@@ -5,6 +5,7 @@
 	using Output4Epam.BLL.Interface;
 	using Output4Epam.Entities;
 	using System.Text.RegularExpressions;
+	using System.Linq;
 	public class RegUserLogic : IRegUserLogic
 	{
 		public bool Add(RegUser item)
@@ -50,7 +51,7 @@
 
 		public IEnumerable<RegUser> GetAll()
 		{
-			return Common.Common.RegUserDao.GetAll();
+			return Common.Common.RegUserDao.GetAll().ToList();
 		}
 
 		public RegUser GetByLogin(string login)

@@ -3,6 +3,7 @@
 @{
 	if (IsPost)
 	{
+		LoggerProvider.Log.Fatal("Some message");
 
 		string login = Request["login"];
 		string password = Request["password"];

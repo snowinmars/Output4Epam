@@ -5,7 +5,7 @@
 	using System.IO;
 	using Output4Epam.BLL.Interface;
 	using Output4Epam.Entities;
-
+	using System.Linq;
 	public class LotLogic : ILotLogic
 	{
 		public bool Add(Lot item)
@@ -25,7 +25,12 @@
 
 		public void AddImage(Guid lotId, Stream image)
 		{
-			// TODO stream size
+			long length = image.Length;
+
+			if (length > 2097152) // 2 MiB
+			{
+				throw new ArgumentException("Too big file");
+			}
 
 			Common.Common.LotDao.AddImage(lotId, image);
 		}
@@ -42,14 +47,12 @@
 
 		public IEnumerable<Lot> GetAll()
 		{
-			return Common.Common.LotDao.GetAll(); // TODO make copy
+			return Common.Common.LotDao.GetAll().ToList();
 		}
 
 		public byte[] GetHeader()
 		{
-			byte[] a = Common.Common.LotDao.GetHeader();
-
-			return a;
+			return Common.Common.LotDao.GetHeader();
 		}
 
 		public byte[] GetImage(Guid id)

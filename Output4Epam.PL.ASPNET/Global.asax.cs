@@ -1,11 +1,13 @@
 ﻿namespace Output4Epam
 {
+	using Providers;
 	using System;
 
 	public class Global : System.Web.HttpApplication
 	{
 		protected void Application_Start(object sender, EventArgs e)
 		{
+			LoggerProvider.InitLogger();
 		}
 
 		protected void Session_Start(object sender, EventArgs e)
