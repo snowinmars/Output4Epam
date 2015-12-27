@@ -1,0 +1,40 @@
+﻿@using Output4Epam.Providers;
+@using Output4Epam.Entities;
+@{
+	Layout = "~/Pages/Index.cshtml";
+	var asd = from item in LogicProvider.LotLogic.GetAll()
+		  select item.Types;
+	int count = asd.Count();
+
+	Dictionary<string, int> qwe = new Dictionary<string, int>();
+
+	var gfh = Enum.GetValues(typeof(LotTypes));
+
+	foreach (var item in gfh)
+		{
+		qwe.Add(item.ToString(), 0);
+	}
+
+	foreach (var item in asd)
+	{
+		foreach (var role in item.ToString().Split(','))
+		{
+			++qwe[role.Trim()];
+		}
+	}
+}
+
+<section class="section">
+	<table>
+		<tbody>
+			@foreach (var item in qwe)
+			{
+				<tr>
+					<th scope="row">@item.Key</th>
+					<td>@item.Value</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<div class="chart" id="holder"></div>
+</section>

@@ -135,6 +135,7 @@
     <Content Include="Pages\ErrorPages\501.cshtml" />
     <Content Include="Pages\AJAX\ChangeTheme.cshtml" />
     <Content Include="Pages\ErrorPages\403.cshtml" />
+    <Content Include="Pages\StructureElements\Stats.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -149,6 +150,9 @@
   <ItemGroup>
     <Content Include="Scripts\MyScripts\JavaScript.js" />
     <Content Include="Content\testing.css" />
+    <Content Include="Scripts\pie.js" />
+    <Content Include="Scripts\raphael-min.js" />
+    <Content Include="Scripts\raphael.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

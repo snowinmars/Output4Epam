@@ -210,12 +210,13 @@ footer {
 
 	.section .userlist {
 		margin-left: 10px;
-		background: linear-gradient(to right, rgba(29,8,75,0.8), transparent);
 		color: #fff;
 		list-style-type: none;
 	}
 
 		.section .userlist .userlistitem {
+		background-image: linear-gradient(to right, rgba(29,8,75,0.8), transparent);
+
 			position: relative;
 			display: block;
 			height: 150px;
