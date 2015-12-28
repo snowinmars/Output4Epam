@@ -23,6 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outpu4Epam.DAL.Interface", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outpu4Epam.DAL.SQL", "Outpu4Epam.DAL.SQL\Outpu4Epam.DAL.SQL.csproj", "{122BE1BE-906A-408A-843C-11B983C9B171}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{4A493DF1-14D0-4BB5-B484-ED9DEB972996}"
+	ProjectSection(SolutionItems) = preProject
+		read.me = read.me
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

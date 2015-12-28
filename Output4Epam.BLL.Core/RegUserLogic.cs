@@ -9,22 +9,34 @@
 
 	public class RegUserLogic : IRegUserLogic
 	{
-		public bool Add(RegUser item)
+		/// <summary>
+		/// Add item to database.
+		/// </summary>
+		/// <param name="regUser"></param>
+		/// <returns></returns>
+		public bool Add(RegUser regUser)
 		{
-			string regexQuery = @"[a-zA-Z_]";
+			string regexQuery = Common.Common.LoginRegex;
 			Regex regex = new Regex(regexQuery);
-			Match match = regex.Match(item.Login);
+			Match match = regex.Match(regUser.Login);
 
-			if ((item.Login.Length > 50) ||
-				(item.Money < 0) ||
+			if ((regUser.Login.Length > Common.Common.MaxLoginLength) ||
+				(regUser.Login.Length < Common.Common.MinLoginLength) ||
+				(regUser.Money < 0) ||
 				(!match.Success))
 			{
 				throw new ArgumentException("Uncorrect parameters");
 			}
 
-			return Common.Common.RegUserDao.Add(item);
+			return Common.Common.RegUserDao.Add(regUser);
 		}
 
+		/// <summary>
+		/// Check, is there any user with this login and password.
+		/// </summary>
+		/// <param name="login"></param>
+		/// <param name="password"></param>
+		/// <returns></returns>
 		public bool Auth(string login, string password)
 		{
 			int hash = password.GetHashCode();
@@ -45,48 +57,81 @@
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Get user by its Id. If no such user will be found, method return default(RegUser)
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public RegUser Get(Guid id)
 		{
 			return Common.Common.RegUserDao.Get(id);
 		}
 
+		/// <summary>
+		/// Get all users from database
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerable<RegUser> GetAll()
 		{
 			return Common.Common.RegUserDao.GetAll().ToList();
 		}
 
+		/// <summary>
+		/// Get user by its login. If no such user will be found, method return default(RegUser)
+		/// </summary>
+		/// <param name="login"></param>
+		/// <returns></returns>
 		public RegUser GetByLogin(string login)
 		{
 			return Common.Common.RegUserDao.GetByLogin(login);
 		}
 
-		public string[] GetRolesForUser(string username)
+		/// <summary>
+		/// Get all roles, that this user has.
+		/// </summary>
+		/// <param name="login"></param>
+		/// <returns></returns>
+		public string[] GetRolesForUser(string login)
 		{
-			return Common.Common.RegUserDao.GetRolesForUser(username);
+			return Common.Common.RegUserDao.GetRolesForUser(login);
 		}
 
-		public bool IsUserInRole(string username, string roleName)
+		/// <summary>
+		/// Checks, is there any user with this role.
+		/// </summary>
+		/// <param name="login"></param>
+		/// <param name="roleName"></param>
+		/// <returns></returns>
+		public bool IsUserInRole(string login, string roleName)
 		{
-			return Common.Common.RegUserDao.IsUserInRole(username, roleName);
+			return Common.Common.RegUserDao.IsUserInRole(login, roleName);
 		}
 
+		/// <summary>
+		/// Registrate new user with this login and password.
+		/// </summary>
+		/// <param name="login"></param>
+		/// <param name="password"></param>
+		/// <returns></returns>
 		public bool Registrate(string login, string password)
 		{
-			string regexQuery = @"[a-zA-Z_]";
+			string regexQuery = Common.Common.LoginRegex;
 			Regex regex = new Regex(regexQuery);
 			Match match = regex.Match(login);
 
-			if ((login.Length > 50) ||
+			if ((login.Length > Common.Common.MaxLoginLength) ||
+				(login.Length < Common.Common.MinLoginLength) ||
 				(!match.Success))
 			{
 				throw new ArgumentException("Uncorrect parameters");
 			}
 
-			regexQuery = @"[a-zA-Z0-9`~!@#$%^&*()-=_+\|/?.>,<':;]";
+			regexQuery = Common.Common.PasswordRegex;
 			regex = new Regex(regexQuery);
 			match = regex.Match(password);
 
-			if ((password.Length > 100) ||
+			if ((password.Length > Common.Common.MaxPasswordLength) ||
+				(password.Length < Common.Common.MinPasswordLength) ||
 				(!match.Success))
 			{
 				throw new ArgumentException("Uncorrect parameters");
@@ -96,32 +141,53 @@
 			return Common.Common.RegUserDao.Add(regUser);
 		}
 
+		/// <summary>
+		/// Remove user by its Id.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public bool Remove(Guid id)
 		{
 			return Common.Common.RegUserDao.Remove(id);
 		}
 
+		/// <summary>
+		/// Remove user by its login.
+		/// </summary>
+		/// <param name="login"></param>
+		/// <returns></returns>
 		public bool RemoveByLogin(string login)
 		{
 			return Common.Common.RegUserDao.RemoveByLogin(login);
 		}
 
-		public void Set(RegUser item)
+		/// <summary>
+		/// Update user. Well, I don't know, what I wanna say with this. Not implemented yet
+		/// </summary>
+		/// <param name="regUser"></param>
+		public void Set(RegUser regUser)
 		{
-			string regexQuery = @"[a-zA-Z_]";
+			string regexQuery = Common.Common.LoginRegex;
 			Regex regex = new Regex(regexQuery);
-			Match match = regex.Match(item.Login);
+			Match match = regex.Match(regUser.Login);
 
-			if ((item.Login.Length > 50) ||
-				(item.Money < 0) ||
+			if ((regUser.Login.Length > Common.Common.MaxLoginLength) ||
+				(regUser.Login.Length < Common.Common.MinLoginLength) ||
+				(regUser.Money < 0) ||
 				(!match.Success))
 			{
 				throw new ArgumentException("Uncorrect parameters");
 			}
 
-			Common.Common.RegUserDao.Set(item);
+			Common.Common.RegUserDao.Set(regUser);
 		}
 
+		/// <summary>
+		/// Toggle role for this user (on/off).
+		/// </summary>
+		/// <param name="login"></param>
+		/// <param name="role"></param>
+		/// <returns></returns>
 		public bool ToggleRole(string login, RoleScroll role)
 		{
 			return Common.Common.RegUserDao.ToggleRole(login, role);

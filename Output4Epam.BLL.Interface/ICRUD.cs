@@ -4,12 +4,31 @@
 
 	public interface ICRUD<T>
 	{
-		bool Add(T item); // createc
+		/// <summary>
+		/// Add item to database.
+		/// </summary>
+		/// <param name="lot"></param>
+		/// <returns></returns>
+		bool Add(T item);
 
-		T Get(Guid id); // read
+		/// <summary>
+		/// Get Lot by its Id. If no such lot will be found, method return default(Lot)
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		T Get(Guid id);
 
-		bool Remove(Guid id); // delete
+		/// <summary>
+		/// Remove lot by its Id
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		bool Remove(Guid id);
 
-		void Set(T item); // update
+		/// <summary>
+		/// Update lot. Well, I don't know, what I wanna say with this. Not implemented yet
+		/// </summary>
+		/// <param name="lot"></param>
+		void Set(T item);
 	}
 }

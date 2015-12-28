@@ -9,26 +9,44 @@
 
 	public class LotLogic : ILotLogic
 	{
-		public bool Add(Lot item)
+		/// <summary>
+		/// Add item to database.
+		/// </summary>
+		/// <param name="lot"></param>
+		/// <returns></returns>
+		public bool Add(Lot lot)
 		{
-			if ((item.Cost <= 0) ||
-				(item.Info.Length > 500) ||
-				(item.Owner.Length > 50) ||
-				(item.PostDate > DateTime.Now) ||
-				(item.Sity.Length > 100) ||
-				(item.Title.Length > 200))
+			if ((lot.Cost <= 0) ||
+				(lot.Info.Length > Common.Common.MaxInfoLength) ||
+				(lot.Info.Length < Common.Common.MinInfoLength) ||
+
+				(lot.Owner.Length > Common.Common.MaxLoginLength) ||
+				(lot.Owner.Length < Common.Common.MinLoginLength) ||
+
+				(lot.PostDate > DateTime.Now) ||
+				
+				(lot.Sity.Length > Common.Common.MaxSityLength) ||
+				(lot.Sity.Length < Common.Common.MinSityLength) ||
+
+				(lot.Title.Length > Common.Common.MaxTitleLength) ||
+				(lot.Title.Length < Common.Common.MinTitleLength))
 			{
 				throw new ArgumentException("Uncorrect parameters");
 			}
 
-			return Common.Common.LotDao.Add(item);
+			return Common.Common.LotDao.Add(lot);
 		}
 
+		/// <summary>
+		/// Add image to this lot. If not set, lot will use defaule image (see /Docs/read.me)
+		/// </summary>
+		/// <param name="lotId"></param>
+		/// <param name="image"></param>
 		public void AddImage(Guid lotId, Stream image)
 		{
 			long length = image.Length;
 
-			if (length > 2097152) // 2 MiB
+			if (length > 2097152) // 2 MiB in bytes
 			{
 				throw new ArgumentException("Too big file");
 			}
@@ -41,21 +59,40 @@
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Get Lot by its Id. If no such lot will be found, method return default(Lot)
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public Lot Get(Guid id)
 		{
 			return Common.Common.LotDao.Get(id);
 		}
 
+		/// <summary>
+		/// Get all lots from database
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerable<Lot> GetAll()
 		{
 			return Common.Common.LotDao.GetAll().ToList();
 		}
 
+		/// <summary>
+		/// Get appropriate header image for your color sheme
+		/// </summary>
+		/// <param name="colorsheme"></param>
+		/// <returns></returns>
 		public byte[] GetHeader(string colorsheme)
 		{
 			return Common.Common.LotDao.GetHeader(colorsheme);
 		}
 
+		/// <summary>
+		/// Get image for your lot. If there's no predetermined image or if it can't be found, the default image will be returned. 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public byte[] GetImage(Guid id)
 		{
 			byte[] a = Common.Common.LotDao.GetImage(id);
@@ -68,19 +105,36 @@
 			return a;
 		}
 
+		/// <summary>
+		/// Remove lot by its Id
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public bool Remove(Guid id)
 		{
 			return Common.Common.LotDao.Remove(id);
 		}
 
-		public void Set(Lot item)
+		/// <summary>
+		/// Update lot. Well, I don't know, what I wanna say with this. Not implemented yet
+		/// </summary>
+		/// <param name="lot"></param>
+		public void Set(Lot lot)
 		{
-			if ((item.Cost <= 0) ||
-				(item.Info.Length > 500) ||
-				(item.Owner.Length > 50) ||
-				(item.PostDate > DateTime.Now) ||
-				(item.Sity.Length > 100) ||
-				(item.Title.Length > 200))
+			if ((lot.Cost <= 0) ||
+				(lot.Info.Length > Common.Common.MaxInfoLength) ||
+				(lot.Info.Length < Common.Common.MinInfoLength) ||
+
+				(lot.Owner.Length > Common.Common.MaxLoginLength) ||
+				(lot.Owner.Length < Common.Common.MinLoginLength) ||
+
+				(lot.PostDate > DateTime.Now) ||
+
+				(lot.Sity.Length > Common.Common.MaxSityLength) ||
+				(lot.Sity.Length < Common.Common.MinSityLength) ||
+
+				(lot.Title.Length > Common.Common.MaxTitleLength) ||
+				(lot.Title.Length < Common.Common.MinTitleLength))
 			{
 				throw new ArgumentException("Uncorrect parameters");
 			}

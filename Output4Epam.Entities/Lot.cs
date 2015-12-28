@@ -16,9 +16,9 @@
 	{
 		public Lot(string title, string owner, string sity, int cost, string info, LotTypes types = LotTypes.Other, DateTime postDate = default(DateTime), Guid g = default(Guid))
 		{
-			this.Title = title; // lt 200
-			this.Owner = owner; // lt 200
-			this.Sity = sity; // lt 100
+			this.Title = title;
+			this.Owner = owner;
+			this.Sity = sity; 
 			this.Cost = cost;
 			this.Types = types;
 			this.PostDate = postDate;
