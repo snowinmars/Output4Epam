@@ -2,8 +2,9 @@
 {
 	using System;
 	using System.IO;
+	using Output4Epam.Entities;
 
-	public interface ILotDao<Lot> : IDao<Lot>
+	public interface ILotDao : IDao<Lot>
 	{
 		/// <summary>
 		/// Add image for lot with lotId.
@@ -38,5 +39,11 @@
 		/// <param name="id"></param>
 		/// <returns></returns>
 		bool Buy(Guid id, string login);
+
+		/// <summary>
+		/// Remove image from this lot.
+		/// </summary>
+		/// <param name="id"></param>
+		void RemoveImage(Guid id);
 	}
 }

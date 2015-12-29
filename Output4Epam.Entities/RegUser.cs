@@ -14,7 +14,11 @@
 
 	public class RegUser
 	{
-		public RegUser(string login, int passwordHash, RoleScroll roles = RoleScroll.None, int money = 0, string colorSheme = default(string))
+		public RegUser(string login,
+				int passwordHash,
+				RoleScroll roles = RoleScroll.None,
+				int money = 0,
+				string colorSheme = default(string))
 		{
 			this.Login = login;
 			this.PasswordHash = passwordHash;
@@ -23,10 +27,10 @@
 			this.ColorSheme = colorSheme;
 		}
 
+		public string ColorSheme { get; set; }
 		public string Login { get; set; }
 		public int Money { get; set; }
 		public int PasswordHash { get; set; }
 		public RoleScroll Roles { get; set; }
-		public string ColorSheme { get; set; }
 	}
 }

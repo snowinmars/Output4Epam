@@ -29,6 +29,10 @@
 		{
 			Response.Redirect("/Pages/ErrorPages/501.cshtml");
 		}
+		catch (ArgumentException)
+		{
+			Response.Redirect("/Pages/ErrorPages/400.cshtml");
+		}
 		catch
 		{
 			Response.Redirect("/Pages/ErrorPages/Other.cshtml");

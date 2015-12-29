@@ -2,8 +2,8 @@
 @using Output4Epam.Entities
 
 @{
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
-	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "Admin");
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
 }
 
 <nav class="leftmenu borderaround">

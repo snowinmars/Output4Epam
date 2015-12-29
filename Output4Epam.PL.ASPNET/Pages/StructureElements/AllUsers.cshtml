@@ -1,8 +1,9 @@
 ﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
 
 @{
 	Layout = "~/Pages/Index.cshtml";
-	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "Admin");
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
 }
 
 @if (isAdmin)

@@ -5,15 +5,7 @@
 
 	public class LoggerProvider
 	{
-		private static readonly ILog log = LogManager.GetLogger(typeof(LoggerProvider));
-
-		public static ILog Log
-		{
-			get
-			{
-				return log;
-			}
-		}
+		public static ILog Log { get; } = LogManager.GetLogger(typeof(LoggerProvider));
 
 		public static void InitLogger() // TODO to ask init?
 		{

@@ -5,10 +5,10 @@
 	$(".delete").click(deleteLot);
 
 	function deleteLot(e) {
-		var target = $(e.target);
-		var datastr = {
-			"Id": target.data("id"),
-		};
+		var target = $(e.target),
+			datastr = {
+				"Id": target.data("id"),
+			};
 		$.ajax({
 			url: "/Pages/AJAX/DeleteLot.cshtml",
 			type: "post",
@@ -23,8 +23,8 @@
 	$(".p").add(".title").click(more);
 
 	function more(e) {
-		var target = $(e.target);
-		var guid = target.closest("li").children("p").children("img").attr("src").split("=")[1];
+		var target = $(e.target),
+			guid = target.closest("li").children("p").children("img").attr("src").split("=")[1];
 
 		location.href = "/Pages/StructureElements/ShowMore.cshtml" + "?id=" + guid;
 	};
@@ -34,8 +34,8 @@
 	$(".removeuser").click(removeUser);
 
 	function removeUser(e) {
-		var target = $(e.target);
-		var login = target.closest("li").data("login");
+		var target = $(e.target),
+			login = target.closest("li").data("login");
 
 		$.ajax({
 			url: "/Pages/AJAX/DeleteUser.cshtml",
@@ -53,23 +53,23 @@
 	$(".banuser").add(".togglevipuser").add(".toggleadminuser").click(toggleUserRole); // TODO to ask
 
 	function toggleUserRole(e) {
-		var i = 0;
-		var length = 0;
-		var target = $(e.target);
-		var roles = target.closest("li").children(".info")[0];
-		var login = target.closest("li").attr("data-login");
-		var action = target.attr("data-action");
-		var datastr = {
-			"Login": login,
-			"Action": action,
-		}
+		var i = 0,
+			length = 0,
+			target = $(e.target),
+			roles = target.closest("li").children(".info")[0],
+			login = target.closest("li").attr("data-login"),
+			action = target.attr("data-action"),
+			datastr = {
+				"Login": login,
+				"Action": action,
+			},
+			rutrnroleslist = $.ajax({
+				async: false,
+				url: "/Pages/AJAX/ToggleUserRole",
+				type: "post",
+				data: datastr,
+			}).responseText;
 
-		var rutrnroleslist = $.ajax({
-			async: false,
-			url: "/Pages/AJAX/ToggleUserRole",
-			type: "post",
-			data: datastr,
-		}).responseText;
 		rutrnroleslist = rutrnroleslist.slice(0, rutrnroleslist.length - 1).split(",");
 
 		length = roles.children.length;
@@ -88,9 +88,10 @@
 	$(".orderByName").add(".orderByDate").add(".orderByOwner").click(writeGet);
 
 	function writeGet(e) {
-		var target = $(e.target);
-		var action = target.data("action");
-		var thispage = location.href;
+		var target = $(e.target),
+			action = target.data("action"),
+			thispage = location.href;
+
 		$(".selected").toggleClass("selected");
 		target.toggleClass("selected");
 
@@ -103,9 +104,9 @@
 	$(".filter").click(filter);
 
 	function filter(e) {
-		var target = $(e.target);
-		var action = target.data("action");
-		var thispage = location.href;
+		var target = $(e.target),
+			action = target.data("action"),
+			thispage = location.href;
 
 		//location.href = location.hostname + location.pathname + "?orderby=" + action;
 		location.search = "filterby=" + action;
@@ -116,13 +117,13 @@
 	$("[name=colorsheme]").click(changetheme);
 
 	function changetheme(e) {
-		var target = $(e.target);
+		var target = $(e.target),
+			theme = $("[name=stylesheet]");
 
-		var theme = $("[name=stylesheet]");
 		loadjscssfile("/Content/" + target.data("type") + ".css", "css");
 	}
 
-	// I'm afraid to touch this stuff due to I spent five hours to find this working stuff. Due to my code on jQuery didn't rerender page.
+	// I'm afraid to touch this stuff due to I spent five hours to find this working stuff. Let it just be.
 	function loadjscssfile(filename, filetype) {
 		if (filetype == "js") { //if filename is a external JavaScript file
 			var fileref = document.createElement('script');
@@ -141,47 +142,17 @@
 		if (typeof fileref != "undefined")
 			document.getElementsByTagName("head")[0].appendChild(fileref);
 	}
-	/*________________________________________*/
-
-	//	function getCurs($moneyCode){
-	//		// создаем объект для работы с XML
-	//		$xml = new DOMDocument();
-	//		// ссылка на сайт банка
-	//		$url = 'http://www.cbr.ru/scripts/XML_daily.asp?date_req=' . date('d.m.Y');
-	//		// получаем xml с курсами всех валют
-	//		if ($xml->load($url)){
-	//			// массив для хранения курсов валют
-	//			$result = array();
-	//			// разбираем xml
-	//			$root = $xml->documentElement;
-	//			// берем все теги 'Valute' и их содержимое
-	//			$items = $root->getElementsByTagName('Valute');
-	//			// переберем теги 'Valute' по одному
-	//			foreach ($items as $item){
-	//			// получаем код валюты
-	//			    $code = $item->getElementsByTagName('CharCode')->item(0)->nodeValue;
-	//			// получаем значение курса валюты, относительно рубля
-	//			$value = $item->getElementsByTagName('Value')->item(0)->nodeValue;
-	//			// записываем в массив, предварительно заменив запятую на точку
-	//			$result[$code] = str_replace(',', '.', $value);
-	//		}
-	//		// возвращаем значение курса, для запрошенной валюты
-	//		return $result[$moneyCode];
-	//	}else{
-	//	// если не получили xml возвращаем false
-	//        return false;
-	//}
-	//}
 
 	/*________________________________________*/
 
 	$(".buy").click(buy);
 
 	function buy(e) {
-		var target = $(e.target);
-		var datastr = {
-			"Id": target.data("id"),
-		};
+		var target = $(e.target),
+			datastr = {
+				"Id": target.data("id"),
+			};
+
 		$.ajax({
 			url: "/Pages/AJAX/BuyLot.cshtml",
 			type: "post",
@@ -191,22 +162,23 @@
 
 	/*________________________________________*/
 
-	// TODO : this f to another file
+	// TODO : this stuff to another file - to ask: how?
 	$(".add").click(add);
 
 	function add(e) {
-		var group = $(".checkbox");
-		var form = $("form");
-		var i = 0;
-		form.append('<input type="text" name="Types" value="">');
-		var type = form.children("[name=Types]")
-		var count = 0;
+		var group = $(".checkbox"),
+			form = $("form"),
+			i = 0,
+			type = form.children("[name=Types]"),
+			count = 0;
 
+		form.append('<input type="text" name="Types" value="">');
 		for (i = 0; i < group.length; ++i) {
 			if (group[i].checked) {
 				count += $(group[i]).data("enumvalue");
 			}
 		}
+
 		type.val(count);
 		form.submit();
 		type.remove();
@@ -215,11 +187,11 @@
 	$("[name=settheme]").click(settheme);
 
 	function settheme(e) {
-		var target = $(e.target);
-		var group = $(".radiobox");
-		var i = 0;
-		var datastr = "";
-		var headimg;
+		var target = $(e.target),
+			group = $(".radiobox"),
+			i = 0,
+			datastr = "",
+			headimg;
 
 		for (i = 0; i < group.length; ++i) {
 			if (group[i].checked) {
@@ -238,33 +210,33 @@
 			data: datastr,
 		}).success(function (r) {
 			loadjscssfile("/Content/" + $(group[i]).data("shemename") + ".css", "css");
-			//headimg = $("header").children("a").children("img");
-			//tmp = headimg;
-			//headimg.remove();
-			//$("header").append(tmp);
 		});
 	};
 
 	$(".costchoiseitem").click(calccost);
 
 	function calccost(e) {
-		var target = $(e.target);
-		var costitem = target.parent(".costchoise").siblings(".cost");
-		var type = target.data("type");
-		var datastr = {
-			"Type": type,
-		};
+		var target = $(e.target),
+			costitem = target.parent(".costchoise").siblings(".cost"),
+			type = target.data("type"),
+			datastr = {
+				"Type": type,
+			},
+			ratestr,
+			rate,
+			oldcost,
+			newcost;
 
-		var ratestr = $.ajax({
+		ratestr = $.ajax({
 			async: false,
 			url: "/Pages/AJAX/GetExchangeRates.cshtml",
 			type: "post",
 			data: datastr,
 		}).responseText;
-		var rate = JSON.parse(ratestr);
+		rate = JSON.parse(ratestr);
 
-		var oldcost = costitem.data("cost"); // always in rubles
-		var newcost;
+		oldcost = costitem.data("cost"); // always in rubles
+
 		switch (type) {
 			case "dollar":
 				newcost = (oldcost - 0) / (rate.USD - 0);

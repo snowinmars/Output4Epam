@@ -1,13 +1,13 @@
 ﻿namespace Outpu4Epam.DAL.SQL
 {
-	using Outpu4Epam.DAL.Interface;
-	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
 	using System.IO;
+	using Outpu4Epam.DAL.Interface;
+	using Output4Epam.Entities;
 
-	public class LotDao : ILotDao<Lot>
+	public class LotDao : ILotDao
 	{
 		private string pathToWorkFolder = Common.PathToWorkFolder;
 
@@ -301,7 +301,6 @@
 
 		void IDisposable.Dispose()
 		{
-			throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -328,12 +327,61 @@
 		}
 
 		/// <summary>
-		/// Set image by its Id. Not implemented yet
+		/// Remove image from this lot.
+		/// </summary>
+		/// <param name="id"></param>
+		public void RemoveImage(Guid id)
+		{
+			string connectionString = Common.ConnectionString;
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "delete from [dbo].[ImagesTable] " +
+						"where [dbo].[LotTable].[LotId] = @LotId";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@LotId", id);
+
+				connection.Open();
+				var reader = command.ExecuteNonQuery();
+			}
+		}
+
+		/// <summary>
+		/// Set image by its Id.
 		/// </summary>
 		/// <param name="lot"></param>
 		public void Set(Lot lot)
 		{
-			throw new NotImplementedException();
+			string connectionString = Common.ConnectionString;
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "update [dbo].[LotTable] " +
+						"set " +
+							"[BoughtBy] = @BoughtBy , " +
+							"[Cost] = @Cost , " +
+							"[Id] = @Id , " +
+							"[Info] = @Info , " +
+							"[Owner] = @Owner " +
+							"[PostDate] = @PostDate " +
+							"[Sity] = @Sity " +
+							"[Title] = @Title " +
+							"[Types] = @Types " +
+						"where [dbo].[LotTable].[Id] = @Id";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@BoughtBy", lot.BoughtBy);
+				command.Parameters.AddWithValue("@Cost", lot.Cost);
+				command.Parameters.AddWithValue("@Id", lot.Id);
+				command.Parameters.AddWithValue("@Info", lot.Info);
+				command.Parameters.AddWithValue("@Owner", lot.Owner);
+				command.Parameters.AddWithValue("@PostDate", lot.PostDate);
+				command.Parameters.AddWithValue("@Sity", lot.Sity);
+				command.Parameters.AddWithValue("@Title", lot.Title);
+				command.Parameters.AddWithValue("@Types", lot.Types);
+
+				connection.Open();
+				var reader = command.ExecuteNonQuery();
+			}
 		}
 	}
 }

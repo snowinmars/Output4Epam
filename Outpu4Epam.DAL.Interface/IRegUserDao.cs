@@ -2,7 +2,7 @@
 {
 	using Output4Epam.Entities;
 
-	public interface IRegUserDao<RegUser> : IDao<RegUser>
+	public interface IRegUserDao : IDao<RegUser>
 	{
 		/// <summary>
 		/// Get user by its login. If no such user will be found, method return default(RegUser)

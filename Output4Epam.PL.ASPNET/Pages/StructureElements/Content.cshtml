@@ -4,8 +4,8 @@
 @{
 	Layout = "~/Pages/Index.cshtml";
 
-	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "Admin");
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
 
 	string order = Request["orderby"];
 	string filter = Request["filterby"];
@@ -61,7 +61,7 @@
 				<p class="title">@item.Title.ToString()</p>
 				<p class="info">@item.Info</p>
 				<p class="city">г. @item.Sity</p>
-				<p class="cost" tabindex="2" data-cost="@(item.Cost)">@(item.Cost) руб.</p>
+				<p class="cost" tabindex="2" data-cost="@(item.Cost)">@(item.Cost) руб.</p>  <!-- data-cost always in rubles -->
 				<ul class="costchoise">
 					<li class="costchoiseitem" data-type="dollar">Баксы</li>
 					<li class="costchoiseitem" data-type="euro">Евро</li>

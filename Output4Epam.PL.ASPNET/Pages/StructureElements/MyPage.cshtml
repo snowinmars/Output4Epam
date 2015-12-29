@@ -7,7 +7,7 @@
 
 @{
 	RegUser user = LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
 }
 
 @if (isUser)
@@ -15,8 +15,6 @@
 	<section class="section mypage">
 		<ul class="mypagelist" data-userlogin="@User.Identity.Name">
 			<li class="mypagelistitem">
-				@*<p class="p"><img class="img" src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" /></p>*@
-
 				<p class="title">Hello, @user.Login</p>
 				<p class="info">Money: @user.Money</p>
 			</li>

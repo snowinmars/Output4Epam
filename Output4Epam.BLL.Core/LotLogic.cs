@@ -1,7 +1,5 @@
 ﻿namespace Output4Epam.BLL.Core
 {
-	using Output4Epam.BLL.Interface;
-	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Drawing;
@@ -9,6 +7,8 @@
 	using System.Drawing.Imaging;
 	using System.IO;
 	using System.Linq;
+	using Output4Epam.BLL.Interface;
+	using Output4Epam.Entities;
 
 	public class LotLogic : ILotLogic
 	{
@@ -54,17 +54,9 @@
 				throw new ArgumentException("Too big file");
 			}
 
-			Stream smallImage = new MemoryStream(this.ResizeImageFile(StreamToByteArray(image), 100));
+			Stream smallImage = new MemoryStream(this.ResizeImageFile(image.ToByteArray(), 100));
+
 			Common.Common.LotDao.AddImage(lotId, smallImage);
-		}
-
-		private byte[] StreamToByteArray(Stream stream)
-		{
-			byte[] f = new byte[stream.Length];
-
-			stream.Read(f, 0, (int)stream.Length);
-
-			return f;
 		}
 
 		/// <summary>
@@ -139,7 +131,17 @@
 		}
 
 		/// <summary>
-		/// Update lot. Well, I don't know, what I wanna say with this. Not implemented yet
+		/// Remove image from lot.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public void RemoveImage(Guid id)
+		{
+			Common.Common.LotDao.RemoveImage(id);
+		}
+
+		/// <summary>
+		/// Update lot.
 		/// </summary>
 		/// <param name="lot"></param>
 		public void Set(Lot lot)
@@ -161,7 +163,22 @@
 			{
 				throw new ArgumentException("Uncorrect parameters");
 			}
-			throw new NotImplementedException();
+			Common.Common.LotDao.Set(lot);
+		}
+
+		private Size CalculateDimensions(Size oldSize, int targetSize)
+		{
+			Size newSize = new Size();
+			if (oldSize.Height > oldSize.Width)
+			{
+				newSize.Width = (int)(oldSize.Width * ((float)targetSize / (float)oldSize.Height));
+				newSize.Height = targetSize;
+			}
+			else {
+				newSize.Width = targetSize;
+				newSize.Height = (int)(oldSize.Height * ((float)targetSize / (float)oldSize.Width));
+			}
+			return newSize;
 		}
 
 		private byte[] ResizeImageFile(byte[] imageFile, int targetSize)
@@ -183,21 +200,6 @@
 					}
 				}
 			}
-		}
-
-		private Size CalculateDimensions(Size oldSize, int targetSize)
-		{
-			Size newSize = new Size();
-			if (oldSize.Height > oldSize.Width)
-			{
-				newSize.Width = (int)(oldSize.Width * ((float)targetSize / (float)oldSize.Height));
-				newSize.Height = targetSize;
-			}
-			else {
-				newSize.Width = targetSize;
-				newSize.Height = (int)(oldSize.Height * ((float)targetSize / (float)oldSize.Width));
-			}
-			return newSize;
 		}
 	}
 }

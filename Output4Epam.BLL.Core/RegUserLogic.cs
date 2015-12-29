@@ -1,11 +1,11 @@
 ﻿namespace Output4Epam.BLL.Core
 {
-	using Output4Epam.BLL.Interface;
-	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Text.RegularExpressions;
+	using Output4Epam.BLL.Interface;
+	using Output4Epam.Entities;
 
 	public class RegUserLogic : IRegUserLogic
 	{
@@ -52,11 +52,6 @@
 			return false;
 		}
 
-		void IDisposable.Dispose()
-		{
-			throw new NotImplementedException();
-		}
-
 		/// <summary>
 		/// Get user by its Id. If no such user will be found, method return default(RegUser)
 		/// </summary>
@@ -94,6 +89,11 @@
 		public string[] GetRolesForUser(string login)
 		{
 			return Common.Common.RegUserDao.GetRolesForUser(login);
+		}
+
+		void IDisposable.Dispose()
+		{
+			throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -162,7 +162,7 @@
 		}
 
 		/// <summary>
-		/// Update user. Well, I don't know, what I wanna say with this. Not implemented yet
+		/// Update user.
 		/// </summary>
 		/// <param name="regUser"></param>
 		public void Set(RegUser regUser)

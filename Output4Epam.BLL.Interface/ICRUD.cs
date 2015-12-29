@@ -26,7 +26,7 @@
 		bool Remove(Guid id);
 
 		/// <summary>
-		/// Update lot. Well, I don't know, what I wanna say with this. Not implemented yet
+		/// Update lot.
 		/// </summary>
 		/// <param name="lot"></param>
 		void Set(T item);

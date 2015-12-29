@@ -26,7 +26,7 @@
 		bool Remove(Guid id);
 
 		/// <summary>
-		/// Set image by its Id. Not implemented yet
+		/// Set image by its Id.
 		/// </summary>
 		/// <param name="lot"></param>
 		void Set(T item);

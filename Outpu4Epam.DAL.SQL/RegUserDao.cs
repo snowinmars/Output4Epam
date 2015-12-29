@@ -1,12 +1,12 @@
 ﻿namespace Outpu4Epam.DAL.SQL
 {
-	using Outpu4Epam.DAL.Interface;
-	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
+	using Outpu4Epam.DAL.Interface;
+	using Output4Epam.Entities;
 
-	public class RegUserDao : IRegUserDao<RegUser>
+	public class RegUserDao : IRegUserDao
 	{
 		/// <summary>
 		/// Add user to database.
@@ -43,11 +43,6 @@
 			}
 
 			return true;
-		}
-
-		void IDisposable.Dispose()
-		{
-			throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -196,6 +191,11 @@
 			}
 
 			return asd.ToArray();
+		}
+
+		void IDisposable.Dispose()
+		{
+			throw new NotImplementedException();
 		}
 
 		/// <summary>

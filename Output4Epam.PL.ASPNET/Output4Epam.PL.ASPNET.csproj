@@ -138,6 +138,7 @@
     <Content Include="Pages\StructureElements\Stats.cshtml" />
     <Content Include="Pages\AJAX\BuyLot.cshtml" />
     <Content Include="Pages\AJAX\GetExchangeRates.cshtml" />
+    <Content Include="Pages\ErrorPages\400.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

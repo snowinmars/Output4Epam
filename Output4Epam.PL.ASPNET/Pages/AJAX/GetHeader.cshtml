@@ -2,30 +2,45 @@
 @using Output4Epam.Entities
 
 @{
-
-	string colorsheme = default(string);
-
-	if (User.Identity.IsAuthenticated)
+	try
 	{
-		RegUser regUser = LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
 
-		if (regUser.ColorSheme == String.Empty)
+		string colorsheme = default(string);
+
+		if (User.Identity.IsAuthenticated)
 		{
-			colorsheme = "oldschoolblack";
+			RegUser regUser = LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
+
+			if (regUser.ColorSheme == String.Empty)
+			{
+				colorsheme = "oldschoolblack";
+			}
+			else
+			{
+				colorsheme = regUser.ColorSheme;
+			}
+
 		}
 		else
 		{
-			colorsheme = regUser.ColorSheme;
+			colorsheme = "oldschoolblack";
 		}
 
+		byte[] imageArray = LogicProvider.LotLogic.GetHeader(colorsheme);
+
+		Response.WriteBinary(imageArray, "image/png");
 	}
-	else
+	catch (NotImplementedException)
 	{
-		colorsheme = "oldschoolblack";
+		Response.Redirect("/Pages/ErrorPages/501.cshtml");
 	}
-
-	byte[] imageArray = LogicProvider.LotLogic.GetHeader(colorsheme);
-
-	Response.WriteBinary(imageArray, "image/png");
+	catch (ArgumentException)
+	{
+		Response.Redirect("/Pages/ErrorPages/400.cshtml");
+	}
+	catch
+	{
+		Response.Redirect("/Pages/ErrorPages/Other.cshtml");
+	}
 	return;
 }

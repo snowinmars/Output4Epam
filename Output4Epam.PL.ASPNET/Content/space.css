@@ -405,7 +405,8 @@ footer {
 	}
 
 	.section .add {
-		top: 250px;
+		top: 270px;
+		height: 15px;
 		left: 0px;
 	}
 
