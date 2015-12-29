@@ -18,7 +18,7 @@
 		{
 			this.Title = title;
 			this.Owner = owner;
-			this.Sity = sity; 
+			this.Sity = sity;
 			this.Cost = cost;
 			this.Types = types;
 			this.PostDate = postDate;

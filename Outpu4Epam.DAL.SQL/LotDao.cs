@@ -120,7 +120,7 @@
 				{
 					string boughtBy;
 
-					if (reader["BoughtBy"]== DBNull.Value)
+					if (reader["BoughtBy"] == DBNull.Value)
 					{
 						boughtBy = "";
 					}

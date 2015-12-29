@@ -1,10 +1,10 @@
 ﻿namespace Outpu4Epam.DAL.SQL
 {
+	using Outpu4Epam.DAL.Interface;
+	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
-	using Outpu4Epam.DAL.Interface;
-	using Output4Epam.Entities;
 
 	public class RegUserDao : IRegUserDao<RegUser>
 	{
@@ -29,7 +29,7 @@
 				command.Parameters.AddWithValue("@Role", regUser.Roles);
 				command.Parameters.AddWithValue("@Money", regUser.Money);
 
-				if (regUser.ColorSheme == String.Empty)
+				if ((regUser.ColorSheme == String.Empty) || (regUser.ColorSheme == null))
 				{
 					command.Parameters.AddWithValue("@ColorSheme", DBNull.Value);
 				}
@@ -289,7 +289,7 @@
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				var query = "update [dbo].[RegUserTable] " +
-						"set " + 
+						"set " +
 							"[Login] = @login , " +
 							"[PasswordHash] = @passwordHash , " +
 							"[Role] = @Role , " +

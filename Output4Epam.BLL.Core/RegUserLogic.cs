@@ -1,11 +1,11 @@
 ﻿namespace Output4Epam.BLL.Core
 {
+	using Output4Epam.BLL.Interface;
+	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Text.RegularExpressions;
-	using Output4Epam.BLL.Interface;
-	using Output4Epam.Entities;
 
 	public class RegUserLogic : IRegUserLogic
 	{

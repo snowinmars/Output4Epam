@@ -262,7 +262,7 @@
 			data: datastr,
 		}).responseText;
 		var rate = JSON.parse(ratestr);
-		
+
 		var oldcost = costitem.data("cost"); // always in rubles
 		var newcost;
 		switch (type) {
@@ -281,6 +281,5 @@
 			default:
 				break;
 		}
-
 	};
 })();

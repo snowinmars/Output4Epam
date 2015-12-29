@@ -118,7 +118,7 @@ body {
 /*_________________________________________________________________________________________________________________*/
 
 footer {
-	position:fixed;
+	position: fixed;
 	background-color: black;
 	bottom: 0;
 	width: 100%;
@@ -216,8 +216,7 @@ footer {
 	}
 
 		.section .userlist .userlistitem {
-		background-image: linear-gradient(to right, rgba(29,8,75,0.8), transparent);
-
+			background-image: linear-gradient(to right, rgba(29,8,75,0.8), transparent);
 			position: relative;
 			display: block;
 			height: 150px;
@@ -298,8 +297,7 @@ footer {
 			color: #bb1d94;
 		}
 
-
-		.section .info {
+	.section .info {
 		top: 35px;
 		left: 250px;
 		font-size: 12px;
@@ -333,6 +331,30 @@ footer {
 			color: #bb1d94;
 		}
 
+	.section .costchoise {
+		right: 30px;
+		top: 60px;
+		display: none;
+	}
+
+		.section .costchoise .costchoiseitem {
+			width: 50px;
+			margin: 10px 0 10px 0;
+		}
+
+			.section .costchoise .costchoiseitem:hover {
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+	.section .cost:focus + .costchoise {
+		display: inline-block;
+	}
+
+	.section .costchoise:hover {
+		display: inline-block;
+	}
+
 	.section .postDate {
 		top: 120px;
 		left: 250px;
@@ -356,8 +378,6 @@ footer {
 		border: 2px solid #991d94;
 		border-radius: 10px;
 		padding: 5px 0 5px 0;
-
-		
 	}
 
 		.section .button:hover {
@@ -388,7 +408,7 @@ footer {
 		top: 250px;
 		left: 0px;
 	}
-	
+
 	.section .delete {
 		left: 600px;
 	}
@@ -402,10 +422,10 @@ footer {
 		cursor: default;
 	}
 
-	.section .bought:hover {
-		background-color: #333;
-		cursor: default;
-	}
+		.section .bought:hover {
+			background-color: #333;
+			cursor: default;
+		}
 
 	.section .categories { /* Теги */
 		display: inline-block;

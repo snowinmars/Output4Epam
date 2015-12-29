@@ -81,7 +81,7 @@
 /*________________________________________*/
 
 footer {
-	position:fixed;
+	position: fixed;
 	background-color: black;
 	bottom: 0;
 	width: 100%;
@@ -286,17 +286,17 @@ footer {
 		display: none;
 	}
 
-	.section .costchoise .costchoiseitem{
-		width: 50px;
-		margin: 10px 0 10px 0;
-	}
-
-		.section .costchoise .costchoiseitem:hover {
-			text-decoration: underline;
-			cursor: pointer;
+		.section .costchoise .costchoiseitem {
+			width: 50px;
+			margin: 10px 0 10px 0;
 		}
 
-	.section .cost:focus + .costchoise{
+			.section .costchoise .costchoiseitem:hover {
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+	.section .cost:focus + .costchoise {
 		display: inline-block;
 	}
 
@@ -314,7 +314,6 @@ footer {
 		top: -10px;
 		left: 300px;
 	}
-
 
 	.section .button {
 		bottom: 0;
@@ -364,10 +363,10 @@ footer {
 		cursor: default;
 	}
 
-	.section .bought:hover {
-		background-color: #333;
-		cursor: default;
-	}
+		.section .bought:hover {
+			background-color: #333;
+			cursor: default;
+		}
 
 	.section .categories {
 		display: inline-block;

@@ -81,7 +81,7 @@
 /*________________________________________*/
 
 footer {
-	position:fixed;
+	position: fixed;
 	background-color: white;
 	bottom: 0;
 	width: 100%;
@@ -281,6 +281,30 @@ footer {
 			text-decoration: underline;
 		}
 
+	.section .costchoise {
+		right: 30px;
+		top: 60px;
+		display: none;
+	}
+
+		.section .costchoise .costchoiseitem {
+			width: 50px;
+			margin: 10px 0 10px 0;
+		}
+
+			.section .costchoise .costchoiseitem:hover {
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+	.section .cost:focus + .costchoise {
+		display: inline-block;
+	}
+
+	.section .costchoise:hover {
+		display: inline-block;
+	}
+
 	.section .postDate {
 		top: 150px;
 		cursor: help;
@@ -330,7 +354,7 @@ footer {
 		bottom: -60px;
 	}
 
-		.section .delete {
+	.section .delete {
 		left: 550px;
 	}
 
@@ -339,10 +363,10 @@ footer {
 		cursor: default;
 	}
 
-	.section .bought:hover {
-		background-color: #333;
-		cursor: default;
-	}
+		.section .bought:hover {
+			background-color: #333;
+			cursor: default;
+		}
 
 	.section .categories {
 		display: inline-block;

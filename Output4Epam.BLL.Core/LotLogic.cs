@@ -163,6 +163,7 @@
 			}
 			throw new NotImplementedException();
 		}
+
 		private byte[] ResizeImageFile(byte[] imageFile, int targetSize)
 		{
 			using (Image oldImage = Image.FromStream(new MemoryStream(imageFile)))
@@ -183,6 +184,7 @@
 				}
 			}
 		}
+
 		private Size CalculateDimensions(Size oldSize, int targetSize)
 		{
 			Size newSize = new Size();

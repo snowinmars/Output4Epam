@@ -23,6 +23,5 @@
 
 		public static string LoginRegex { get; } = @"[a-zA-Z_]";
 		public static string PasswordRegex { get; } = @"[a-zA-Z0-9`~!@#$%^&*()-=_+\|/?.>,<':;]";
-
 	}
 }

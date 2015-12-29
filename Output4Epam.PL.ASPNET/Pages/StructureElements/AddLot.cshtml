@@ -15,6 +15,11 @@
 		<ul class="checkboxes">
 			@foreach (var item in Enum.GetValues(typeof(LotTypes)))
 			{
+				if (item.ToString() == LotTypes.None.ToString())
+				{
+					continue;
+				}
+
 				<li class="checkboxitem">
 					<input class="checkbox" type="checkbox" name="@item" data-enumValue="@((int)item)" /><label for="@item">@item</label>
 				</li>

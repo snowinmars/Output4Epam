@@ -21,7 +21,7 @@
 		byte[] GetHeader(string colorsheme);
 
 		/// <summary>
-		/// Get image for your lot. If there's no predetermined image or if it can't be found, the default image will be returned. 
+		/// Get image for your lot. If there's no predetermined image or if it can't be found, the default image will be returned.
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
