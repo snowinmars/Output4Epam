@@ -1,6 +1,10 @@
-﻿@{
+﻿@using Output4Epam.Providers;
+
+@{
+
 	FormsAuthentication.SignOut();
+	LoggerProvider.Log.Info($"{User.Identity.Name} logged out.");
 
 	Response.Redirect("/Pages/StructureElements/Content.cshtml");
-		return;
+	return;
 }

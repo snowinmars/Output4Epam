@@ -26,5 +26,12 @@
 		/// <param name="id"></param>
 		/// <returns></returns>
 		byte[] GetImage(Guid id);
+
+		/// <summary>
+		/// Buy lot with this Id for user with this login
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		bool Buy(Guid id, string login);
 	}
 }

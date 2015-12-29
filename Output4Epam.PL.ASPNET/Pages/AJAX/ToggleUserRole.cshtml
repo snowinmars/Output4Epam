@@ -24,6 +24,7 @@
 	}
 
 	LogicProvider.RegUserLogic.ToggleRole(login, role);
+	LoggerProvider.Log.Info($"Role {role.ToString()} had been toggled for user {User.Identity.Name}.");
 
 	string[] roles = LogicProvider.RegUserLogic.GetRolesForUser(login);
 
@@ -33,6 +34,7 @@
 		sb.Append(roles[i] + ", ");
 	}
 	sb.Append(roles[roles.Length - 1]);
+
 
 	Response.Write(sb.ToString());
 }

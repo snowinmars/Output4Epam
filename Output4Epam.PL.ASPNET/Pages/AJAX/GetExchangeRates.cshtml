@@ -1,0 +1,78 @@
+﻿@using System.Xml
+@using Newtonsoft.Json
+@{
+	// code by spider_net	
+	// http://iantonov.me/page/kak-poluchit-kurs-valjut-sredstvami-c
+
+	//Инициализируем объекта типа XmlTextReader и
+	//загружаем XML документ с сайта центрального банка
+	XmlTextReader reader = new XmlTextReader("http://www.cbr.ru/scripts/XML_daily.asp");
+	//В эти переменные будем сохранять куски XML
+	//с определенными валютами (Euro, USD)
+	string USDXml = "";
+	string EuroXML = "";
+	//Перебираем все узлы в загруженном документе
+	while (reader.Read())
+	{
+		//Проверяем тип текущего узла
+		switch (reader.NodeType)
+		{
+			//Если этого элемент Valute, то начинаем анализировать атрибуты
+			case XmlNodeType.Element:
+
+				if (reader.Name == "Valute")
+				{
+					if (reader.HasAttributes)
+					{
+						//Метод передвигает указатель к следующему атрибуту
+						while (reader.MoveToNextAttribute())
+						{
+							if (reader.Name == "ID")
+							{
+								//Если значение атрибута равно R01235, то перед нами информация о курсе доллара
+								if (reader.Value == "R01235")
+								{
+									//Возвращаемся к элементу, содержащий текущий узел атрибута
+									reader.MoveToElement();
+									//Считываем содержимое дочерних узлом
+									USDXml = reader.ReadOuterXml();
+								}
+							}
+
+							//Аналогичную процедуру делаем для ЕВРО
+							if (reader.Name == "ID")
+							{
+								if (reader.Value == "R01239")
+								{
+									reader.MoveToElement();
+									EuroXML = reader.ReadOuterXml();
+								}
+							}
+						}
+					}
+				}
+
+				break;
+		}
+	}
+
+	//Из выдернутых кусков XML кода создаем новые XML документы
+	XmlDocument usdXmlDocument = new XmlDocument();
+	usdXmlDocument.LoadXml(USDXml);
+	XmlDocument euroXmlDocument = new XmlDocument();
+	euroXmlDocument.LoadXml(EuroXML);
+	//Метод возвращает узел, соответствующий выражению XPath
+	XmlNode xmlNode = usdXmlDocument.SelectSingleNode("Valute/Value");
+
+	//Считываем значение и конвертируем в decimal. Курс валют получен
+	decimal usdValue = Convert.ToDecimal(xmlNode.InnerText);
+	xmlNode = euroXmlDocument.SelectSingleNode("Valute/Value");
+	decimal euroValue = Convert.ToDecimal(xmlNode.InnerText);
+
+	Dictionary<string, decimal> output = new Dictionary<string, decimal>(2);
+	output.Add("USD", usdValue);
+	output.Add("EURO", euroValue);
+
+	Response.Write(JsonConvert.SerializeObject(output));
+	return;
+}

@@ -81,10 +81,11 @@
 /*________________________________________*/
 
 footer {
-	position: absolute;
+	position:fixed;
+	background-color: white;
 	bottom: 0;
-	margin: 0 50%;
-	width: 100px;
+	width: 100%;
+	text-align: center;
 }
 
 /*________________________________________*/
@@ -220,6 +221,8 @@ footer {
 			margin: 10px;
 			border-radius: 10px;
 			cursor: pointer;
+			max-width: 250px;
+			max-height: 150px;
 		}
 
 	.section .title,
@@ -246,6 +249,9 @@ footer {
 
 	.section .info {
 		top: 50px;
+		width: 70%;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 
 		.section .info .role:after {
@@ -320,9 +326,22 @@ footer {
 	}
 
 	.section .add {
-		background-color: red;
 		left: 0px;
 		bottom: -60px;
+	}
+
+		.section .delete {
+		left: 550px;
+	}
+
+	.section .bought {
+		background-color: #333;
+		cursor: default;
+	}
+
+	.section .bought:hover {
+		background-color: #333;
+		cursor: default;
 	}
 
 	.section .categories {

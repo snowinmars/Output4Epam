@@ -1,0 +1,21 @@
+﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
+
+@{ 
+	if (IsPost)
+	{
+		bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
+
+		if (isUser)
+		{
+			Guid id = Guid.Parse(Request["Id"]);
+			LogicProvider.LotLogic.Buy(id, User.Identity.Name);
+		}
+		else
+		{
+			Response.Redirect("/Pages/ErrorPage/403.cshtml");
+		}
+	}
+	Response.Redirect("/Pages/StructureElements/Content.cshtml");
+	return;
+}

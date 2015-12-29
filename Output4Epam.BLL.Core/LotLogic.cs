@@ -1,11 +1,14 @@
 ﻿namespace Output4Epam.BLL.Core
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
 	using Output4Epam.BLL.Interface;
 	using Output4Epam.Entities;
+	using System;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using System.Drawing.Drawing2D;
+	using System.Drawing.Imaging;
+	using System.IO;
+	using System.Linq;
 
 	public class LotLogic : ILotLogic
 	{
@@ -24,7 +27,7 @@
 				(lot.Owner.Length < Common.Common.MinLoginLength) ||
 
 				(lot.PostDate > DateTime.Now) ||
-				
+
 				(lot.Sity.Length > Common.Common.MaxSityLength) ||
 				(lot.Sity.Length < Common.Common.MinSityLength) ||
 
@@ -46,17 +49,32 @@
 		{
 			long length = image.Length;
 
-			if (length > 2097152) // 2 MiB in bytes
+			if (length > 7340032) // 7 MiB in bytes
 			{
 				throw new ArgumentException("Too big file");
 			}
 
-			Common.Common.LotDao.AddImage(lotId, image);
+			Stream smallImage = new MemoryStream(this.ResizeImageFile(StreamToByteArray(image), 100));
+			Common.Common.LotDao.AddImage(lotId, smallImage);
 		}
 
-		void IDisposable.Dispose()
+		private byte[] StreamToByteArray(Stream stream)
 		{
-			throw new NotImplementedException();
+			byte[] f = new byte[stream.Length];
+
+			stream.Read(f, 0, (int)stream.Length);
+
+			return f;
+		}
+
+		/// <summary>
+		/// Buy lot with this Id for user with this login
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public bool Buy(Guid id, string login)
+		{
+			return Common.Common.LotDao.Buy(id, login);
 		}
 
 		/// <summary>
@@ -89,7 +107,7 @@
 		}
 
 		/// <summary>
-		/// Get image for your lot. If there's no predetermined image or if it can't be found, the default image will be returned. 
+		/// Get image for your lot. If there's no predetermined image or if it can't be found, the default image will be returned.
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
@@ -103,6 +121,11 @@
 			}
 
 			return a;
+		}
+
+		void IDisposable.Dispose()
+		{
+			throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -139,6 +162,40 @@
 				throw new ArgumentException("Uncorrect parameters");
 			}
 			throw new NotImplementedException();
+		}
+		private byte[] ResizeImageFile(byte[] imageFile, int targetSize)
+		{
+			using (Image oldImage = Image.FromStream(new MemoryStream(imageFile)))
+			{
+				Size newSize = CalculateDimensions(oldImage.Size, targetSize);
+				using (Bitmap newImage = new Bitmap(newSize.Width, newSize.Height, PixelFormat.Format24bppRgb))
+				{
+					using (Graphics canvas = Graphics.FromImage(newImage))
+					{
+						canvas.SmoothingMode = SmoothingMode.HighQuality;
+						canvas.InterpolationMode = InterpolationMode.HighQualityBicubic;
+						canvas.PixelOffsetMode = PixelOffsetMode.HighQuality;
+						canvas.DrawImage(oldImage, new Rectangle(new Point(0, 0), newSize));
+						MemoryStream m = new MemoryStream();
+						newImage.Save(m, ImageFormat.Png);
+						return m.GetBuffer();
+					}
+				}
+			}
+		}
+		private Size CalculateDimensions(Size oldSize, int targetSize)
+		{
+			Size newSize = new Size();
+			if (oldSize.Height > oldSize.Width)
+			{
+				newSize.Width = (int)(oldSize.Width * ((float)targetSize / (float)oldSize.Height));
+				newSize.Height = targetSize;
+			}
+			else {
+				newSize.Width = targetSize;
+				newSize.Height = (int)(oldSize.Height * ((float)targetSize / (float)oldSize.Width));
+			}
+			return newSize;
 		}
 	}
 }

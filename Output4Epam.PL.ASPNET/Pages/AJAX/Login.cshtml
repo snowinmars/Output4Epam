@@ -3,14 +3,13 @@
 @{
 	if (IsPost)
 	{
-		LoggerProvider.Log.Fatal("Some message");
-
 		string login = Request["login"];
 		string password = Request["password"];
 
 		if (LogicProvider.RegUserLogic.Auth(login, password))
 		{
 			FormsAuthentication.SetAuthCookie(login, createPersistentCookie: true);
+			LoggerProvider.Log.Info($"{User.Identity.Name} logged in.");
 		}
 	}
 	Response.Redirect("/Pages/StructureElements/Content.cshtml");

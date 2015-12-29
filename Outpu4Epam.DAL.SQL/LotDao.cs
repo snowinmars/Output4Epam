@@ -1,11 +1,11 @@
 ﻿namespace Outpu4Epam.DAL.SQL
 {
+	using Outpu4Epam.DAL.Interface;
+	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
 	using System.IO;
-	using Outpu4Epam.DAL.Interface;
-	using Output4Epam.Entities;
 
 	public class LotDao : ILotDao<Lot>
 	{
@@ -22,9 +22,9 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "insert into [dbo].[LotTable] " + 
-						"([Id],[Title],[Owner],[Sity],[Cost],[Types],[PostDate],[Info]) " + 
-						"values(@Id,@Title,@Owner,@Sity,@Cost,@Types,@PostDate,@Info);";
+				var query = "insert into [dbo].[LotTable] " +
+						"([Id],[Title],[Owner],[Sity],[Cost],[Types],[PostDate],[Info],[BoughtBy]) " +
+						"values(@Id,@Title,@Owner,@Sity,@Cost,@Types,@PostDate,@Info,@BoughtBy);";
 
 				var command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@Id", lot.Id.ToString());
@@ -35,6 +35,7 @@
 				command.Parameters.AddWithValue("@Types", lot.Types);
 				command.Parameters.AddWithValue("@PostDate", lot.PostDate);
 				command.Parameters.AddWithValue("@Info", lot.Info);
+				command.Parameters.AddWithValue("@BoughtBy", lot.BoughtBy);
 
 				connection.Open();
 				command.ExecuteNonQuery();
@@ -54,8 +55,8 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "insert into [dbo].[ImagesTable] " + 
-						"([ImageId],[LotId],[Image]) " + 
+				var query = "insert into [dbo].[ImagesTable] " +
+						"([ImageId],[LotId],[Image]) " +
 						"values (@ImageId, @LotId, @Image)";
 				var command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@ImageId", Guid.NewGuid());
@@ -67,9 +68,30 @@
 			}
 		}
 
-		void IDisposable.Dispose()
+		/// <summary>
+		/// Buy lot with this Id for user with this login
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public bool Buy(Guid id, string login)
 		{
-			throw new NotImplementedException();
+			string connectionString = Common.ConnectionString;
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var query = "update [dbo].[LotTable] " +
+						"set " +
+							"[BoughtBy] = @boughtBy " +
+						"where [dbo].[LotTable].[Id] = @Id";
+				var command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@boughtBy", login);
+				command.Parameters.AddWithValue("@Id", id);
+
+				connection.Open();
+				var reader = command.ExecuteNonQuery();
+			}
+
+			return true;
 		}
 
 		/// <summary>
@@ -96,6 +118,17 @@
 
 				while (reader.Read())
 				{
+					string boughtBy;
+
+					if (reader["BoughtBy"]== DBNull.Value)
+					{
+						boughtBy = "";
+					}
+					else
+					{
+						boughtBy = (string)reader["BoughtBy"];
+					}
+
 					lot = new Lot((string)reader["Title"],
 							(string)reader["Owner"],
 							(string)reader["Sity"],
@@ -103,13 +136,14 @@
 							(string)reader["Info"],
 							(LotTypes)reader["Types"],
 							(DateTime)reader["PostDate"],
-							(Guid)reader["Id"]);
+							(Guid)reader["Id"],
+							boughtBy);
 				}
 			}
 
 			return lot;
 		}
-		
+
 		/// <summary>
 		/// Get all lots
 		/// </summary>
@@ -132,6 +166,17 @@
 
 				while (reader.Read())
 				{
+					string boughtBy;
+
+					if (reader["BoughtBy"] == DBNull.Value)
+					{
+						boughtBy = "";
+					}
+					else
+					{
+						boughtBy = (string)reader["BoughtBy"];
+					}
+
 					lotList.Add(new Lot((string)reader["Title"],
 								(string)((reader["Owner"]).ToString()),
 								(string)reader["Sity"],
@@ -139,7 +184,8 @@
 								(reader["Info"] == DBNull.Value ? String.Empty : (string)reader["Info"]),
 								(LotTypes)reader["Types"],
 								(DateTime)reader["PostDate"],
-								(Guid)reader["Id"]));
+								(Guid)reader["Id"],
+								boughtBy));
 				}
 			}
 
@@ -167,15 +213,19 @@
 					case "testing":
 						command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000000"));
 						break;
+
 					case "space":
 						command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000002"));
 						break;
+
 					case "oldschoolwhite":
 						command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000003"));
 						break;
+
 					case "oldschoolblack":
 						command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000004"));
 						break;
+
 					default:
 						break;
 				}
@@ -247,6 +297,11 @@
 			}
 
 			return new byte[] { };
+		}
+
+		void IDisposable.Dispose()
+		{
+			throw new NotImplementedException();
 		}
 
 		/// <summary>

@@ -81,10 +81,11 @@
 /*________________________________________*/
 
 footer {
-	position: absolute;
+	position:fixed;
+	background-color: black;
 	bottom: 0;
-	margin: 0 50%;
-	width: 100px;
+	width: 100%;
+	text-align: center;
 }
 
 /*________________________________________*/
@@ -218,6 +219,8 @@ footer {
 			height: 90%;
 			margin: 10px;
 			cursor: pointer;
+			max-width: 250px;
+			max-height: 150px;
 		}
 
 	.section .title,
@@ -226,6 +229,7 @@ footer {
 	.section .cost,
 	.section .postDate,
 	.section .owner,
+	.section .costchoise,
 	.section .button,
 	.section .categories {
 		display: inline-block;
@@ -244,6 +248,9 @@ footer {
 
 	.section .info {
 		top: 50px;
+		width: 70%;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 
 		.section .info .role:after {
@@ -273,7 +280,32 @@ footer {
 			text-decoration: underline;
 		}
 
+	.section .costchoise {
+		right: 30px;
+		top: 60px;
+		display: none;
+	}
+
+	.section .costchoise .costchoiseitem{
+		width: 50px;
+		margin: 10px 0 10px 0;
+	}
+
+		.section .costchoise .costchoiseitem:hover {
+			text-decoration: underline;
+			cursor: pointer;
+		}
+
+	.section .cost:focus + .costchoise{
+		display: inline-block;
+	}
+
+	.section .costchoise:hover {
+		display: inline-block;
+	}
+
 	.section .postDate {
+		left: 300px;
 		top: 150px;
 		cursor: help;
 	}
@@ -282,6 +314,7 @@ footer {
 		top: -10px;
 		left: 300px;
 	}
+
 
 	.section .button {
 		bottom: 0;
@@ -318,9 +351,22 @@ footer {
 	}
 
 	.section .add {
-		background-color: red;
 		left: 0px;
 		bottom: -60px;
+	}
+
+	.section .delete {
+		left: 550px;
+	}
+
+	.section .bought {
+		background-color: #333;
+		cursor: default;
+	}
+
+	.section .bought:hover {
+		background-color: #333;
+		cursor: default;
 	}
 
 	.section .categories {

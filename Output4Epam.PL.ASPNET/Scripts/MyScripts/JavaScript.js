@@ -1,14 +1,18 @@
-﻿/// <reference path="C:\prg\Output4Epam\Output4Epam.PL.ASPNET\Content/SetStyle.cshtml" />
-/// <reference path="C:\prg\Output4Epam\Output4Epam.PL.ASPNET\Content/SetStyle.cshtml" />
+﻿/// <reference path="C:\prg\Output4Epam\Output4Epam.PL.ASPNET\Pages/AJAX/BuyLot.cshtml" />
+/// <reference path="C:\prg\Output4Epam\Output4Epam.PL.ASPNET\Pages/AJAX/BuyLot.cshtml" />
+/// <reference path="C:\prg\Output4Epam\Output4Epam.PL.ASPNET\Pages/AJAX/BuyLot.cshtml" />
 (function () {
 	$(".delete").click(deleteLot);
 
 	function deleteLot(e) {
 		var target = $(e.target);
+		var datastr = {
+			"Id": target.data("id"),
+		};
 		$.ajax({
 			url: "/Pages/AJAX/DeleteLot.cshtml",
 			type: "post",
-			data: target.attr("id"),
+			data: datastr,
 		}).success(function () {
 			target.closest("li").remove();
 		});
@@ -171,6 +175,22 @@
 
 	/*________________________________________*/
 
+	$(".buy").click(buy);
+
+	function buy(e) {
+		var target = $(e.target);
+		var datastr = {
+			"Id": target.data("id"),
+		};
+		$.ajax({
+			url: "/Pages/AJAX/BuyLot.cshtml",
+			type: "post",
+			data: datastr,
+		});
+	}
+
+	/*________________________________________*/
+
 	// TODO : this f to another file
 	$(".add").click(add);
 
@@ -223,5 +243,44 @@
 			//headimg.remove();
 			//$("header").append(tmp);
 		});
+	};
+
+	$(".costchoiseitem").click(calccost);
+
+	function calccost(e) {
+		var target = $(e.target);
+		var costitem = target.parent(".costchoise").siblings(".cost");
+		var type = target.data("type");
+		var datastr = {
+			"Type": type,
+		};
+
+		var ratestr = $.ajax({
+			async: false,
+			url: "/Pages/AJAX/GetExchangeRates.cshtml",
+			type: "post",
+			data: datastr,
+		}).responseText;
+		var rate = JSON.parse(ratestr);
+		
+		var oldcost = costitem.data("cost"); // always in rubles
+		var newcost;
+		switch (type) {
+			case "dollar":
+				newcost = (oldcost - 0) / (rate.USD - 0);
+				costitem.text(Math.round(newcost) + " $");
+				break;
+			case "euro":
+				newcost = (oldcost - 0) / (rate.EURO - 0);
+				costitem.text(Math.round(newcost) + " €");
+				break;
+			case "ruble":
+				newcost = oldcost;
+				costitem.text(Math.round(newcost) + " руб.");
+				break;
+			default:
+				break;
+		}
+
 	};
 })();

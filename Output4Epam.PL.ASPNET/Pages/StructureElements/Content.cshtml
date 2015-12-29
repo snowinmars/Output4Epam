@@ -5,6 +5,7 @@
 	Layout = "~/Pages/Index.cshtml";
 
 	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "Admin");
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
 
 	string order = Request["orderby"];
 	string filter = Request["filterby"];
@@ -60,12 +61,29 @@
 				<p class="title">@item.Title.ToString()</p>
 				<p class="info">@item.Info</p>
 				<p class="city">г. @item.Sity</p>
-				<p class="cost">@(item.Cost) руб.</p>
+				<p class="cost" tabindex="2" data-cost="@(item.Cost)">@(item.Cost) руб.</p>
+				<ul class="costchoise">
+					<li class="costchoiseitem" data-type="dollar">Баксы</li>
+					<li class="costchoiseitem" data-type="euro">Евро</li>
+					<li class="costchoiseitem" data-type="ruble">Рубли</li>
+				</ul>
 				<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.PostDate.ToString("dd.MM.yyyy")</p>
 				<p class="owner">posted by @(item.Owner)</p>
+				@if (isUser)
+				{
+					if (item.BoughtBy == "")
+					{
+						<p class="button buy" data-id="@item.Id">Купить</p>
+					}
+					else
+					{
+						<p class="button bought tooltip" data-tooltip="bought by @item.BoughtBy" data-id="@item.Id">Купить</p>
+
+					}
+				}
 				@if (isAdmin)
 				{
-					<p class="button delete" id="@item.Id">Удалить</p>
+					<p class="button delete" data-id="@item.Id">Удалить</p>
 				}
 				<p class="categories">
 					@foreach (var type in @item.Types.ToString().Split(','))

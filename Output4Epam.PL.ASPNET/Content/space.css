@@ -118,10 +118,11 @@ body {
 /*_________________________________________________________________________________________________________________*/
 
 footer {
-	position: absolute;
+	position:fixed;
+	background-color: black;
 	bottom: 0;
-	margin: 0 40%;
-	width: 100px;
+	width: 100%;
+	text-align: center;
 }
 
 /*_________________________________________________________________________________________________________________*/
@@ -267,6 +268,8 @@ footer {
 			border-radius: 10px;
 			cursor: pointer;
 			border: 2px solid transparent;
+			max-width: 230px;
+			max-height: 130px;
 		}
 
 			.section .p .img:hover {
@@ -295,10 +298,14 @@ footer {
 			color: #bb1d94;
 		}
 
-	.section .info {
+
+		.section .info {
 		top: 35px;
 		left: 250px;
 		font-size: 12px;
+		width: 70%;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 
 		.section .info .role:after {
@@ -334,7 +341,7 @@ footer {
 
 	.section .owner {
 		top: 120px;
-		left: 600px;
+		left: 750px;
 		margin-right: 50px;
 		font-size: 12px;
 	}
@@ -380,6 +387,24 @@ footer {
 	.section .add {
 		top: 250px;
 		left: 0px;
+	}
+	
+	.section .delete {
+		left: 600px;
+	}
+
+	.section .add {
+	}
+
+	.section .bought {
+		top: 97px;
+		background-color: #333;
+		cursor: default;
+	}
+
+	.section .bought:hover {
+		background-color: #333;
+		cursor: default;
 	}
 
 	.section .categories { /* Теги */
