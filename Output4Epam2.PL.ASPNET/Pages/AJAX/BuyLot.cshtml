@@ -13,8 +13,6 @@
 			try
 			{
 
-				bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
-
 				if (isUser)
 				{
 					Guid id = Guid.Parse(Request["Id"]);

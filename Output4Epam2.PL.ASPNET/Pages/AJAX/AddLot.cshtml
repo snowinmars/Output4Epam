@@ -19,7 +19,7 @@
 				string info = Request["Info"];
 				int type = Int32.Parse(Request["Types"]);
 				Guid lotId = Guid.NewGuid();
-				Stream photo = Request.Files["Photo"].InputStream;
+				Stream photo = Request.Files["Photo"] == null ? default(Stream) : Request.Files["Photo"].InputStream;
 
 				LogicProvider.LotLogic.Add(new Lot(title,
 									User.Identity.Name,
@@ -30,7 +30,10 @@
 									DateTime.Now,
 									lotId));
 
-				LogicProvider.LotLogic.AddImage(lotId, photo);
+				if (photo != default(Stream))
+				{
+					LogicProvider.LotLogic.AddImage(lotId, photo);
+				}
 			}
 			catch (NotImplementedException)
 			{

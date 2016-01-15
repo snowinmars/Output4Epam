@@ -82,6 +82,20 @@ body {
 .title {
 	font-size: 2.5ex;
 	margin-bottom: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@media(max-width: 640px) {
+	.title {
+		font-size: 2ex;
+	}
+}
+
+.titlefull {
+	font-size: 2.5ex;
+	margin-bottom: 0;
 }
 
 .link:hover {

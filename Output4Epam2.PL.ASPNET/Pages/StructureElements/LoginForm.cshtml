@@ -2,7 +2,7 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-	<div class="btn-group loginform col-xs-1 col-md-1 clearfix ">
+	<div class="btn-group loginform col-xs-4 col-sm-3 col-md-1 clearfix ">
 		<form id="dislogin-form" action="~/Pages/AJAX/Dislogin.cshtml" method="post" role="form" style="display: block;">
 			<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Dislogin">
 		</form>
