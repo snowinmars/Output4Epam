@@ -9,6 +9,12 @@
 
 			string login = Request["login"];
 			string password = Request["password"];
+			string confirm_password = Request["confirm-password"];
+
+			if (password != confirm_password)
+			{
+				throw new ArgumentException("Passwords are different");
+			}
 
 			LogicProvider.RegUserLogic.Registrate(login, password);
 			LoggerProvider.Log.Info($"{User.Identity.Name} added to database.");

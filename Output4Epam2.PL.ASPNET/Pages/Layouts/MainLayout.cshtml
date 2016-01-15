@@ -1,0 +1,50 @@
+﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
+
+@{
+	bool banned = false;
+
+	if (LogicProvider.RegUserLogic.GetRolesForUser(User.Identity.Name).Contains(RoleScroll.Ban.ToString()))
+	{
+		banned = true;
+	}
+}
+
+@if (banned)
+{
+	Response.Redirect("/Pages/StructureElements/Urbanned.cshtml");
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<meta charset="utf8" />
+	<title>Yay</title>
+	<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/Content/jasny-bootstrap.min.css" rel="stylesheet" />
+	<link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body>
+
+	@RenderPage("/Pages/StructureElements/Header.cshtml")
+
+	<section class="main">
+		@RenderPage("/Pages/StructureElements/LoginForm.cshtml")
+
+		@RenderPage("/Pages/StructureElements/Menu.cshtml")
+
+		<section class="allitems col-xs-12">
+			@RenderBody()
+		</section>
+	</section>
+
+	@RenderPage("/Pages/StructureElements/Footer.cshtml")
+
+	<script src="~/scripts/jquery-1.9.1.min.js"></script>
+	<script src="~/scripts/bootstrap.min.js"></script>
+	<script src="~/scripts/jasny-bootstrap.min.js"></script>
+	<script src="~/scripts/scripts.js"></script>
+</body>
+</html>

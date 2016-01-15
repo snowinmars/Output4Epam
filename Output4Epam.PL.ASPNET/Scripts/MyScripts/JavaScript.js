@@ -1,7 +1,4 @@
-﻿/// <reference path="C:\prg\Output4Epam\Output4Epam.PL.ASPNET\Pages/AJAX/BuyLot.cshtml" />
-/// <reference path="C:\prg\Output4Epam\Output4Epam.PL.ASPNET\Pages/AJAX/BuyLot.cshtml" />
-/// <reference path="C:\prg\Output4Epam\Output4Epam.PL.ASPNET\Pages/AJAX/BuyLot.cshtml" />
-(function () {
+﻿(function () {
 	$(".delete").click(deleteLot);
 
 	function deleteLot(e) {

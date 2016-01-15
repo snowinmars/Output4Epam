@@ -1,0 +1,58 @@
+﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
+
+@{
+	Layout = @"/Pages/Layouts/MainLayout.cshtml";
+}
+
+@{
+	Guid id = Guid.Parse(Request["id"]);
+	Lot item = LogicProvider.LotLogic.Get(id);
+}
+
+<ul class="userlist col-sm-offset-1 col-xs-12 col-sm-11">
+	<li class="userlistitem col-xs-12">
+		<p class="p4img col-xs-6 col-sm-4 col-md-2">
+			<img class="img img-responsive" src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" />
+		</p>
+		<div class="col-xs-6 col-sm-8 col-md-10">
+			<p class="title col-xs-8 link">@item.Title</p>
+			<div class=" col-xs-6 col-sm-4">
+				<button type="button" class="btn btn-default btn-xs dropdown-toggle cost link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="cost" data-cost="@(item.Cost)">@item.Cost руб.</span>
+					<span class="caret"></span>
+				</button>
+				<ul class="costchoise dropdown-menu">
+					<li class="costchoiseitem" data-type="dollar"><a href="#">Баксы</a></li>
+					<li class="costchoiseitem" data-type="euro"><a href="#">Евро</a></li>
+					<li class="costchoiseitem" data-type="ruble"><a href="#">Рубли</a></li>
+				</ul>
+			</div>
+			<p class="owner col-xs-offset-1">posted by @(item.Owner) from г. @item.Sity</p>
+		</div>
+		<p class="col-xs-6 col-sm-6 col-md-10">@item.Info</p>
+		<div class="col-xs-4 col-sm-2">
+			<p class="postDate toolatip" data-tooltip="format in dd.mm.yyyy">@item.PostDate</p>
+		</div>
+		<div class=" col-xs-4">
+			@if (item.BoughtBy == String.Empty)
+			{
+				<p class="btn mybtn btn-default btn-xs buy" data-id="@item.Id">Buy</p>
+			}
+			else
+			{
+				<p class="btn mybtn btn-default btn-xs toolatip" disabled="disabled" data-tooltip="bought by @item.BoughtBy" data-id="@item.Id">Buy</p>
+			}
+			<p class="btn mybtn btn-danger btn-xs delete" data-id="@item.Id">Delete</p>
+		</div>
+		<div class="col-xs-4">
+			@foreach (var type in @item.Types.ToString().Split(','))
+			{
+				<p class="categories">
+					<span>@String.Join("", "#", type)</span>
+				</p>
+			}
+		</div>
+	</li>
+</ul>
+<div id="toolatip"></div>

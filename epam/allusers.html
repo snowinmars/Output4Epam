@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<meta charset="utf-8" />
+	<title>Yay</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="jasny-bootstrap/css/jasny-bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<header class="text-center visible-md visible-lg">
+		<a href="index.html"><img src="header.png" alt="header">	</a>
+		
+	</header>
+
+	<section class="main">
+		<div class="btn-group loginform col-xs-12 col-md-12 clearfix ">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Login form <span class="caret"></span>
+			</button>
+
+			<div class="row dropdown-menu keep_open"> 
+				<div class="col-md-12"> 
+					<div class="panel panel-login"> 
+						<div class="panel-heading"> 
+							<div class="row"> 
+								<div class="col-xs-6"> 
+									<a href="#" class="active" id="login-form-link">Login</a> 
+								</div> 
+								<div class="col-xs-6"> 
+									<a href="#" id="register-form-link">Register</a> 
+								</div> 
+							</div> 
+							<hr> 
+						</div> 
+						<div class="panel-body"> 
+							<div class="row"> 
+								<div class="col-lg-12"> 
+									<form id="login-form" action="http://phpoll.com/login/process" method="post" role="form" style="display: block;"> 
+										<div class="form-group"> 
+											<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value=""> 
+										</div> 
+										<div class="form-group"> 
+											<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password"> 
+										</div> 
+										<div class="form-group"> 
+											<div class="row"> 
+												<div class="col-sm-6 col-sm-offset-3"> 
+													<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In"> 
+												</div> 
+											</div> 
+										</div> 
+									</form> 
+									<form id="register-form" action="http://phpoll.com/register/process" method="post" role="form" style="display: none;"> 
+										<div class="form-group"> 
+											<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value=""> 
+										</div> 
+										<div class="form-group"> 
+											<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password"> 
+										</div> 
+										<div class="form-group"> 
+											<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password"> 
+										</div> 
+										<div class="form-group"> 
+											<div class="row"> 
+												<div class="col-sm-6 col-sm-offset-3"> 
+													<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now"> 
+												</div> 
+											</div> 
+										</div> 
+									</form> 
+								</div> 
+							</div> 
+						</div> 
+					</div> 
+				</div> 
+			</div>
+		</div>
+
+		<div class="navmenu navmenu-default navmenu-fixed-left offcanvas" style="">
+			<a class="navmenu-brand" href="#">Yay</a>
+			<ul class="nav navmenu-nav">
+				<li class="active"><a href="addlot.html">Add lot</a></li>
+				<li><a href="#">Show my lots</a></li>
+				<li><a href="allusers.html">Show all users</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Filters<b class="caret"></b></a>
+					<ul class="dropdown-menu navmenu-nav">
+						<li><a href="#">Technic</a></li>
+						<li><a href="#">Cloth</a></li>
+						<li><a href="#">Fun</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+		<div class="navbar navbar-default navbar-fixed-top" style="">
+			<button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu" data-canvas="body">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+
+
+		<section class="allitems col-xs-12">
+			<ul class="userlist">
+				<li class="userlistitem" data-login="@item.Login">
+					<div class="col-12-xs">
+					<p class="title col-xs-8">Login: kasd</p>
+					<p class="cost col-xs-4">Has 123 руб.</p>
+					</div>
+					<p class="info col-xs-12">
+						Roles:
+							<span class="role">ads</span>
+							<span class="role">sdf</span>
+							<span class="role">dfg</span>
+							<span class="role">fgh</span>
+					</p>
+					<div class="col-xs-12">
+					<p class="btn btn-danger removeuser" data-action="remove">Remove</p>
+					<p class="btn btn-default togglevipuser" data-action="togglevip">Toggle VIP</p>
+					<p class="btn btn-default toggleadminuser" data-action="toggleadmin">Toggle admin</p>
+					<p class="btn btn-warning banuser" data-action="ban">Ban</p>
+					</div>
+				</li>
+		</ul>
+		<div id="tooltip"></div>
+		</section>
+	</section>
+
+	<footer class="text-center navbar-fixed-bottom">
+		GNUGPL
+	</footer>
+
+	<script src="jquery-2.2.0.min.js"></script>
+	<script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+	<script src="jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
+	<script src="scripts.js"></script>
+</body>
+</html>

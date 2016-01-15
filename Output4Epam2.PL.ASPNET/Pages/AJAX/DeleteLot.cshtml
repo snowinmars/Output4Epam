@@ -1,0 +1,28 @@
+﻿@using Output4Epam.Providers
+
+@{
+	if (IsPost)
+	{
+		try
+		{
+
+			Guid id = Guid.Parse(Request["Id"]);
+
+			LogicProvider.LotLogic.Remove(id);
+		}
+		catch (NotImplementedException)
+		{
+			Response.Redirect("/Pages/ErrorPages/501.cshtml");
+		}
+		catch (ArgumentException)
+		{
+			Response.Redirect("/Pages/ErrorPages/400.cshtml");
+		}
+		catch
+		{
+			Response.Redirect("/Pages/ErrorPages/Other.cshtml");
+		}
+	}
+		Response.Redirect("/Pages/StructureElements/ShowMyLots.cshtml");
+		return;
+}

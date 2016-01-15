@@ -1,0 +1,32 @@
+﻿@using Output4Epam.Providers
+
+@{
+	Layout = @"/Pages/Layouts/MainLayout.cshtml";
+}
+
+<ul class="userlist">
+	@foreach (var item in LogicProvider.RegUserLogic.GetAll())
+	{
+
+		<li class="userlistitem" data-login="@item.Login">
+			<div class="col-12-xs">
+				<p class="title col-xs-8">Login: @item.Login</p>
+				<p class="cost col-xs-4">Has @item.Money руб.</p>
+			</div>
+			<p class="info col-xs-12">
+				Roles:
+				@foreach (var rolename in @LogicProvider.RegUserLogic.GetRolesForUser(item.Login))
+				{
+					<span class="role">@rolename</span>
+				}
+			</p>
+			<div class="col-xs-12">
+				<p class="btn btn-danger removeuser" data-action="remove">Remove</p>
+				<p class="btn btn-default togglevipuser" data-action="togglevip">Toggle VIP</p>
+				<p class="btn btn-default toggleadminuser" data-action="toggleadmin">Toggle admin</p>
+				<p class="btn btn-warning banuser" data-action="ban">Ban</p>
+			</div>
+		</li>
+	}
+</ul>
+<div id="tooltip"></div>

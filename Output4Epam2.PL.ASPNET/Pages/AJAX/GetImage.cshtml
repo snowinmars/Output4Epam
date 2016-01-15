@@ -1,11 +1,13 @@
-﻿@using Output4Epam.Providers;
+﻿@using Output4Epam.Providers
 
 @{
 	try
 	{
 
-		FormsAuthentication.SignOut();
-		LoggerProvider.Log.Info($"{User.Identity.Name} logged out.");
+		Guid id = Guid.Parse(Request["id"]);
+
+		byte[] imageArray = LogicProvider.LotLogic.GetImage(id);
+		Response.WriteBinary(imageArray, "image/png");
 	}
 	catch (NotImplementedException)
 	{
@@ -19,7 +21,5 @@
 	{
 		Response.Redirect("/Pages/ErrorPages/Other.cshtml");
 	}
-
-	Response.Redirect("/Pages/StructureElements/Index.cshtml");
 	return;
 }
