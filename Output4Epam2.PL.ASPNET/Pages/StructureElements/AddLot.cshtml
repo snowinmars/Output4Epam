@@ -1,7 +1,16 @@
-﻿@{ 
+﻿@using Output4Epam.Entities
+@using Output4Epam.Providers
+
+@{
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+}
+
+@{ 
 	Layout = @"/Pages/Layouts/MainLayout.cshtml";
 }
 
+@if (isUser)
+{
 <p>Choose category</p>
 <div class="col-xs-1 checkboxes">
 	<div class="checkbox">
@@ -52,3 +61,4 @@
 		<button type="submit" class="btn btn-default">Sign in</button>
 	</div>
 </div>
+}

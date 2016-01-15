@@ -1,35 +1,42 @@
-﻿@using Output4Epam.Providers
-@using Output4Epam.Entities
+﻿@using Output4Epam.Entities
+@using Output4Epam.Providers
 
 @{
-	if (IsPost)
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+}
+@{
+	if (isUser)
 	{
-		try
-		{
 
-			bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
+		if (IsPost)
+		{
+			try
+			{
 
-			if (isUser)
-			{
-				Guid id = Guid.Parse(Request["Id"]);
-				LogicProvider.LotLogic.Buy(id, User.Identity.Name);
+				bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, "User");
+
+				if (isUser)
+				{
+					Guid id = Guid.Parse(Request["Id"]);
+					LogicProvider.LotLogic.Buy(id, User.Identity.Name);
+				}
+				else
+				{
+					Response.Redirect("/Pages/ErrorPage/403.cshtml");
+				}
 			}
-			else
+			catch (NotImplementedException)
 			{
-				Response.Redirect("/Pages/ErrorPage/403.cshtml");
+				Response.Redirect("/Pages/ErrorPages/501.cshtml");
 			}
-		}
-		catch (NotImplementedException)
-		{
-			Response.Redirect("/Pages/ErrorPages/501.cshtml");
-		}
-		catch (ArgumentException)
-		{
-			Response.Redirect("/Pages/ErrorPages/400.cshtml");
-		}
-		catch
-		{
-			Response.Redirect("/Pages/ErrorPages/Other.cshtml");
+			catch (ArgumentException)
+			{
+				Response.Redirect("/Pages/ErrorPages/400.cshtml");
+			}
+			catch
+			{
+				Response.Redirect("/Pages/ErrorPages/Other.cshtml");
+			}
 		}
 	}
 	Response.Redirect("/Pages/StructureElements/Index.cshtml");

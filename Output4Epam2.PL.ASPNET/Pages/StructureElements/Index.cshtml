@@ -1,11 +1,56 @@
 ﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
+@using System.Linq
 
 @{
 	Layout = @"/Pages/Layouts/MainLayout.cshtml";
 }
 
+@{
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+
+	string order = Request["orderby"];
+	string filter = Request["filterby"];
+	IEnumerable<Lot> collection = default(IEnumerable<Lot>);
+
+	if ((filter != String.Empty) || (filter != null))
+	{
+		collection = from item in LogicProvider.LotLogic.GetAll()
+			     where item.Types.HasFlag((LotTypes)Enum.Parse(typeof(LotTypes), filter))
+			     select item;
+	}
+
+	if (((order == String.Empty) || (order == null)) &&
+		((filter == String.Empty) || (filter == null)))
+	{
+		order = "orderByDate";
+	}
+
+	switch (order)
+	{
+		case "orderByDate":
+			collection = from item in LogicProvider.LotLogic.GetAll() // dunno how to sort in another way
+				     orderby item.PostDate                             // yea, I know about method Filter(), but...
+				     select item;
+			break;
+		case "orderByName":
+			collection = from item in LogicProvider.LotLogic.GetAll()
+				     orderby item.Title
+				     select item;
+			break;
+		case "orderByOwner":
+			collection = from item in LogicProvider.LotLogic.GetAll()
+				     orderby item.Owner
+				     select item;
+			break;
+		default:
+			break;
+	}
+}
+
 <ul class="userlist col-sm-offset-1 col-xs-12 col-sm-11">
-	@foreach (var item in LogicProvider.LotLogic.GetAll())
+	@foreach (var item in collection)
 	{
 		<li class="userlistitem col-xs-12">
 			<p class="p4img col-xs-6 col-sm-4 col-md-2">

@@ -1,9 +1,16 @@
 ﻿@using Output4Epam.Providers
+@using Output4Epam.Entities
+
+@{
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
+}
 
 @{
 	Layout = @"/Pages/Layouts/MainLayout.cshtml";
 }
 
+@if (isAdmin)
+{
 <ul class="userlist">
 	@foreach (var item in LogicProvider.RegUserLogic.GetAll())
 	{
@@ -30,3 +37,4 @@
 	}
 </ul>
 <div id="tooltip"></div>
+}

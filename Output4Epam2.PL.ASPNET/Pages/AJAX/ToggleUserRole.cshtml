@@ -4,52 +4,58 @@
 @using Newtonsoft.Json
 
 @{
-	try
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
+}
+
+@{
+	if (isAdmin)
 	{
-
-		string login = Request["Login"];
-		string action = Request["Action"];
-		RoleScroll role = RoleScroll.None;
-
-		switch (action)
+		try
 		{
-			case "ban":
-				role = RoleScroll.Ban;
-				break;
-			case "togglevip":
-				role = RoleScroll.VIP;
-				break;
-			case "toggleadmin":
-				role = RoleScroll.Admin;
-				break;
-			default:
-				break;
+			string login = Request["Login"];
+			string action = Request["Action"];
+			RoleScroll role = RoleScroll.None;
+
+			switch (action)
+			{
+				case "ban":
+					role = RoleScroll.Ban;
+					break;
+				case "togglevip":
+					role = RoleScroll.VIP;
+					break;
+				case "toggleadmin":
+					role = RoleScroll.Admin;
+					break;
+				default:
+					break;
+			}
+
+			LogicProvider.RegUserLogic.ToggleRole(login, role);
+			LoggerProvider.Log.Info($"Role {role.ToString()} had been toggled for user {User.Identity.Name}.");
+
+			string[] roles = LogicProvider.RegUserLogic.GetRolesForUser(login);
+
+			StringBuilder sb = new StringBuilder(32);
+			for (int i = 0; i < roles.Length - 1; ++i)
+			{
+				sb.Append(roles[i] + ", ");
+			}
+			sb.Append(roles[roles.Length - 1]);
+
+			Response.Write(sb.ToString());
 		}
-
-		LogicProvider.RegUserLogic.ToggleRole(login, role);
-		LoggerProvider.Log.Info($"Role {role.ToString()} had been toggled for user {User.Identity.Name}.");
-
-		string[] roles = LogicProvider.RegUserLogic.GetRolesForUser(login);
-
-		StringBuilder sb = new StringBuilder(32);
-		for (int i = 0; i < roles.Length - 1; ++i)
+		catch (NotImplementedException)
 		{
-			sb.Append(roles[i] + ", ");
+			Response.Redirect("/Pages/ErrorPages/501.cshtml");
 		}
-		sb.Append(roles[roles.Length - 1]);
-
-		Response.Write(sb.ToString());
-	}
-	catch (NotImplementedException)
-	{
-		Response.Redirect("/Pages/ErrorPages/501.cshtml");
-	}
-	catch (ArgumentException)
-	{
-		Response.Redirect("/Pages/ErrorPages/400.cshtml");
-	}
-	catch
-	{
-		Response.Redirect("/Pages/ErrorPages/Other.cshtml");
+		catch (ArgumentException)
+		{
+			Response.Redirect("/Pages/ErrorPages/400.cshtml");
+		}
+		catch
+		{
+			Response.Redirect("/Pages/ErrorPages/Other.cshtml");
+		}
 	}
 }

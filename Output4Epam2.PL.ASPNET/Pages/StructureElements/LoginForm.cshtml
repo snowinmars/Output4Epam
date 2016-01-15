@@ -1,6 +1,14 @@
 ﻿@using Output4Epam.Providers;
 
-@if (!User.Identity.IsAuthenticated)
+@if (User.Identity.IsAuthenticated)
+{
+	<div class="btn-group loginform col-xs-1 col-md-1 clearfix ">
+		<form id="dislogin-form" action="~/Pages/AJAX/Dislogin.cshtml" method="post" role="form" style="display: block;">
+			<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Dislogin">
+		</form>
+	</div>
+}
+else
 {
 	<div class="btn-group loginform col-xs-12 col-md-12 clearfix ">
 		<button type="button" class="btn btn-login dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,13 +71,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
-}
-else
-{
-	<div class="btn-group loginform col-xs-1 col-md-1 clearfix ">
-		<form id="dislogin-form" action="~/Pages/AJAX/Dislogin.cshtml" method="post" role="form" style="display: block;">
-			<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Dislogin">
-		</form>
 	</div>
 }
