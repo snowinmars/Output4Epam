@@ -137,6 +137,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="scripts\pie.js" />
     <Content Include="scripts\jasny-bootstrap.js" />
     <Content Include="scripts\jasny-bootstrap.min.js" />
     <Content Include="scripts\jquery-1.9.1.min.map" />
@@ -149,6 +150,8 @@
     <Content Include="Pages\StructureElements\ShowMore.cshtml" />
     <Content Include="Pages\StructureElements\Urbanned.cshtml" />
     <Content Include="Pages\Layouts\ErrorPageLayout.cshtml" />
+    <Content Include="Pages\StructureElements\Statistic.cshtml" />
+    <Content Include="Pages\StructureElements\ShowMyPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

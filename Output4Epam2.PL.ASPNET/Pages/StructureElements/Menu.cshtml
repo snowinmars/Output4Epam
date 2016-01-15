@@ -8,21 +8,23 @@
 
 <div class="navmenu navmenu-default navmenu-fixed-left offcanvas" style="">
 	<a class="navmenu-brand" href="/Pages/StructureElements/Index.cshtml">Yay</a>
-	<ul class="nav navmenu-nav">
+	<ul class="nav navmenu-nav mainNavMenu">
 		@if (isUser)
 		{
-			<li class="active"><a href="/Pages/StructureElements/AddLot.cshtml">Add lot</a></li>
-			<li><a href="/Pages/StructureElements/ShowMyLots.cshtml">Show my lots</a></li>
+			<li data-type="showmypage"><a href="/Pages/StructureElements/ShowMyPage.cshtml">My Page</a></li>
+			<li data-type="addlot" class="active"><a href="/Pages/StructureElements/AddLot.cshtml">Add lot</a></li>
+			<li data-type="showmylots"><a href="/Pages/StructureElements/ShowMyLots.cshtml">Show my lots</a></li>
 		}
 		@if (isAdmin)
 		{
-			<li><a href="/Pages/StructureElements/ShowAllUsers.cshtml">Show all users</a></li>
+			<li data-type="showallusers"><a href="/Pages/StructureElements/ShowAllUsers.cshtml">Show all users</a></li>
 		}
 		@if (!User.Identity.IsAuthenticated)
 		{
-			<li class="blackfont">Registrate for more options</li>
+			<li data-type="none" class="blackfont">Registrate for more options</li>
 		}
-		<li class="dropdown">
+		<li data-type="statistic"><a href="/Pages/StructureElements/Statistic.cshtml">Statistic</a></li>
+		<li class="dropdown" data-type="none">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Filters<b class="caret"></b></a>
 			<ul class="dropdown-menu navmenu-nav">
 				@foreach (var item in Enum.GetValues(typeof(LotTypes)))

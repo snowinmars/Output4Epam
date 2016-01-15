@@ -1,0 +1,37 @@
+﻿@using Output4Epam.Providers;
+@using Output4Epam.Entities;
+@{
+	Layout = "~/Pages/Layouts/MainLayout.cshtml";
+}
+@{
+	Dictionary <string, int> pairs = new Dictionary<string, int>();
+
+	foreach (var item in Enum.GetValues(typeof(LotTypes)))
+	{
+		pairs.Add(item.ToString(), 0);
+	}
+
+	IEnumerable<LotTypes> types = from item in LogicProvider.LotLogic.GetAll()
+				      select item.Types;
+
+	foreach (var item in types)
+	{
+		foreach (var role in item.ToString().Split(','))
+		{
+			++pairs[role.Trim()];
+		}
+	}
+}
+
+<table>
+	<tbody>
+		@foreach (var item in pairs)
+		{
+			<tr>
+				<th scope="row">@item.Key</th>
+				<td>@item.Value</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<div class="chart" id="holder"></div>

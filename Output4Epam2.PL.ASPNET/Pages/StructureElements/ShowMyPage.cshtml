@@ -1,0 +1,28 @@
+﻿@using Output4Epam.Entities
+@using Output4Epam.Providers
+
+@{
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	RegUser item = LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
+}
+
+@{
+	Layout = @"/Pages/Layouts/MainLayout.cshtml";
+}
+
+<ul class="userlist">
+	<li class="userlistitem" data-login="@item.Login">
+		<div class="col-12-xs">
+			<p class="title col-xs-12">Login: @item.Login</p>
+			<p class="cost col-xs-12">Has @item.Money руб.</p>
+		</div>
+		<p class="info col-xs-12">
+			Roles:
+			@foreach (var rolename in @LogicProvider.RegUserLogic.GetRolesForUser(item.Login))
+			{
+				<span class="role">@rolename</span>
+			}
+		</p>
+	</li>
+</ul>
+<div id="tooltip"></div>
