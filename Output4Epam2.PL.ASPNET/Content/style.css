@@ -61,6 +61,7 @@ body {
 .p4img {
 	margin-top: 10px;
 	outline: 2px solid transparent;
+	height: auto;
 }
 
 .p4img:hover {

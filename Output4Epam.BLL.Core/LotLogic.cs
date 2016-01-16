@@ -54,9 +54,10 @@
 				throw new ArgumentException("Too big file");
 			}
 
-			Stream smallImage = new MemoryStream(this.ResizeImageFile(image.ToByteArray(), 100));
+			// Use this, if u wanna to resize image
+			//Stream smallImage = new MemoryStream(this.ResizeImageFile(image.ToByteArray(), 100));
 
-			Common.Common.LotDao.AddImage(lotId, smallImage);
+			Common.Common.LotDao.AddImage(lotId, image);
 		}
 
 		/// <summary>

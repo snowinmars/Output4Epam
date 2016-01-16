@@ -6,7 +6,8 @@
 	using System.Text.RegularExpressions;
 	using Output4Epam.BLL.Interface;
 	using Output4Epam.Entities;
-
+	using System.Security.Cryptography;
+	using System.Text;
 	public class RegUserLogic : IRegUserLogic
 	{
 		/// <summary>
@@ -107,6 +108,45 @@
 			return Common.Common.RegUserDao.IsUserInRole(login, roleName);
 		}
 
+		private static byte[] CreateRandomSalt(int length)
+		{
+			// Create a buffer
+			byte[] randBytes;
+
+			if (length >= 1)
+			{
+				randBytes = new byte[length];
+			}
+			else
+			{
+				randBytes = new byte[1];
+			}
+
+			// Create a new RNGCryptoServiceProvider.
+			RNGCryptoServiceProvider rand = new RNGCryptoServiceProvider();
+
+			// Fill the buffer with random bytes.
+			rand.GetBytes(randBytes);
+
+			// return the bytes.
+			return randBytes;
+		}
+
+		private static void ClearBytes(byte[] buffer)
+		{
+			// Check arguments.
+			if (buffer == null)
+			{
+				throw new ArgumentException("buffer");
+			}
+
+			// Set each byte in the buffer to 0.
+			for (int x = 0; x < buffer.Length; x++)
+			{
+				buffer[x] = 0;
+			}
+		}
+
 		/// <summary>
 		/// Registrate new user with this login and password.
 		/// </summary>
@@ -137,7 +177,23 @@
 				throw new ArgumentException("Uncorrect parameters");
 			}
 
-			RegUser regUser = new RegUser(login, password.GetHashCode(), RoleScroll.User, 0);
+			byte[] pwd = Encoding.Unicode.GetBytes(password);
+			byte[] salt = CreateRandomSalt(7);
+			TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
+			RegUser regUser = default(RegUser);
+			try
+			{
+				PasswordDeriveBytes pdb = new PasswordDeriveBytes(pwd, salt);
+				tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
+				regUser = new RegUser(login, BitConverter.ToInt32(tdes.Key, 0), RoleScroll.User, 0);
+			}
+			finally
+			{
+				ClearBytes(pwd);
+				ClearBytes(salt);
+				tdes.Clear();
+			}
+
 			return Common.Common.RegUserDao.Add(regUser);
 		}
 
