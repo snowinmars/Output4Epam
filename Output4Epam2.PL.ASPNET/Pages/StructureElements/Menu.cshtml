@@ -150,7 +150,7 @@
 				@if (isUser)
 			{
 					<li class="navbar-left" data-type="showmypage"><a href="/Pages/StructureElements/ShowMyPage.cshtml">My Page</a></li>
-					<li class="navbar-left" data-type="addlot" class="active"><a href="/Pages/StructureElements/AddLot.cshtml">Add lot</a></li>
+					<li class="navbar-left active" data-type="addlot"><a href="/Pages/StructureElements/AddLot.cshtml">Add lot</a></li>
 					<li class="navbar-left" data-type="showmylots"><a href="/Pages/StructureElements/ShowMyLots.cshtml">Show my lots</a></li>
 			}
 				@if (isAdmin)
@@ -159,7 +159,7 @@
 			}
 				@if (!User.Identity.IsAuthenticated)
 			{
-					<li class="navbar-left" data-type="none" class="blackfont">Registrate for more options</li>
+					<li class="navbar-left" data-type="none"><a href="~/Pages/StructureElements/Register.cshtml">Registrate for more options</a></li>
 			}
 				<li class="navbar-left" data-type="statistic"><a href="/Pages/StructureElements/Statistic.cshtml">Statistic</a></li>
 				<li class="dropdown navbar-left" data-type="none">

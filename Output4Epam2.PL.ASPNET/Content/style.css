@@ -6,6 +6,15 @@ body {
 	right: 0;
 	bottom: 0;
 	left: 0;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #555;
+  background-color: #222;
+  border-radius: 7px;
 }
 
 .blackfont {

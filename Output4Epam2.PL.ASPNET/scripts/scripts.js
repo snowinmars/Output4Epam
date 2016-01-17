@@ -1,23 +1,24 @@
 (function () {
-	menu = $(".mainNavMenu");
-	page = location.pathname;
-	menu.children().removeClass("active");
+	menu = $("#bs-example-navbar-collapse-1");
+	page = location.pathname,
+	items = menu.find("li");
+	items.removeClass("active");
 
 	switch (page) {
 		case "/Pages/StructureElements/ShowMyPage.cshtml":
-			menu.children().filter("[data-type=showmypage]").addClass("active");
+			items.filter("[data-type=showmypage]").addClass("active");
 			break;
 		case "/Pages/StructureElements/AddLot.cshtml":
-			menu.children().filter("[data-type=addlot]").addClass("active");
+			items.filter("[data-type=addlot]").addClass("active");
 			break;
 		case "/Pages/StructureElements/ShowMyLots.cshtml":
-			menu.children().filter("[data-type=showmylots]").addClass("active");
+			items.filter("[data-type=showmylots]").addClass("active");
 			break;
 		case "/Pages/StructureElements/ShowAllUsers.cshtml":
-			menu.children().filter("[data-type=showallusers]").addClass("active");
+			items.filter("[data-type=showallusers]").addClass("active");
 			break;
 		case "/Pages/StructureElements/Statistic.cshtml":
-			menu.children().filter("[data-type=statistic]").addClass("active");
+			items.filter("[data-type=statistic]").addClass("active");
 			break;
 		default:
 			break;
@@ -287,15 +288,15 @@
 		switch (type) {
 			case "dollar":
 				newcost = (oldcost - 0) / (rate.USD - 0);
-				costitem.text(Math.round(newcost) + " $");
+				costitem.text(newcost.toFixed(2) + " $");
 				break;
 			case "euro":
 				newcost = (oldcost - 0) / (rate.EURO - 0);
-				costitem.text(Math.round(newcost) + " ˆ");
-				break;
+				costitem.text(newcost.toFixed(2) + " â‚¬"); // euro
+				break;						// OMG, I hate MS so much.
 			case "ruble":
 				newcost = oldcost;
-				costitem.text(Math.round(newcost) + " ðóá.");
+				costitem.text(newcost + " Ñ€ÑƒÐ±."); // rubles
 				break;
 			default:
 				break;
