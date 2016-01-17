@@ -17,6 +17,7 @@
 				{
 					Guid id = Guid.Parse(Request["Id"]);
 					LogicProvider.LotLogic.Buy(id, User.Identity.Name);
+					Response.Write(id.ToString());
 				}
 				else
 				{

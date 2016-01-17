@@ -69,7 +69,7 @@
 
 	function more(e) {
 		var target = $(e.target),
-			guid = target.closest("li").children("p").children("img").attr("src").split("=")[1];
+			guid = target.closest("li").find("img").attr("src").split("=")[1];
 
 		location.href = "/Pages/StructureElements/ShowMore.cshtml" + "?id=" + guid;
 	};
@@ -191,16 +191,20 @@
 	$(".buy").click(buy);
 
 	function buy(e) {
-		var target = $(e.target),
+		var id,
+			target = $(e.target),
 			datastr = {
 				"Id": target.data("id"),
 			};
 
-		$.ajax({
+		id = $.ajax({
+			async: false,
 			url: "/Pages/AJAX/BuyLot.cshtml",
 			type: "post",
 			data: datastr,
-		});
+		}).responseText;
+
+		target.attr("disabled", "disabled");
 	}
 
 	/*________________________________________*/
@@ -209,7 +213,7 @@
 	$(".add").click(add);
 
 	function add(e) {
-		var group = $(".checkbox"),
+		var group = $(".checkbox").find(":input"),
 			form = $("form");
 		form.append('<input type="text" name="Types" value="">');
 		var i = 0,

@@ -1,13 +1,14 @@
 ﻿namespace Output4Epam.BLL.Core
 {
+	using Output4Epam.BLL.Interface;
+	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-	using System.Text.RegularExpressions;
-	using Output4Epam.BLL.Interface;
-	using Output4Epam.Entities;
 	using System.Security.Cryptography;
 	using System.Text;
+	using System.Text.RegularExpressions;
+
 	public class RegUserLogic : IRegUserLogic
 	{
 		/// <summary>
@@ -40,17 +41,32 @@
 		/// <returns></returns>
 		public bool Auth(string login, string password)
 		{
-			int hash = password.GetHashCode();
+			byte[] pwd = Encoding.Unicode.GetBytes(password);
+			byte[] salt = CreateRandomSalt(7);
+			TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
 
-			foreach (var item in Common.Common.RegUserDao.GetAll())
+			try
 			{
-				if ((item.Login == login) && (item.PasswordHash == hash))
-				{
-					return true;
-				}
-			}
+				PasswordDeriveBytes pdb = new PasswordDeriveBytes(pwd, salt);
+				tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
+				int hash = BitConverter.ToInt32(tdes.Key, 0);
 
-			return false;
+				foreach (var item in Common.Common.RegUserDao.GetAll())
+				{
+					if ((item.Login == login) && (item.PasswordHash == hash))
+					{
+						return true;
+					}
+				}
+
+				return false;
+			}
+			finally
+			{
+				ClearBytes(pwd);
+				ClearBytes(salt);
+				tdes.Clear();
+			}
 		}
 
 		/// <summary>

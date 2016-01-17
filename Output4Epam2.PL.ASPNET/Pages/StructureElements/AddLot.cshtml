@@ -14,25 +14,19 @@
 	<div class="col-xs-2 checkboxes">
 		<p>Choose category</p>
 		<div class="checkbox">
-			<ul class="typelist">
-				<li>
-					<label>
-						<input type="checkbox" value="">
-						Fun
-					</label>
-				</li>
-				<li>
-					<label>
-						<input type="checkbox" value="">
-						Technic
-					</label>
-				</li>
-				<li>
-					<label>
-						<input type="checkbox" value="">
-						Cloth
-					</label>
-				</li>
+			<ul>
+				@foreach (var item in Enum.GetValues(typeof(LotTypes)))
+				{
+					if (item.ToString() == LotTypes.None.ToString())
+					{
+						continue;
+					}
+
+					<li>
+						<input type="checkbox" name="@item" data-enumValue="@((int)item)">
+						@item.ToString()
+					</li>
+				}
 			</ul>
 		</div>
 	</div>

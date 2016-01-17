@@ -66,6 +66,8 @@ body {
 	margin-top: 10px;
 	outline: 2px solid transparent;
 	height: auto;
+	max-height: 200px;
+	overflow: hidden;
 }
 
 .p4img:hover {
