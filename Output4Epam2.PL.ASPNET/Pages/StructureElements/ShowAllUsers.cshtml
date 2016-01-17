@@ -15,8 +15,8 @@
 	@foreach (var item in LogicProvider.RegUserLogic.GetAll())
 	{
 
-		<li class="userlistitem" data-login="@item.Login">
-			<div class="col-12-xs">
+		<li class="userlistitem col-xs-12 col-md-5" data-login="@item.Login">
+			<div>
 				<p class="title col-xs-8">Login: @item.Login</p>
 				<p class="cost col-xs-4">Has @item.Money руб.</p>
 			</div>

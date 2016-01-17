@@ -52,6 +52,10 @@ body {
 	list-style: none;
 }
 
+.typelist {
+	list-style: none;
+}
+
 .userlistitem {
 	border: 1px solid white;
 	margin: 10px;

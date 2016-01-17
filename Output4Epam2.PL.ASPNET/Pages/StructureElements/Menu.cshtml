@@ -1,49 +1,196 @@
 ﻿@using Output4Epam.Entities
 @using Output4Epam.Providers
 
-@{ 
+@{
 	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
 	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
 }
 
-<div class="navmenu navmenu-default navmenu-fixed-left offcanvas" style="">
-	<a class="navmenu-brand" href="/Pages/StructureElements/Index.cshtml">Yay</a>
-	<ul class="nav navmenu-nav mainNavMenu">
-		@if (isUser)
-		{
-			<li data-type="showmypage"><a href="/Pages/StructureElements/ShowMyPage.cshtml">My Page</a></li>
-			<li data-type="addlot" class="active"><a href="/Pages/StructureElements/AddLot.cshtml">Add lot</a></li>
-			<li data-type="showmylots"><a href="/Pages/StructureElements/ShowMyLots.cshtml">Show my lots</a></li>
-		}
-		@if (isAdmin)
-		{
-			<li data-type="showallusers"><a href="/Pages/StructureElements/ShowAllUsers.cshtml">Show all users</a></li>
-		}
-		@if (!User.Identity.IsAuthenticated)
-		{
-			<li data-type="none" class="blackfont">Registrate for more options</li>
-		}
-		<li data-type="statistic"><a href="/Pages/StructureElements/Statistic.cshtml">Statistic</a></li>
-		<li class="dropdown" data-type="none">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Filters<b class="caret"></b></a>
-			<ul class="dropdown-menu navmenu-nav">
-				@foreach (var item in Enum.GetValues(typeof(LotTypes)))
-				{
-					if (@item.ToString() != "None")
+@*
+	<div class="navmenu navmenu-default navmenu-fixed-left offcanvas" style="">
+		<a class="navmenu-brand" href="/Pages/StructureElements/Index.cshtml">Yay</a>
+		<ul class="nav navmenu-nav mainNavMenu">
+			<li class="dropdown" data-type="none">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Filters<b class="caret"></b></a>
+				<ul class="dropdown-menu navmenu-nav">
+					@if (User.Identity.IsAuthenticated)
 					{
-						<li class="topbutton filter" data-action="@item"><a href="#">@item</a></li>
+						<li>
+							<div class="btn-group loginform col-xs-4 col-sm-3 col-md-1 clearfix ">
+								<form id="dislogin-form" action="~/Pages/AJAX/Dislogin.cshtml" method="post" role="form" style="display: block;">
+									<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Dislogin">
+								</form>
+							</div>
+						</li>
 					}
+					else
+					{
+						<li>
+							<div class="btn-group loginform col-xs-12 col-md-12 clearfix ">
+								<button type="button" class="btn btn-login dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Login form <span class="caret"></span>
+								</button>
+
+								<div class="row dropdown-menu keep_open">
+									<div class="col-md-12">
+										<div class="panel panel-login">
+											<div class="panel-heading">
+												<div class="row">
+													<div class="col-xs-6">
+														<a href="#" class="active" id="login-form-link">Login</a>
+													</div>
+													<div class="col-xs-6">
+														<a href="#" id="register-form-link">Register</a>
+													</div>
+												</div>
+												<hr>
+											</div>
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-lg-12">
+														<form id="login-form" action="/Pages/AJAX/Login.cshtml" method="post" role="form" style="display: block;">
+															<div class="form-group">
+																<input type="text" name="login" id="login" tabindex="1" class="form-control" placeholder="Login" value="">
+															</div>
+															<div class="form-group">
+																<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+															</div>
+															<div class="form-group">
+																<div class="row">
+																	<div class="col-sm-6 col-sm-offset-3">
+																		<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+																	</div>
+																</div>
+															</div>
+														</form>
+														<form id="register-form" action="/Pages/AJAX/Registration.cshtml" method="post" role="form" style="display: none;">
+															<div class="form-group">
+																<input type="text" name="login" id="login" tabindex="1" class="form-control" placeholder="Login" value="">
+															</div>
+															<div class="form-group">
+																<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+															</div>
+															<div class="form-group">
+																<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+															</div>
+															<div class="form-group">
+																<div class="row">
+																	<div class="col-sm-6 col-sm-offset-3">
+																		<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register">
+																	</div>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					}
+				</ul>
+			</li>
+			@if (isUser)
+			{
+				<li data-type="showmypage"><a href="/Pages/StructureElements/ShowMyPage.cshtml">My Page</a></li>
+				<li data-type="addlot" class="active"><a href="/Pages/StructureElements/AddLot.cshtml">Add lot</a></li>
+				<li data-type="showmylots"><a href="/Pages/StructureElements/ShowMyLots.cshtml">Show my lots</a></li>
+			}
+			@if (isAdmin)
+			{
+				<li data-type="showallusers"><a href="/Pages/StructureElements/ShowAllUsers.cshtml">Show all users</a></li>
+			}
+			@if (!User.Identity.IsAuthenticated)
+			{
+				<li data-type="none" class="blackfont">Registrate for more options</li>
+			}
+			<li data-type="statistic"><a href="/Pages/StructureElements/Statistic.cshtml">Statistic</a></li>
+			<li class="dropdown" data-type="none">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Filters<b class="caret"></b></a>
+				<ul class="dropdown-menu navmenu-nav">
+					@foreach (var item in Enum.GetValues(typeof(LotTypes)))
+					{
+						if (@item.ToString() != "None")
+						{
+							<li class="topbutton filter" data-action="@item"><a href="#">@item</a></li>
+						}
+					}
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div class="navbar navbar-default navbar-fixed-top" style="">
+
+		<button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu" data-canvas="body">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+	</div>*@
+
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header ">
+			<button type="button" class="navbar-toggle collapsed hidden-sm hidden-md hidden-lg" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="~/Pages/StructureElements/Index.cshtml">Yay</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav col-xs-11">
+				@if (isUser)
+			{
+					<li class="navbar-left" data-type="showmypage"><a href="/Pages/StructureElements/ShowMyPage.cshtml">My Page</a></li>
+					<li class="navbar-left" data-type="addlot" class="active"><a href="/Pages/StructureElements/AddLot.cshtml">Add lot</a></li>
+					<li class="navbar-left" data-type="showmylots"><a href="/Pages/StructureElements/ShowMyLots.cshtml">Show my lots</a></li>
+			}
+				@if (isAdmin)
+			{
+					<li class="navbar-left" data-type="showallusers"><a href="/Pages/StructureElements/ShowAllUsers.cshtml">Show all users</a></li>
+			}
+				@if (!User.Identity.IsAuthenticated)
+			{
+					<li class="navbar-left" data-type="none" class="blackfont">Registrate for more options</li>
+			}
+				<li class="navbar-left" data-type="statistic"><a href="/Pages/StructureElements/Statistic.cshtml">Statistic</a></li>
+				<li class="dropdown navbar-left" data-type="none">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filters<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						@foreach (var item in Enum.GetValues(typeof(LotTypes)))
+						{
+							if (@item.ToString() != "None")
+							{
+								<li class="topbutton filter" data-action="@item"><a href="#">@item</a></li>
+							}
+						}
+					</ul>
+				</li>
+
+				@if (User.Identity.IsAuthenticated)
+				{
+							<li class="navbar-right"><a href="~/Pages/AJAX/Dislogin.cshtml">Dislogin</a></li>
+				}
+				else
+				{
+					<li class="dropdown navbar-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="~/Pages/StructureElements/Login.cshtml">Login</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="~/Pages/StructureElements/Register.cshtml">Register</a></li>
+						</ul>
+					</li>
 				}
 			</ul>
-		</li>
-	</ul>
-</div>
-
-<div class="navbar navbar-default navbar-fixed-top" style="">
-	
-	<button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu" data-canvas="body">
-		<span class="icon-bar"></span>
-		<span class="icon-bar"></span>
-		<span class="icon-bar"></span>
-	</button>
-</div>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>

@@ -152,6 +152,8 @@
     <Content Include="Pages\Layouts\ErrorPageLayout.cshtml" />
     <Content Include="Pages\StructureElements\Statistic.cshtml" />
     <Content Include="Pages\StructureElements\ShowMyPage.cshtml" />
+    <Content Include="Pages\StructureElements\Login.cshtml" />
+    <Content Include="Pages\StructureElements\Register.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
