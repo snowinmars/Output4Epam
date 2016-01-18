@@ -264,5 +264,14 @@
 		{
 			return Common.Common.RegUserDao.ToggleRole(login, role);
 		}
+
+		public int GetAdminCount()
+		{
+			var asd = from item in this.GetAll()
+			where item.Roles.HasFlag(RoleScroll.Admin)
+			select item;
+
+			return asd.Count(); // TODO to ask
+		}
 	}
 }

@@ -56,5 +56,12 @@
 		/// <param name="role"></param>
 		/// <returns></returns>
 		bool ToggleRole(string login, RoleScroll role);
+
+		/// <summary>
+		/// How many admins are in base
+		/// Can be zero.
+		/// </summary>
+		/// <returns></returns>
+		int GetAdminCount();
 	}
 }

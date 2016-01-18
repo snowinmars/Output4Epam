@@ -29,7 +29,7 @@
 
 		public string ColorSheme { get; set; }
 		public string Login { get; set; }
-		public int Money { get; set; }
+		public int Money { get; set; } // TODO My fault: I forgot about decimal. If I'll have time, I'll redo this.
 		public int PasswordHash { get; set; }
 		public RoleScroll Roles { get; set; }
 	}
