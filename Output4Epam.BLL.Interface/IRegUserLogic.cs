@@ -63,5 +63,21 @@
 		/// </summary>
 		/// <returns></returns>
 		int GetAdminCount();
+
+		/// <summary>
+		/// Add money to user
+		/// </summary>
+		/// <param name="login"></param>
+		/// <param name="summ"></param>
+		/// <returns></returns>
+		bool AddMoney(string login, int summ); // TODO to ask
+
+		/// <summary>
+		/// Sub money from user
+		/// </summary>
+		/// <param name="login"></param>
+		/// <param name="summ"></param>
+		/// <returns></returns>
+		bool SubMoney(string login, int summ);
 	}
 }

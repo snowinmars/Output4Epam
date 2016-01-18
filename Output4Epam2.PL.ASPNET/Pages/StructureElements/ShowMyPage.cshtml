@@ -12,19 +12,24 @@
 
 <ul class="userlist">
 	<li class="userlistitem" data-login="@item.Login">
-		<div class="col-12-xs">
-			<p class="title col-xs-12">Login: @item.Login</p>
-			<p class="cost col-xs-12">Has @item.Money руб.</p>
+		<div class="col-xs-8">
+			<div class="col-12-xs">
+				<p class="title col-xs-12">Login: @item.Login</p>
+				<p class="cost col-xs-12">Has @item.Money руб.</p>
+			</div>
+			<p class="info col-xs-12">
+				Roles:
+				@foreach (var rolename in @LogicProvider.RegUserLogic.GetRolesForUser(item.Login))
+				{
+					<span class="role">@rolename</span>
+				}
+			</p>
 		</div>
-		<p class="info col-xs-12">
-			Roles:
-			@foreach (var rolename in @LogicProvider.RegUserLogic.GetRolesForUser(item.Login))
-			{
-				<span class="role">@rolename</span>
-			}
-		</p>
-		<div>
-			<input type="button" name="add_money" id="add_money" tabindex="4" class="form-control btn btn-login" value="Add 1k">
+		<div class="col-xs-4">
+			<div>
+				<input type="button" name="add_money" id="add_money" tabindex="4" class="form-control btn btn-login" value="Add 1k" data-userLogin="@item.Login">
+				<input type="button" name="sub_money" id="sub_money" tabindex="4" class="form-control btn btn-warning" value="Sub 1k" data-userLogin="@item.Login">
+			</div>
 		</div>
 	</li>
 </ul>

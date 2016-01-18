@@ -66,6 +66,42 @@
 
 	/*________________________________________*/
 
+	$("#add_money").click(addMoney);
+
+	function addMoney(e) { // TODO to add success()
+		var target = $(e.target),
+			userLogin = target.data("userlogin");
+
+		$.ajax({
+			url: "/Pages/AJAX/AddMoney.cshtml",
+			type: "post",
+			data: {
+				"Login": userLogin,
+				"Summ": "1000",
+			}
+		})
+	}
+
+	/*________________________________________*/
+
+	$("#sub_money").click(subMoney);
+
+	function subMoney(e) {
+		var target = $(e.target),
+			userLogin = target.data("userlogin");
+
+		$.ajax({
+			url: "/Pages/AJAX/SubMoney.cshtml",
+			type: "post",
+			data: {
+				"Login": userLogin,
+				"Summ": "1000",
+			}
+		})
+	}
+
+	/*________________________________________*/
+
 	$(".p").add(".title").click(more);
 
 	function more(e) {
@@ -196,6 +232,7 @@
 			target = $(e.target),
 			datastr = {
 				"Id": target.data("id"),
+				"Summ": target.data("summ"),
 			};
 
 		id = $.ajax({

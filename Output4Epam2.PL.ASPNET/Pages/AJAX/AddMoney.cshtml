@@ -1,0 +1,15 @@
+﻿@using Output4Epam.Entities
+@using Output4Epam.Providers
+
+@{
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+}
+@{
+	if (isUser)
+	{
+		string login = Request["Login"];
+		int summ = Int32.Parse(Request["Summ"]);
+
+		LogicProvider.RegUserLogic.AddMoney(login, summ);
+	}
+}

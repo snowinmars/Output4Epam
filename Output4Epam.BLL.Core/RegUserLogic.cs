@@ -273,5 +273,35 @@
 
 			return asd.Count(); // TODO to ask
 		}
+
+		public bool AddMoney(string login, int summ)
+		{
+			if (Common.Common.RegUserDao.GetByLogin(login) == default(RegUser))
+			{
+				throw new ArgumentException("No such user");
+			}
+
+			if (summ <= 0)
+			{
+				throw new ArgumentException("Summ must be positive");
+			}
+
+			return Common.Common.RegUserDao.AddMoney(login, summ);
+		}
+
+		public bool SubMoney(string login, int summ)
+		{
+			if (Common.Common.RegUserDao.GetByLogin(login) == default(RegUser))
+			{
+				throw new ArgumentException("No such user");
+			}
+
+			if (summ <= 0)
+			{
+				throw new ArgumentException("Summ must be positive");
+			}
+
+			return Common.Common.RegUserDao.SubMoney(login, summ);
+		}
 	}
 }

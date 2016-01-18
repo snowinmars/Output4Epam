@@ -154,6 +154,8 @@
     <Content Include="Pages\StructureElements\ShowMyPage.cshtml" />
     <Content Include="Pages\StructureElements\Login.cshtml" />
     <Content Include="Pages\StructureElements\Register.cshtml" />
+    <Content Include="Pages\AJAX\AddMoney.cshtml" />
+    <Content Include="Pages\AJAX\SubMoney.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

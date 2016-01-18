@@ -40,5 +40,21 @@
 		/// <param name="role"></param>
 		/// <returns></returns>
 		bool ToggleRole(string login, RoleScroll role);
+
+		/// <summary>
+		/// Add money to user
+		/// </summary>
+		/// <param name="login"></param>
+		/// <param name="summ"></param>
+		/// <returns></returns>
+		bool AddMoney(string login, int summ);
+
+		/// <summary>
+		/// Sub money from user
+		/// </summary>
+		/// <param name="login"></param>
+		/// <param name="summ"></param>
+		/// <returns></returns>
+		bool SubMoney(string login, int summ);
 	}
 }

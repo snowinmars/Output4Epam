@@ -16,6 +16,8 @@
 				if (isUser)
 				{
 					Guid id = Guid.Parse(Request["Id"]);
+					int summ = Int32.Parse(Request["Summ"]);
+					LogicProvider.RegUserLogic.SubMoney(User.Identity.Name, summ);
 					LogicProvider.LotLogic.Buy(id, User.Identity.Name);
 					Response.Write(id.ToString());
 				}

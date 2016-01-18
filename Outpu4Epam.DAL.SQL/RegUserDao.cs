@@ -322,5 +322,23 @@
 
 			return true;
 		}
+
+		public bool AddMoney(string login, int summ)
+		{
+			RegUser regUser = this.GetByLogin(login);
+			regUser.Money += summ;
+			this.Set(regUser);
+
+			return true;
+		}
+
+		public bool SubMoney(string login, int summ)
+		{
+			RegUser regUser = this.GetByLogin(login);
+			regUser.Money -= summ;
+			this.Set(regUser);
+
+			return true;
+		}
 	}
 }
