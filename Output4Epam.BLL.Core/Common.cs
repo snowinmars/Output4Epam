@@ -29,7 +29,7 @@
 
 		internal static int MinPasswordLength { get; } = 6;
 
-		internal static int MinSityLength { get; } = 0;
+		internal static int MinSityLength { get; } = 2;
 
 		internal static int MinTitleLength { get; } = 2;
 

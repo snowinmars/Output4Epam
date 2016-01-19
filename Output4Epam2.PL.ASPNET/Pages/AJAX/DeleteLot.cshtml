@@ -3,10 +3,19 @@
 
 @{
 	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
+
+	bool myLot = false;
+	foreach (var item in LogicProvider.LotLogic.GetAll())
+	{
+		if (item.Owner == User.Identity.Name)
+		{
+			myLot = true;
+		}
+	}
 }
 
 @{
-	if (isAdmin)
+	if ((isAdmin) || (myLot))
 	{
 		if (IsPost)
 		{

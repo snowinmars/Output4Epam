@@ -2,12 +2,9 @@
 @using Output4Epam.Entities
 
 @{
-	bool banned = false;
+	bool banned = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.GetRolesForUser(User.Identity.Name).Contains(RoleScroll.Ban.ToString());
 
-	if (LogicProvider.RegUserLogic.GetRolesForUser(User.Identity.Name).Contains(RoleScroll.Ban.ToString()))
-	{
-		banned = true;
-	}
+	
 }
 
 @if (banned)

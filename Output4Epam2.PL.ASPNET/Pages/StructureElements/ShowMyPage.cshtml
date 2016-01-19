@@ -2,13 +2,17 @@
 @using Output4Epam.Providers
 
 @{
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
-	RegUser item = LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
+	bool isUser = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	RegUser item = User.Identity.Name == String.Empty ? default(RegUser) : LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
 }
 
 @{
 	Layout = @"/Pages/Layouts/MainLayout.cshtml";
 }
+
+@if ((isUser) &&
+	(item != default(RegUser)))
+{
 
 <ul class="userlist">
 	<li class="userlistitem" data-login="@item.Login">
@@ -36,4 +40,5 @@
 <div id="tooltip"></div>
 @section script{
 	<script src="~/scripts/MyScripts/setTheme.js"></script>
+}
 }

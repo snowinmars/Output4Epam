@@ -1,4 +1,5 @@
-﻿$("[name=settheme]").click(settheme);
+﻿(function () {
+$("[name=settheme]").click(settheme);
 
 function settheme(e) {
 	var target = $(e.target),
@@ -26,3 +27,4 @@ function settheme(e) {
 		loadjscssfile("/Content/" + $(group[i]).data("shemename") + ".css", "css");
 	});
 };
+})();

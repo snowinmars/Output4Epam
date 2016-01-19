@@ -9,7 +9,9 @@
 }
 
 @{
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isUser = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isAdmin = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
+
 
 	string order = Request["orderby"];
 	string filter = Request["filterby"];
@@ -31,26 +33,26 @@
 
 	switch (order)
 	{
-		case "orderByDate":
-			myLotList = from item in LogicProvider.LotLogic.GetAll() // dunno how to sort in another way
-				    where item.Owner == User.Identity.Name
-				    orderby item.PostDate                             // yea, I know about method Filter(), but...
-				    select item;
-			break;
-		case "orderByName":
-			myLotList = from item in LogicProvider.LotLogic.GetAll()
-				    where item.Owner == User.Identity.Name
-				    orderby item.Title
-				    select item;
-			break;
-		case "orderByOwner":
-			myLotList = from item in LogicProvider.LotLogic.GetAll()
-				    where item.Owner == User.Identity.Name
-				    orderby item.Owner
-				    select item;
-			break;
-		default:
-			break;
+	case "orderByDate":
+		myLotList = from item in LogicProvider.LotLogic.GetAll() // dunno how to sort in another way
+			    where item.Owner == User.Identity.Name
+			    orderby item.PostDate                             // yea, I know about method Filter(), but...
+			    select item;
+		break;
+	case "orderByName":
+		myLotList = from item in LogicProvider.LotLogic.GetAll()
+			    where item.Owner == User.Identity.Name
+			    orderby item.Title
+			    select item;
+		break;
+	case "orderByOwner":
+		myLotList = from item in LogicProvider.LotLogic.GetAll()
+			    where item.Owner == User.Identity.Name
+			    orderby item.Owner
+			    select item;
+		break;
+	default:
+		break;
 	}
 }
 
@@ -81,15 +83,10 @@
 						<div class="col-xs-6">
 							<div class="col-xs-12">
 								<div class="col-xs-6 visible-md visible-lg">
-									@if (item.BoughtBy == String.Empty)
+									@if ((isAdmin) || (item.Owner == User.Identity.Name))
 									{
-										<p class="btn mybtn btn-default btn-xs buy" data-id="@item.Id">Buy</p>
+										<p class="btn mybtn btn-danger btn-xs delete" data-id="@item.Id">Delete</p>
 									}
-									else
-									{
-										<p class="btn mybtn btn-default btn-xs toolatip" disabled="disabled" data-tooltip="bought by @item.BoughtBy" data-id="@item.Id">Buy</p>
-									}
-									<p class="btn mybtn btn-danger btn-xs delete" data-id="@item.Id">Delete</p>
 								</div>
 								<div class="col-xs-4 hidden-md hidden-lg">
 									<p class="btn mybtn btn-default more" data-id="@item.Id"><a href="~/Pages/StructureElements/ShowMore.cshtml?id=@item.Id">More</a></p>

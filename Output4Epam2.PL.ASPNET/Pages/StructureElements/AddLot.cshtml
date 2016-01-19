@@ -2,7 +2,7 @@
 @using Output4Epam.Providers
 
 @{
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isUser = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
 }
 
 @{
@@ -35,31 +35,63 @@
 		<div class="form-group">
 			<label for="inputTitle" class="col-xs-2 control-label">Title</label>
 			<div class="col-xs-10">
-				<input type="text" class="form-control" name="Title" id="inputTitle" placeholder="Title">
+				<div class="col-xs-10">
+					<input type="text" class="form-control" name="Title" id="inputTitle" placeholder="Title">
+				</div>
+				<div class="col-xs-2">
+					<span id="inputTitleAfter" class="inputafter inputafterTitle hidden wrong">Wrong</span>
+					<span id="inputTitleAfter" class="inputafter inputafterTitle hidden correct">OK</span>
+				</div>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="inputCost" class="col-xs-2 control-label">Photo</label>
 			<div class="col-xs-10">
-				<input type="file" name="Photo" id="photo" placeholder="Photo">
+				<div class="col-xs-10">
+
+					<input type="file" name="Photo" id="photo" placeholder="Photo">
+				</div>
 			</div>
 		</div>
+
 		<div class="form-group">
 			<label for="inputSity" class="col-xs-2 control-label">Sity</label>
 			<div class="col-xs-10">
-				<input type="text" class="form-control" name="Sity" id="inputSity" placeholder="Sity">
+				<div class="col-xs-10">
+
+					<input type="text" class="form-control" name="Sity" id="inputSity" placeholder="Sity">
+				</div>
+				<div class="col-xs-2">
+					<span id="inputTitleAfter" class="inputafter inputafterSity hidden wrong">Wrong</span>
+					<span id="inputTitleAfter" class="inputafter inputafterSity hidden correct">OK</span>
+				</div>
 			</div>
 		</div>
+
 		<div class="form-group">
 			<label for="inputCost" class="col-xs-2 control-label">Cost</label>
 			<div class="col-xs-10">
-				<input type="text" class="form-control" name="Cost" id="inputCost" placeholder="Cost">
+				<div class="col-xs-10">
+
+					<input type="text" class="form-control" name="Cost" id="inputCost" placeholder="Cost">
+				</div>
+				<div class="col-xs-2">
+					<span id="inputTitleAfter" class="inputafter inputafterCost hidden wrong">Wrong</span>
+					<span id="inputTitleAfter" class="inputafter inputafterCost hidden correct">OK</span>
+				</div>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="inputInfo" class="col-xs-2 control-label">Info</label>
 			<div class="col-xs-10">
-				<input type="text" class="form-control" name="Info" id="inputInfo" placeholder="Info">
+				<div class="col-xs-10">
+
+					<input type="text" class="form-control" name="Info" id="inputInfo" placeholder="Info">
+				</div>
+				<div class="col-xs-2">
+					<span id="inputTitleAfter" class="inputafter inputafterInfo hidden wrong">Wrong</span>
+					<span id="inputTitleAfter" class="inputafter inputafterInfo hidden correct">OK</span>
+				</div>
 			</div>
 		</div>
 	</form>
