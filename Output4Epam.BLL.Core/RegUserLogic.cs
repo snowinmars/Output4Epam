@@ -1,12 +1,12 @@
 ﻿namespace Output4Epam.BLL.Core
 {
-	using Output4Epam.BLL.Interface;
-	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Security.Cryptography;
 	using System.Text;
+	using Output4Epam.BLL.Interface;
+	using Output4Epam.Entities;
 
 	public class RegUserLogic : IRegUserLogic
 	{
@@ -22,6 +22,12 @@
 			return Common.Common.RegUserDao.Add(regUser);
 		}
 
+		/// <summary>
+		/// Add money to user. Summ must be non-negative
+		/// </summary>
+		/// <param name="login"></param>
+		/// <param name="summ"></param>
+		/// <returns></returns>
 		public bool AddMoney(string login, int summ)
 		{
 			Validate.V_login(login);
@@ -219,6 +225,12 @@
 			Common.Common.RegUserDao.Set(regUser);
 		}
 
+		/// <summary>
+		/// Substract money from user. Summ must be non-negative
+		/// </summary>
+		/// <param name="login"></param>
+		/// <param name="summ"></param>
+		/// <returns></returns>
 		public bool SubMoney(string login, int summ)
 		{
 			Validate.V_login(login);
@@ -267,6 +279,7 @@
 			{
 				buffer[x] = 0;
 			}
+
 		}
 
 		private static byte[] CreateRandomSalt(int length)

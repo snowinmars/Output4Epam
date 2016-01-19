@@ -1,8 +1,8 @@
 ﻿namespace Outpu4Epam.DAL.Interface
 {
-	using Output4Epam.Entities;
 	using System;
 	using System.IO;
+	using Output4Epam.Entities;
 
 	public interface ILotDao : IDao<Lot>
 	{

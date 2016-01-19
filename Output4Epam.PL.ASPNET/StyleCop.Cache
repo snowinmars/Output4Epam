@@ -1,10 +1,13 @@
 <stylecopresultscache>
   <version>12</version>
-  <sourcecode name="AssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
+  <project key="1745862050">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="Global.asax.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2015.12.26 15:50:55.481</styleCop>
-      <settingsFile>2015.12.26 16:00:09.880</settingsFile>
-      <sourceFile>2015.12.23 16:24:22.653</sourceFile>
+      <settingsFile>2015.12.26 21:42:57.040</settingsFile>
+      <sourceFile>2015.12.27 10:14:59.500</sourceFile>
       <parser>2015.12.26 15:50:55.481</parser>
       <StyleCop.CSharp.DocumentationRules>2015.12.26 15:50:55.481</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1811481702</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -21,13 +24,48 @@
       <StyleCop.CSharp.SpacingRules>2015.12.26 15:50:55.481</StyleCop.CSharp.SpacingRules>
       <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
     </timestamps>
-    <violations />
+    <violations>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives" ruleCheckId="SA1208">
+        <context>System using directives must be placed before all other using directives.</context>
+        <line>4</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
   </sourcecode>
-  <sourcecode name="Global.asax.cs" parser="StyleCop.CSharp.CsParser">
+  <sourcecode name="AssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2015.12.26 15:50:55.481</styleCop>
-      <settingsFile>2015.12.26 16:00:09.880</settingsFile>
-      <sourceFile>2015.12.26 16:00:59.749</sourceFile>
+      <settingsFile>2015.12.26 21:42:57.040</settingsFile>
+      <sourceFile>2015.12.27 10:12:10.303</sourceFile>
+      <parser>2015.12.26 15:50:55.481</parser>
+      <StyleCop.CSharp.DocumentationRules>2015.12.26 15:50:55.481</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1811481702</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2015.12.26 15:50:55.481</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2015.12.26 15:50:55.481</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2015.12.26 15:50:55.481</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2015.12.26 15:50:55.481</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2015.12.26 15:50:55.481</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2015.12.26 15:50:55.481</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+    </timestamps>
+    <violations>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="SingleLineCommentMustBePrecededByBlankLine" ruleCheckId="SA1515">
+        <context>A single-line comment must be preceded by a blank line or another single-line comment, or must be the first item in its scope. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
+        <line>16</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
+  </sourcecode>
+  <sourcecode name="LoggerProvider.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2015.12.26 15:50:55.481</styleCop>
+      <settingsFile>2015.12.26 21:42:57.040</settingsFile>
+      <sourceFile>2016.01.19 08:14:01.607</sourceFile>
       <parser>2015.12.26 15:50:55.481</parser>
       <StyleCop.CSharp.DocumentationRules>2015.12.26 15:50:55.481</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1811481702</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -49,8 +87,8 @@
   <sourcecode name="LogicProvider.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2015.12.26 15:50:55.481</styleCop>
-      <settingsFile>2015.12.26 16:00:09.880</settingsFile>
-      <sourceFile>2015.12.26 16:00:59.743</sourceFile>
+      <settingsFile>2015.12.26 21:42:57.040</settingsFile>
+      <sourceFile>2016.01.19 08:14:01.593</sourceFile>
       <parser>2015.12.26 15:50:55.481</parser>
       <StyleCop.CSharp.DocumentationRules>2015.12.26 15:50:55.481</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1811481702</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -67,13 +105,24 @@
       <StyleCop.CSharp.SpacingRules>2015.12.26 15:50:55.481</StyleCop.CSharp.SpacingRules>
       <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
     </timestamps>
-    <violations />
+    <violations>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="OpeningCurlyBracketsMustNotBeFollowedByBlankLine" ruleCheckId="SA1505">
+        <context>An opening curly bracket must not be followed by a blank line.</context>
+        <line>7</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
+        <context>Adjacent elements must be separated by a blank line.</context>
+        <line>10</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
   </sourcecode>
   <sourcecode name="Output4EpamRoleProvider.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2015.12.26 15:50:55.481</styleCop>
-      <settingsFile>2015.12.26 16:00:09.880</settingsFile>
-      <sourceFile>2015.12.26 16:00:59.736</sourceFile>
+      <settingsFile>2015.12.26 21:42:57.040</settingsFile>
+      <sourceFile>2015.12.27 16:24:12.961</sourceFile>
       <parser>2015.12.26 15:50:55.481</parser>
       <StyleCop.CSharp.DocumentationRules>2015.12.26 15:50:55.481</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1811481702</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -92,7 +141,4 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <project key="1745862050">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
 </stylecopresultscache>

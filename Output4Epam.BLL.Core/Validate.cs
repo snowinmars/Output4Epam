@@ -1,10 +1,10 @@
-﻿using Output4Epam.Entities;
-using System;
-using System.IO;
-using System.Text.RegularExpressions;
-
-namespace Output4Epam.BLL.Core
+﻿namespace Output4Epam.BLL.Core
 {
+	using System;
+	using System.IO;
+	using System.Text.RegularExpressions;
+	using Output4Epam.Entities;
+
 	internal static class Validate
 	{
 
@@ -44,6 +44,7 @@ namespace Output4Epam.BLL.Core
 			{
 				throw new ArgumentException($"Login is too long: max length - {Common.Common.MaxLoginLength}");
 			}
+
 			if (login.Length < Common.Common.MinLoginLength)
 			{
 				throw new ArgumentException($"Login is too short: min length - {Common.Common.MinLoginLength}");
@@ -72,6 +73,7 @@ namespace Output4Epam.BLL.Core
 			{
 				throw new ArgumentException($"Lot info is too long: max length - {Common.Common.MaxInfoLength}");
 			}
+
 			if (lot.Info.Length < Common.Common.MinInfoLength)
 			{
 				throw new ArgumentException($"Lot info is too short: min length - {Common.Common.MinInfoLength}");
@@ -90,6 +92,7 @@ namespace Output4Epam.BLL.Core
 			{
 				throw new ArgumentException($"Lot sity name is too long: max length - {Common.Common.MaxSityLength}");
 			}
+
 			if (lot.Sity.Length < Common.Common.MinSityLength)
 			{
 				throw new ArgumentException($"Lot sity name is too short: min length - {Common.Common.MinSityLength}");
@@ -99,6 +102,7 @@ namespace Output4Epam.BLL.Core
 			{
 				throw new ArgumentException($"Lot title is too long: max length - {Common.Common.MaxTitleLength}");
 			}
+
 			if (lot.Title.Length < Common.Common.MinTitleLength)
 			{
 				throw new ArgumentException($"Lot title is too short: max length - {Common.Common.MinTitleLength}");
@@ -125,6 +129,7 @@ namespace Output4Epam.BLL.Core
 			{
 				throw new ArgumentException($"Password is too long: max length - {Common.Common.MaxPasswordLength}");
 			}
+
 			if (password.Length < Common.Common.MinPasswordLength)
 			{
 				throw new ArgumentException($"Password is too short: min length - {Common.Common.MinPasswordLength}");

@@ -1,10 +1,13 @@
 <stylecopresultscache>
   <version>12</version>
+  <project key="1306561185">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
   <sourcecode name="Lot.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2015.12.26 15:50:55.481</styleCop>
-      <settingsFile>2015.12.26 16:04:48.254</settingsFile>
-      <sourceFile>2015.12.26 16:04:25.391</sourceFile>
+      <settingsFile>2015.12.26 21:42:56.916</settingsFile>
+      <sourceFile>2016.01.19 08:16:12.108</sourceFile>
       <parser>2015.12.26 15:50:55.481</parser>
       <StyleCop.CSharp.DocumentationRules>2015.12.26 15:50:55.481</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1811481702</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -21,54 +24,13 @@
       <StyleCop.CSharp.SpacingRules>2015.12.26 15:50:55.481</StyleCop.CSharp.SpacingRules>
       <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
     </timestamps>
-    <violations>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
-        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
-        <line>29</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>34</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>35</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>36</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>37</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>38</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>39</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>40</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
+    <violations />
   </sourcecode>
   <sourcecode name="AssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2015.12.26 15:50:55.481</styleCop>
-      <settingsFile>2015.12.26 16:04:48.254</settingsFile>
-      <sourceFile>2015.12.23 16:24:22.225</sourceFile>
+      <settingsFile>2015.12.26 21:42:56.916</settingsFile>
+      <sourceFile>2015.12.26 21:42:56.913</sourceFile>
       <parser>2015.12.26 15:50:55.481</parser>
       <StyleCop.CSharp.DocumentationRules>2015.12.26 15:50:55.481</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1811481702</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -90,8 +52,8 @@
   <sourcecode name="RegUser.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2015.12.26 15:50:55.481</styleCop>
-      <settingsFile>2015.12.26 16:04:48.254</settingsFile>
-      <sourceFile>2015.12.26 16:04:30.238</sourceFile>
+      <settingsFile>2015.12.26 21:42:56.916</settingsFile>
+      <sourceFile>2016.01.19 08:16:23.621</sourceFile>
       <parser>2015.12.26 15:50:55.481</parser>
       <StyleCop.CSharp.DocumentationRules>2015.12.26 15:50:55.481</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1811481702</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -108,25 +70,6 @@
       <StyleCop.CSharp.SpacingRules>2015.12.26 15:50:55.481</StyleCop.CSharp.SpacingRules>
       <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
     </timestamps>
-    <violations>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>26</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>27</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>28</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
+    <violations />
   </sourcecode>
-  <project key="1306561185">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
 </stylecopresultscache>

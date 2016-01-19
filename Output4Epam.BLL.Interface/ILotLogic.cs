@@ -1,8 +1,8 @@
 ﻿namespace Output4Epam.BLL.Interface
 {
-	using Output4Epam.Entities;
 	using System;
 	using System.IO;
+	using Output4Epam.Entities;
 
 	public interface ILotLogic : ILogic<Lot>
 	{

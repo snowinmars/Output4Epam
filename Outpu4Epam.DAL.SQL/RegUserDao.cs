@@ -1,10 +1,10 @@
 ﻿namespace Outpu4Epam.DAL.SQL
 {
-	using Outpu4Epam.DAL.Interface;
-	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
+	using Outpu4Epam.DAL.Interface;
+	using Output4Epam.Entities;
 
 	public class RegUserDao : IRegUserDao
 	{
@@ -19,10 +19,10 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "insert into [dbo].[RegUserTable] " +
+				const string Query = "insert into [dbo].[RegUserTable] " +
 						"([Id],[Login],[PasswordHash],[Role],[Money],[ColorSheme]) " +
 						"values (@Id,@Login,@PasswordHash,@Role,@Money,@ColorSheme)";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Id", Guid.NewGuid());
 					command.Parameters.AddWithValue("@Login", regUser.Login);
@@ -68,11 +68,11 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "select * " +
+				const string Query = "select * " +
 						"from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Id] = @Id " +
 						"order by [PostDate]";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Id", id);
 
@@ -81,11 +81,12 @@
 
 					while (reader.Read())
 					{
-						regUser = new RegUser((string)reader["Login"],
-									(int)reader["PasswordHash"],
-									(RoleScroll)reader["Role"],
-									(int)reader["Money"],
-									(string)reader["ColorSheme"]);
+						regUser = new RegUser(
+								(string)reader["Login"],
+								(int)reader["PasswordHash"],
+								(RoleScroll)reader["Role"],
+								(int)reader["Money"],
+								(string)reader["ColorSheme"]);
 					}
 				}
 			}
@@ -105,9 +106,9 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "select * " +
+				const string Query = "select * " +
 						"from [dbo].[RegUserTable]";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					connection.Open();
 					var reader = command.ExecuteReader();
@@ -120,11 +121,12 @@
 							colorSheme = (string)reader["ColorSheme"];
 						}
 
-						userList.Add(new RegUser((string)reader["Login"],
-									(int)reader["PasswordHash"],
-									(RoleScroll)reader["Role"],
-									(int)reader["Money"],
-									colorSheme));
+						userList.Add(new RegUser(
+								(string)reader["Login"],
+								(int)reader["PasswordHash"],
+								(RoleScroll)reader["Role"],
+								(int)reader["Money"],
+								colorSheme));
 					}
 				}
 			}
@@ -144,10 +146,10 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "select * " +
+				const string Query = "select * " +
 						"from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Login] = @Login";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Login", login);
 
@@ -162,11 +164,12 @@
 							colorSheme = (string)reader["ColorSheme"];
 						}
 
-						regUser = new RegUser((string)reader["Login"],
-									(int)reader["PasswordHash"],
-									(RoleScroll)reader["Role"],
-									(int)reader["Money"],
-									colorSheme);
+						regUser = new RegUser(
+								(string)reader["Login"],
+								(int)reader["PasswordHash"],
+								(RoleScroll)reader["Role"],
+								(int)reader["Money"],
+								colorSheme);
 					}
 				}
 			}
@@ -187,10 +190,10 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "select * " +
+				const string Query = "select * " +
 						"from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Login] = @Username";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Username", login);
 
@@ -223,10 +226,10 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "select * " +
+				const string Query = "select * " +
 						"from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Login] = @Username";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Username", login);
 
@@ -258,9 +261,9 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "delete from [dbo].[RegUserTable] " +
+				const string Query = "delete from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Id] = @Id";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Id", id);
 
@@ -283,9 +286,9 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "delete from [dbo].[RegUserTable] " +
+				const string Query = "delete from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Login] = @Login";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Login", login);
 
@@ -307,7 +310,7 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "update [dbo].[RegUserTable] " +
+				const string Query = "update [dbo].[RegUserTable] " +
 						"set " +
 							"[Login] = @login , " +
 							"[PasswordHash] = @passwordHash , " +
@@ -315,7 +318,7 @@
 							"[Money] = @Money , " +
 							"[ColorSheme] = @ColorSheme " +
 						"where [dbo].[RegUserTable].[Login] = @Login";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Login", regUser.Login);
 					command.Parameters.AddWithValue("@PasswordHash", regUser.PasswordHash);

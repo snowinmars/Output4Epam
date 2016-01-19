@@ -1,15 +1,15 @@
 ﻿namespace Outpu4Epam.DAL.SQL
 {
-	using Outpu4Epam.DAL.Interface;
-	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
 	using System.IO;
+	using Outpu4Epam.DAL.Interface;
+	using Output4Epam.Entities;
 
 	public class LotDao : ILotDao
 	{
-		private string pathToWorkFolder		{			get;		} = Common.PathToWorkFolder;
+		private string PathToWorkFolder		{			get;		} = Common.PathToWorkFolder;
 
 		/// <summary>
 		/// Add item to database.
@@ -22,11 +22,11 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "insert into [dbo].[LotTable] " +
+				const string Query = "insert into [dbo].[LotTable] " +
 						"([Id],[Title],[Owner],[Sity],[Cost],[Types],[PostDate],[Info],[BoughtBy]) " +
 						"values(@Id,@Title,@Owner,@Sity,@Cost,@Types,@PostDate,@Info,@BoughtBy);";
 
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Id", lot.Id.ToString());
 					command.Parameters.AddWithValue("@Title", lot.Title);
@@ -57,10 +57,10 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "insert into [dbo].[ImagesTable] " +
+				const string Query = "insert into [dbo].[ImagesTable] " +
 						"([ImageId],[LotId],[Image]) " +
 						"values (@ImageId, @LotId, @Image)";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@ImageId", Guid.NewGuid());
 					command.Parameters.AddWithValue("@LotId", lotId);
@@ -84,11 +84,11 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "update [dbo].[LotTable] " +
+				const string Query = "update [dbo].[LotTable] " +
 						"set " +
 							"[BoughtBy] = @boughtBy " +
 						"where [dbo].[LotTable].[Id] = @Id";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@boughtBy", login);
 					command.Parameters.AddWithValue("@Id", id);
@@ -113,11 +113,11 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "select * " +
+				const string Query = "select * " +
 						"from [dbo].[LotTable] " +
 						"where [dbo].[LotTable].[Id] = @Id " +
 						"order by [PostDate]";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Id", id);
 
@@ -128,18 +128,18 @@
 					{
 						string boughtBy;
 
-
 						boughtBy = reader["BoughtBy"] == DBNull.Value ? String.Empty : (string)reader["BoughtBy"];
 
-						lot = new Lot((string)reader["Title"],
-								(string)reader["Owner"],
-								(string)reader["Sity"],
-								(int)reader["Cost"],
-								(string)reader["Info"],
-								(LotTypes)reader["Types"],
-								(DateTime)reader["PostDate"],
-								(Guid)reader["Id"],
-								boughtBy);
+						lot = new Lot(
+							(string)reader["Title"],
+							(string)reader["Owner"],
+							(string)reader["Sity"],
+							(int)reader["Cost"],
+							(string)reader["Info"],
+							(LotTypes)reader["Types"],
+							(DateTime)reader["PostDate"],
+							(Guid)reader["Id"],
+							boughtBy);
 					}
 				}
 			}
@@ -159,10 +159,10 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "select * " +
+				const string Query = "select * " +
 						"from [dbo].[LotTable] " +
 						"order by [PostDate]";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					connection.Open();
 					var reader = command.ExecuteReader();
@@ -173,15 +173,16 @@
 
 						boughtBy = reader["BoughtBy"] == DBNull.Value ? string.Empty : (string)reader["BoughtBy"];
 
-						lotList.Add(new Lot((string)reader["Title"],
-									(string)((reader["Owner"]).ToString()),
-									(string)reader["Sity"],
-									(int)reader["Cost"],
-									(reader["Info"] == DBNull.Value ? String.Empty : (string)reader["Info"]),
-									(LotTypes)reader["Types"],
-									(DateTime)reader["PostDate"],
-									(Guid)reader["Id"],
-									boughtBy));
+						lotList.Add(new Lot(
+								(string)reader["Title"],
+								(string)((reader["Owner"]).ToString()),
+								(string)reader["Sity"],
+								(int)reader["Cost"],
+								(reader["Info"] == DBNull.Value ? String.Empty : (string)reader["Info"]),
+								(LotTypes)reader["Types"],
+								(DateTime)reader["PostDate"],
+								(Guid)reader["Id"],
+								boughtBy));
 					}
 				}
 			}
@@ -200,12 +201,13 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "select * " +
+				const string Query = "select * " +
 						"from [dbo].[ImagesTable] " +
 						"where [LotId] = @LotId";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
-					switch (colorsheme) // read /Docs/read.me if u wanna know about this guids.
+					// read /Docs/read.me if u wanna know about this guids.
+					switch (colorsheme)
 					{
 					case "testing":
 						command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000000"));
@@ -251,10 +253,10 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "select * " +
+				const string Query = "select * " +
 						"from [dbo].[ImagesTable] " +
 						"where [LotId] = @LotId";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@LotId", id);
 
@@ -281,12 +283,12 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "select * " +
+				const string Query = "select * " +
 						"from [dbo].[ImagesTable] " +
 						"where [LotId] = @LotId";
 
 				// read /Docs/read.me if u wanna know about this guids.
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000001"));
 
@@ -314,9 +316,9 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "delete from [dbo].[LotTable] " +
+				const string Query = "delete from [dbo].[LotTable] " +
 						"where [dbo].[LotTable].[Id] = @Id";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Id", id);
 
@@ -338,9 +340,9 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "delete from [dbo].[ImagesTable] " +
+				const string Query = "delete from [dbo].[ImagesTable] " +
 						"where [dbo].[LotTable].[LotId] = @LotId";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@LotId", id);
 
@@ -360,7 +362,7 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				const string query = "update [dbo].[LotTable] " +
+				const string Query = "update [dbo].[LotTable] " +
 						"set " +
 							"[BoughtBy] = @BoughtBy , " +
 							"[Cost] = @Cost , " +
@@ -372,7 +374,7 @@
 							"[Title] = @Title " +
 							"[Types] = @Types " +
 						"where [dbo].[LotTable].[Id] = @Id";
-				using (var command = new SqlCommand(query, connection))
+				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@BoughtBy", lot.BoughtBy);
 					command.Parameters.AddWithValue("@Cost", lot.Cost);

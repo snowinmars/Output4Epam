@@ -1,7 +1,5 @@
 ﻿namespace Output4Epam.BLL.Core
 {
-	using Output4Epam.BLL.Interface;
-	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Drawing;
@@ -9,11 +7,13 @@
 	using System.Drawing.Imaging;
 	using System.IO;
 	using System.Linq;
+	using Output4Epam.BLL.Interface;
+	using Output4Epam.Entities;
 
 	public class LotLogic : ILotLogic
 	{
 		/// <summary>
-		/// Add item to database.
+		/// Add item to database
 		/// </summary>
 		/// <param name="lot"></param>
 		/// <returns></returns>
@@ -33,8 +33,8 @@
 		{
 			Validate.V_image(image);
 
-			// Use this, if u wanna to resize image
-			// Stream smallImage = new MemoryStream(this.ResizeImageFile(image.ToByteArray(), 100));
+			//// Use this, if u wanna to resize image
+			//// Stream smallImage = new MemoryStream(this.ResizeImageFile(image.ToByteArray(), 100));
 
 			Common.Common.LotDao.AddImage(lotId, image);
 		}

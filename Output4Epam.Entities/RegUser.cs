@@ -14,11 +14,12 @@
 
 	public class RegUser
 	{
-		public RegUser(string login,
-				int passwordHash,
-				RoleScroll roles = RoleScroll.None,
-				int money = 0,
-				string colorSheme = default(string))
+		public RegUser(
+			string login,
+			int passwordHash,
+			RoleScroll roles = RoleScroll.None,
+			int money = 0,
+			string colorSheme = default(string))
 		{
 			this.Login = login;
 			this.PasswordHash = passwordHash;
@@ -28,9 +29,13 @@
 		}
 
 		public string ColorSheme { get; set; }
+
 		public string Login { get; set; }
+
 		public int Money { get; set; } // TODO My fault: I forgot about decimal. If I'll have time, I'll redo this.
+
 		public int PasswordHash { get; set; }
+
 		public RoleScroll Roles { get; set; }
 	}
 }
