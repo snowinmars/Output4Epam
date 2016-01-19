@@ -1,5 +1,7 @@
 ﻿namespace Output4Epam.BLL.Core
 {
+	using Output4Epam.BLL.Interface;
+	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Drawing;
@@ -7,8 +9,6 @@
 	using System.Drawing.Imaging;
 	using System.IO;
 	using System.Linq;
-	using Output4Epam.BLL.Interface;
-	using Output4Epam.Entities;
 
 	public class LotLogic : ILotLogic
 	{
@@ -43,6 +43,7 @@
 		/// Buy lot with this Id for user with this login
 		/// </summary>
 		/// <param name="id"></param>
+		/// <param name="login"></param>
 		/// <returns></returns>
 		public bool Buy(Guid id, string login)
 		{
@@ -99,11 +100,6 @@
 			return a;
 		}
 
-		void IDisposable.Dispose()
-		{
-			throw new NotImplementedException();
-		}
-
 		/// <summary>
 		/// Remove lot by its Id
 		/// </summary>
@@ -135,7 +131,7 @@
 			Common.Common.LotDao.Set(lot);
 		}
 
-		private Size CalculateDimensions(Size oldSize, int targetSize)
+		private static Size CalculateDimensions(Size oldSize, int targetSize)
 		{
 			if (oldSize == null)
 			{
@@ -157,7 +153,7 @@
 			return newSize;
 		}
 
-		private byte[] ResizeImageFile(byte[] imageFile, int targetSize)
+		private static byte[] ResizeImageFile(byte[] imageFile, int targetSize)
 		{
 			if (imageFile == null)
 			{
@@ -166,23 +162,33 @@
 
 			Validate.V_positiveNumber(targetSize, canBeZero: false);
 
-			using (Image oldImage = Image.FromStream(new MemoryStream(imageFile)))
+			using (var memoryStream = new MemoryStream(imageFile))
 			{
-				Size newSize = CalculateDimensions(oldImage.Size, targetSize);
-				using (Bitmap newImage = new Bitmap(newSize.Width, newSize.Height, PixelFormat.Format24bppRgb))
+				using (Image oldImage = Image.FromStream(memoryStream))
 				{
-					using (Graphics canvas = Graphics.FromImage(newImage))
+					Size newSize = CalculateDimensions(oldImage.Size, targetSize);
+					using (Bitmap newImage = new Bitmap(newSize.Width, newSize.Height, PixelFormat.Format24bppRgb))
 					{
-						canvas.SmoothingMode = SmoothingMode.HighQuality;
-						canvas.InterpolationMode = InterpolationMode.HighQualityBicubic;
-						canvas.PixelOffsetMode = PixelOffsetMode.HighQuality;
-						canvas.DrawImage(oldImage, new Rectangle(new Point(0, 0), newSize));
-						MemoryStream m = new MemoryStream();
-						newImage.Save(m, ImageFormat.Png);
-						return m.GetBuffer();
+						using (Graphics canvas = Graphics.FromImage(newImage))
+						{
+							canvas.SmoothingMode = SmoothingMode.HighQuality;
+							canvas.InterpolationMode = InterpolationMode.HighQualityBicubic;
+							canvas.PixelOffsetMode = PixelOffsetMode.HighQuality;
+							canvas.DrawImage(oldImage, new Rectangle(new Point(0, 0), newSize));
+							using (MemoryStream m = new MemoryStream())
+							{
+								newImage.Save(m, ImageFormat.Png);
+								return m.GetBuffer();
+							}
+						}
 					}
 				}
 			}
+		}
+
+		void IDisposable.Dispose()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

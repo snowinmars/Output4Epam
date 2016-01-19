@@ -7,7 +7,6 @@
 	using System.Linq;
 	using System.Security.Cryptography;
 	using System.Text;
-	using System.Text.RegularExpressions;
 
 	public class RegUserLogic : IRegUserLogic
 	{
@@ -23,7 +22,26 @@
 			return Common.Common.RegUserDao.Add(regUser);
 		}
 
-		
+		public bool AddMoney(string login, int summ)
+		{
+			Validate.V_login(login);
+
+			Validate.V_positiveNumber(summ, canBeZero: false);
+
+			RegUser regUser = Common.Common.RegUserDao.GetByLogin(login);
+
+			if (regUser == default(RegUser))
+			{
+				throw new ArgumentException("No such user");
+			}
+
+			if (summ + regUser.Money > Int32.MaxValue)
+			{
+				throw new InvalidCastException("Can't do operation: Int32 overflow");
+			}
+
+			return Common.Common.RegUserDao.AddMoney(login, summ);
+		}
 
 		/// <summary>
 		/// Check, is there any user with this login and password.
@@ -38,29 +56,32 @@
 
 			byte[] pwd = Encoding.Unicode.GetBytes(password);
 			byte[] salt = CreateRandomSalt(7);
-			TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
-
-			try
+			using (TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider())
 			{
-				PasswordDeriveBytes pdb = new PasswordDeriveBytes(pwd, salt);
-				tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
-				int hash = BitConverter.ToInt32(tdes.Key, 0);
-
-				foreach (var item in Common.Common.RegUserDao.GetAll())
+				try
 				{
-					if ((item.Login == login) && (item.PasswordHash == hash))
+					using (PasswordDeriveBytes pdb = new PasswordDeriveBytes(pwd, salt))
 					{
-						return true;
+						tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
+						int hash = BitConverter.ToInt32(tdes.Key, 0);
+
+						foreach (var item in Common.Common.RegUserDao.GetAll())
+						{
+							if ((item.Login == login) && (item.PasswordHash == hash))
+							{
+								return true;
+							}
+						}
+
+						return false;
 					}
 				}
-
-				return false;
-			}
-			finally
-			{
-				ClearBytes(pwd);
-				ClearBytes(salt);
-				tdes.Clear();
+				finally
+				{
+					ClearBytes(pwd);
+					ClearBytes(salt);
+					tdes.Clear();
+				}
 			}
 		}
 
@@ -72,6 +93,15 @@
 		public RegUser Get(Guid id)
 		{
 			return Common.Common.RegUserDao.Get(id);
+		}
+
+		public int GetAdminCount()
+		{
+			var admins = from item in this.GetAll()
+				     where item.Roles.HasFlag(RoleScroll.Admin)
+				     select item;
+
+			return admins.Count(); // TODO to ask
 		}
 
 		/// <summary>
@@ -107,11 +137,6 @@
 			return Common.Common.RegUserDao.GetRolesForUser(login);
 		}
 
-		void IDisposable.Dispose()
-		{
-			throw new NotImplementedException();
-		}
-
 		/// <summary>
 		/// Checks, is there any user with this role.
 		/// </summary>
@@ -124,45 +149,6 @@
 			Validate.V_role(roleName);
 
 			return Common.Common.RegUserDao.IsUserInRole(login, roleName);
-		}
-
-		private static byte[] CreateRandomSalt(int length)
-		{
-			// Create a buffer
-			byte[] randBytes;
-
-			if (length >= 1)
-			{
-				randBytes = new byte[length];
-			}
-			else
-			{
-				randBytes = new byte[1];
-			}
-
-			// Create a new RNGCryptoServiceProvider.
-			RNGCryptoServiceProvider rand = new RNGCryptoServiceProvider();
-
-			// Fill the buffer with random bytes.
-			rand.GetBytes(randBytes);
-
-			// return the bytes.
-			return randBytes;
-		}
-
-		private static void ClearBytes(byte[] buffer)
-		{
-			// Check arguments.
-			if (buffer == null)
-			{
-				throw new ArgumentException("buffer is null");
-			}
-
-			// Set each byte in the buffer to 0.
-			for (int x = 0; x < buffer.Length; x++)
-			{
-				buffer[x] = 0;
-			}
 		}
 
 		/// <summary>
@@ -178,22 +164,26 @@
 
 			byte[] pwd = Encoding.Unicode.GetBytes(password);
 			byte[] salt = CreateRandomSalt(7);
-			TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
-			RegUser regUser = default(RegUser);
-			try
+			using (TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider())
 			{
-				PasswordDeriveBytes pdb = new PasswordDeriveBytes(pwd, salt);
-				tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
-				regUser = new RegUser(login, BitConverter.ToInt32(tdes.Key, 0), RoleScroll.User, 0);
-			}
-			finally
-			{
-				ClearBytes(pwd);
-				ClearBytes(salt);
-				tdes.Clear();
-			}
+				RegUser regUser = default(RegUser);
+				try
+				{
+					using (PasswordDeriveBytes pdb = new PasswordDeriveBytes(pwd, salt))
+					{
+						tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
+						regUser = new RegUser(login, BitConverter.ToInt32(tdes.Key, 0), RoleScroll.User, 0);
+					}
+				}
+				finally
+				{
+					ClearBytes(pwd);
+					ClearBytes(salt);
+					tdes.Clear();
+				}
 
-			return Common.Common.RegUserDao.Add(regUser);
+				return Common.Common.RegUserDao.Add(regUser);
+			}
 		}
 
 		/// <summary>
@@ -225,52 +215,8 @@
 		public void Set(RegUser regUser)
 		{
 			Validate.V_regUser(regUser);
-			
+
 			Common.Common.RegUserDao.Set(regUser);
-		}
-
-		/// <summary>
-		/// Toggle role for this user (on/off).
-		/// </summary>
-		/// <param name="login"></param>
-		/// <param name="role"></param>
-		/// <returns></returns>
-		public bool ToggleRole(string login, RoleScroll role)
-		{
-			Validate.V_login(login);
-			Validate.V_role(role);
-
-			return Common.Common.RegUserDao.ToggleRole(login, role);
-		}
-
-		public int GetAdminCount()
-		{
-			var admins = from item in this.GetAll()
-			where item.Roles.HasFlag(RoleScroll.Admin)
-			select item;
-
-			return admins.Count(); // TODO to ask
-		}
-
-		public bool AddMoney(string login, int summ)
-		{
-			Validate.V_login(login);
-
-			Validate.V_positiveNumber(summ, canBeZero: false);
-
-			RegUser regUser = Common.Common.RegUserDao.GetByLogin(login);
-
-			if ( regUser == default(RegUser))
-			{
-				throw new ArgumentException("No such user");
-			}
-
-			if (summ + regUser.Money > Int32.MaxValue)
-			{
-				throw new InvalidCastException("Can't do operation: Int32 overflow");
-			}
-
-			return Common.Common.RegUserDao.AddMoney(login, summ);
 		}
 
 		public bool SubMoney(string login, int summ)
@@ -292,6 +238,59 @@
 			}
 
 			return Common.Common.RegUserDao.SubMoney(login, summ);
+		}
+
+		/// <summary>
+		/// Toggle role for this user (on/off).
+		/// </summary>
+		/// <param name="login"></param>
+		/// <param name="role"></param>
+		/// <returns></returns>
+		public bool ToggleRole(string login, RoleScroll role)
+		{
+			Validate.V_login(login);
+			Validate.V_role(role);
+
+			return Common.Common.RegUserDao.ToggleRole(login, role);
+		}
+
+		private static void ClearBytes(byte[] buffer)
+		{
+			// Check arguments.
+			if (buffer == null)
+			{
+				throw new ArgumentException("buffer is null");
+			}
+
+			// Set each byte in the buffer to 0.
+			for (int x = 0; x < buffer.Length; x++)
+			{
+				buffer[x] = 0;
+			}
+		}
+
+		private static byte[] CreateRandomSalt(int length)
+		{
+			// Create a buffer
+			byte[] randBytes;
+
+			randBytes = length >= 1 ? new byte[length] : new byte[1];
+
+			// Create a new RNGCryptoServiceProvider.
+			using (RNGCryptoServiceProvider rand = new RNGCryptoServiceProvider())
+			{
+
+				// Fill the buffer with random bytes.
+				rand.GetBytes(randBytes);
+
+				// return the bytes.
+				return randBytes;
+			}
+		}
+
+		void IDisposable.Dispose()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

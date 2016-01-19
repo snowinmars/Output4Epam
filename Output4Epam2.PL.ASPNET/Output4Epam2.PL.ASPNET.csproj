@@ -137,6 +137,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="scripts\MyScripts\add.js" />
+    <Content Include="scripts\MyScripts\setTheme.js" />
     <Content Include="scripts\pie.js" />
     <Content Include="scripts\jasny-bootstrap.js" />
     <Content Include="scripts\jasny-bootstrap.min.js" />
@@ -208,7 +210,7 @@
     <Content Include="scripts\jquery-1.9.1.min.js" />
     <Content Include="scripts\raphael-min.js" />
     <Content Include="scripts\raphael.js" />
-    <Content Include="scripts\scripts.js" />
+    <Content Include="scripts\MyScripts\scripts.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

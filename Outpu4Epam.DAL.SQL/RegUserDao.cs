@@ -1,10 +1,10 @@
 ﻿namespace Outpu4Epam.DAL.SQL
 {
+	using Outpu4Epam.DAL.Interface;
+	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
-	using Outpu4Epam.DAL.Interface;
-	using Output4Epam.Entities;
 
 	public class RegUserDao : IRegUserDao
 	{
@@ -19,28 +19,39 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "insert into [dbo].[RegUserTable] " +
+				const string query = "insert into [dbo].[RegUserTable] " +
 						"([Id],[Login],[PasswordHash],[Role],[Money],[ColorSheme]) " +
 						"values (@Id,@Login,@PasswordHash,@Role,@Money,@ColorSheme)";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Id", Guid.NewGuid());
-				command.Parameters.AddWithValue("@Login", regUser.Login);
-				command.Parameters.AddWithValue("@PasswordHash", regUser.PasswordHash);
-				command.Parameters.AddWithValue("@Role", regUser.Roles);
-				command.Parameters.AddWithValue("@Money", regUser.Money);
-
-				if ((regUser.ColorSheme == String.Empty) || (regUser.ColorSheme == null))
+				using (var command = new SqlCommand(query, connection))
 				{
-					command.Parameters.AddWithValue("@ColorSheme", DBNull.Value);
-				}
-				else
-				{
-					command.Parameters.AddWithValue("@ColorSheme", regUser.ColorSheme);
-				}
+					command.Parameters.AddWithValue("@Id", Guid.NewGuid());
+					command.Parameters.AddWithValue("@Login", regUser.Login);
+					command.Parameters.AddWithValue("@PasswordHash", regUser.PasswordHash);
+					command.Parameters.AddWithValue("@Role", regUser.Roles);
+					command.Parameters.AddWithValue("@Money", regUser.Money);
 
-				connection.Open();
-				var reader = command.ExecuteNonQuery();
+					if ((regUser.ColorSheme == String.Empty) || (regUser.ColorSheme == null))
+					{
+						command.Parameters.AddWithValue("@ColorSheme", DBNull.Value);
+					}
+					else
+					{
+						command.Parameters.AddWithValue("@ColorSheme", regUser.ColorSheme);
+					}
+
+					connection.Open();
+					var reader = command.ExecuteNonQuery();
+				}
 			}
+
+			return true;
+		}
+
+		public bool AddMoney(string login, int summ)
+		{
+			RegUser regUser = this.GetByLogin(login);
+			regUser.Money += summ;
+			this.Set(regUser);
 
 			return true;
 		}
@@ -57,23 +68,25 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * " +
+				const string query = "select * " +
 						"from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Id] = @Id " +
 						"order by [PostDate]";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Id", id);
-
-				connection.Open();
-				var reader = command.ExecuteReader();
-
-				while (reader.Read())
+				using (var command = new SqlCommand(query, connection))
 				{
-					regUser = new RegUser((string)reader["Login"],
-								(int)reader["PasswordHash"],
-								(RoleScroll)reader["Role"],
-								(int)reader["Money"],
-								(string)reader["ColorSheme"]);
+					command.Parameters.AddWithValue("@Id", id);
+
+					connection.Open();
+					var reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						regUser = new RegUser((string)reader["Login"],
+									(int)reader["PasswordHash"],
+									(RoleScroll)reader["Role"],
+									(int)reader["Money"],
+									(string)reader["ColorSheme"]);
+					}
 				}
 			}
 
@@ -92,26 +105,27 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * " +
+				const string query = "select * " +
 						"from [dbo].[RegUserTable]";
-				var command = new SqlCommand(query, connection);
-
-				connection.Open();
-				var reader = command.ExecuteReader();
-
-				while (reader.Read())
+				using (var command = new SqlCommand(query, connection))
 				{
-					string colorSheme = "";
-					if (reader["ColorSheme"] != DBNull.Value)
-					{
-						colorSheme = (string)reader["ColorSheme"];
-					}
+					connection.Open();
+					var reader = command.ExecuteReader();
 
-					userList.Add(new RegUser((string)reader["Login"],
-								(int)reader["PasswordHash"],
-								(RoleScroll)reader["Role"],
-								(int)reader["Money"],
-								colorSheme));
+					while (reader.Read())
+					{
+						string colorSheme = "";
+						if (reader["ColorSheme"] != DBNull.Value)
+						{
+							colorSheme = (string)reader["ColorSheme"];
+						}
+
+						userList.Add(new RegUser((string)reader["Login"],
+									(int)reader["PasswordHash"],
+									(RoleScroll)reader["Role"],
+									(int)reader["Money"],
+									colorSheme));
+					}
 				}
 			}
 
@@ -130,28 +144,30 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * " +
+				const string query = "select * " +
 						"from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Login] = @Login";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Login", login);
-
-				connection.Open();
-				var reader = command.ExecuteReader();
-
-				while (reader.Read())
+				using (var command = new SqlCommand(query, connection))
 				{
-					string colorSheme = "";
-					if (reader["ColorSheme"] != DBNull.Value)
-					{
-						colorSheme = (string)reader["ColorSheme"];
-					}
+					command.Parameters.AddWithValue("@Login", login);
 
-					regUser = new RegUser((string)reader["Login"],
-								(int)reader["PasswordHash"],
-								(RoleScroll)reader["Role"],
-								(int)reader["Money"],
-								colorSheme);
+					connection.Open();
+					var reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						string colorSheme = "";
+						if (reader["ColorSheme"] != DBNull.Value)
+						{
+							colorSheme = (string)reader["ColorSheme"];
+						}
+
+						regUser = new RegUser((string)reader["Login"],
+									(int)reader["PasswordHash"],
+									(RoleScroll)reader["Role"],
+									(int)reader["Money"],
+									colorSheme);
+					}
 				}
 			}
 
@@ -171,31 +187,28 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * " +
+				const string query = "select * " +
 						"from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Login] = @Username";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Username", login);
-
-				connection.Open();
-				var reader = command.ExecuteReader();
-
-				while (reader.Read())
+				using (var command = new SqlCommand(query, connection))
 				{
-					RoleScroll x = (RoleScroll)reader["Role"];
-					foreach (var item in x.ToString().Split(','))
+					command.Parameters.AddWithValue("@Username", login);
+
+					connection.Open();
+					var reader = command.ExecuteReader();
+
+					while (reader.Read())
 					{
-						asd.Add(item.Trim());
+						RoleScroll x = (RoleScroll)reader["Role"];
+						foreach (var item in x.ToString().Split(','))
+						{
+							asd.Add(item.Trim());
+						}
 					}
 				}
 			}
 
 			return asd.ToArray();
-		}
-
-		void IDisposable.Dispose()
-		{
-			throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -210,21 +223,23 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * " +
+				const string query = "select * " +
 						"from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Login] = @Username";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Username", login);
-
-				connection.Open();
-				var reader = command.ExecuteReader();
-
-				while (reader.Read())
+				using (var command = new SqlCommand(query, connection))
 				{
-					RoleScroll x = (RoleScroll)reader["Role"];
-					if (x.HasFlag((RoleScroll)Enum.Parse(typeof(RoleScroll), roleName)))
+					command.Parameters.AddWithValue("@Username", login);
+
+					connection.Open();
+					var reader = command.ExecuteReader();
+
+					while (reader.Read())
 					{
-						return true;
+						RoleScroll x = (RoleScroll)reader["Role"];
+						if (x.HasFlag((RoleScroll)Enum.Parse(typeof(RoleScroll), roleName)))
+						{
+							return true;
+						}
 					}
 				}
 			}
@@ -243,13 +258,15 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "delete from [dbo].[RegUserTable] " +
+				const string query = "delete from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Id] = @Id";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Id", id);
+				using (var command = new SqlCommand(query, connection))
+				{
+					command.Parameters.AddWithValue("@Id", id);
 
-				connection.Open();
-				var reader = command.ExecuteNonQuery();
+					connection.Open();
+					var reader = command.ExecuteNonQuery();
+				}
 			}
 
 			return true;
@@ -266,13 +283,15 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "delete from [dbo].[RegUserTable] " +
+				const string query = "delete from [dbo].[RegUserTable] " +
 						"where [dbo].[RegUserTable].[Login] = @Login";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Login", login);
+				using (var command = new SqlCommand(query, connection))
+				{
+					command.Parameters.AddWithValue("@Login", login);
 
-				connection.Open();
-				var reader = command.ExecuteNonQuery();
+					connection.Open();
+					var reader = command.ExecuteNonQuery();
+				}
 			}
 
 			return true;
@@ -288,7 +307,7 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "update [dbo].[RegUserTable] " +
+				const string query = "update [dbo].[RegUserTable] " +
 						"set " +
 							"[Login] = @login , " +
 							"[PasswordHash] = @passwordHash , " +
@@ -296,16 +315,27 @@
 							"[Money] = @Money , " +
 							"[ColorSheme] = @ColorSheme " +
 						"where [dbo].[RegUserTable].[Login] = @Login";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Login", regUser.Login);
-				command.Parameters.AddWithValue("@PasswordHash", regUser.PasswordHash);
-				command.Parameters.AddWithValue("@Role", regUser.Roles);
-				command.Parameters.AddWithValue("@Money", regUser.Money);
-				command.Parameters.AddWithValue("@ColorSheme", regUser.ColorSheme);
+				using (var command = new SqlCommand(query, connection))
+				{
+					command.Parameters.AddWithValue("@Login", regUser.Login);
+					command.Parameters.AddWithValue("@PasswordHash", regUser.PasswordHash);
+					command.Parameters.AddWithValue("@Role", regUser.Roles);
+					command.Parameters.AddWithValue("@Money", regUser.Money);
+					command.Parameters.AddWithValue("@ColorSheme", regUser.ColorSheme);
 
-				connection.Open();
-				var reader = command.ExecuteNonQuery();
+					connection.Open();
+					var reader = command.ExecuteNonQuery();
+				}
 			}
+		}
+
+		public bool SubMoney(string login, int summ)
+		{
+			RegUser regUser = this.GetByLogin(login);
+			regUser.Money -= summ;
+			this.Set(regUser);
+
+			return true;
 		}
 
 		/// <summary>
@@ -323,22 +353,9 @@
 			return true;
 		}
 
-		public bool AddMoney(string login, int summ)
+		void IDisposable.Dispose()
 		{
-			RegUser regUser = this.GetByLogin(login);
-			regUser.Money += summ;
-			this.Set(regUser);
-
-			return true;
-		}
-
-		public bool SubMoney(string login, int summ)
-		{
-			RegUser regUser = this.GetByLogin(login);
-			regUser.Money -= summ;
-			this.Set(regUser);
-
-			return true;
+			throw new NotImplementedException();
 		}
 	}
 }

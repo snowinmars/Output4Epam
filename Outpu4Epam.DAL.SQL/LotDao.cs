@@ -1,15 +1,15 @@
 ﻿namespace Outpu4Epam.DAL.SQL
 {
+	using Outpu4Epam.DAL.Interface;
+	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
 	using System.IO;
-	using Outpu4Epam.DAL.Interface;
-	using Output4Epam.Entities;
 
 	public class LotDao : ILotDao
 	{
-		private string pathToWorkFolder = Common.PathToWorkFolder;
+		private string pathToWorkFolder		{			get;		} = Common.PathToWorkFolder;
 
 		/// <summary>
 		/// Add item to database.
@@ -22,23 +22,25 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "insert into [dbo].[LotTable] " +
+				const string query = "insert into [dbo].[LotTable] " +
 						"([Id],[Title],[Owner],[Sity],[Cost],[Types],[PostDate],[Info],[BoughtBy]) " +
 						"values(@Id,@Title,@Owner,@Sity,@Cost,@Types,@PostDate,@Info,@BoughtBy);";
 
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Id", lot.Id.ToString());
-				command.Parameters.AddWithValue("@Title", lot.Title);
-				command.Parameters.AddWithValue("@Owner", lot.Owner);
-				command.Parameters.AddWithValue("@Sity", lot.Sity);
-				command.Parameters.AddWithValue("@Cost", lot.Cost);
-				command.Parameters.AddWithValue("@Types", lot.Types);
-				command.Parameters.AddWithValue("@PostDate", lot.PostDate);
-				command.Parameters.AddWithValue("@Info", lot.Info);
-				command.Parameters.AddWithValue("@BoughtBy", lot.BoughtBy);
+				using (var command = new SqlCommand(query, connection))
+				{
+					command.Parameters.AddWithValue("@Id", lot.Id.ToString());
+					command.Parameters.AddWithValue("@Title", lot.Title);
+					command.Parameters.AddWithValue("@Owner", lot.Owner);
+					command.Parameters.AddWithValue("@Sity", lot.Sity);
+					command.Parameters.AddWithValue("@Cost", lot.Cost);
+					command.Parameters.AddWithValue("@Types", lot.Types);
+					command.Parameters.AddWithValue("@PostDate", lot.PostDate);
+					command.Parameters.AddWithValue("@Info", lot.Info);
+					command.Parameters.AddWithValue("@BoughtBy", lot.BoughtBy);
 
-				connection.Open();
-				command.ExecuteNonQuery();
+					connection.Open();
+					command.ExecuteNonQuery();
+				}
 			}
 
 			return true;
@@ -55,16 +57,18 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "insert into [dbo].[ImagesTable] " +
+				const string query = "insert into [dbo].[ImagesTable] " +
 						"([ImageId],[LotId],[Image]) " +
 						"values (@ImageId, @LotId, @Image)";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@ImageId", Guid.NewGuid());
-				command.Parameters.AddWithValue("@LotId", lotId);
-				command.Parameters.AddWithValue("@Image", image);
+				using (var command = new SqlCommand(query, connection))
+				{
+					command.Parameters.AddWithValue("@ImageId", Guid.NewGuid());
+					command.Parameters.AddWithValue("@LotId", lotId);
+					command.Parameters.AddWithValue("@Image", image);
 
-				connection.Open();
-				command.ExecuteNonQuery();
+					connection.Open();
+					command.ExecuteNonQuery();
+				}
 			}
 		}
 
@@ -72,6 +76,7 @@
 		/// Buy lot with this Id for user with this login
 		/// </summary>
 		/// <param name="id"></param>
+		/// <param name="login"></param>
 		/// <returns></returns>
 		public bool Buy(Guid id, string login)
 		{
@@ -79,16 +84,18 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "update [dbo].[LotTable] " +
+				const string query = "update [dbo].[LotTable] " +
 						"set " +
 							"[BoughtBy] = @boughtBy " +
 						"where [dbo].[LotTable].[Id] = @Id";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@boughtBy", login);
-				command.Parameters.AddWithValue("@Id", id);
+				using (var command = new SqlCommand(query, connection))
+				{
+					command.Parameters.AddWithValue("@boughtBy", login);
+					command.Parameters.AddWithValue("@Id", id);
 
-				connection.Open();
-				var reader = command.ExecuteNonQuery();
+					connection.Open();
+					var reader = command.ExecuteNonQuery();
+				}
 			}
 
 			return true;
@@ -106,38 +113,34 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * " +
+				const string query = "select * " +
 						"from [dbo].[LotTable] " +
 						"where [dbo].[LotTable].[Id] = @Id " +
 						"order by [PostDate]";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Id", id);
-
-				connection.Open();
-				var reader = command.ExecuteReader();
-
-				while (reader.Read())
+				using (var command = new SqlCommand(query, connection))
 				{
-					string boughtBy;
+					command.Parameters.AddWithValue("@Id", id);
 
-					if (reader["BoughtBy"] == DBNull.Value)
-					{
-						boughtBy = "";
-					}
-					else
-					{
-						boughtBy = (string)reader["BoughtBy"];
-					}
+					connection.Open();
+					var reader = command.ExecuteReader();
 
-					lot = new Lot((string)reader["Title"],
-							(string)reader["Owner"],
-							(string)reader["Sity"],
-							(int)reader["Cost"],
-							(string)reader["Info"],
-							(LotTypes)reader["Types"],
-							(DateTime)reader["PostDate"],
-							(Guid)reader["Id"],
-							boughtBy);
+					while (reader.Read())
+					{
+						string boughtBy;
+
+
+						boughtBy = reader["BoughtBy"] == DBNull.Value ? String.Empty : (string)reader["BoughtBy"];
+
+						lot = new Lot((string)reader["Title"],
+								(string)reader["Owner"],
+								(string)reader["Sity"],
+								(int)reader["Cost"],
+								(string)reader["Info"],
+								(LotTypes)reader["Types"],
+								(DateTime)reader["PostDate"],
+								(Guid)reader["Id"],
+								boughtBy);
+					}
 				}
 			}
 
@@ -156,36 +159,30 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * " +
+				const string query = "select * " +
 						"from [dbo].[LotTable] " +
 						"order by [PostDate]";
-				var command = new SqlCommand(query, connection);
-
-				connection.Open();
-				var reader = command.ExecuteReader();
-
-				while (reader.Read())
+				using (var command = new SqlCommand(query, connection))
 				{
-					string boughtBy;
+					connection.Open();
+					var reader = command.ExecuteReader();
 
-					if (reader["BoughtBy"] == DBNull.Value)
+					while (reader.Read())
 					{
-						boughtBy = "";
-					}
-					else
-					{
-						boughtBy = (string)reader["BoughtBy"];
-					}
+						string boughtBy;
 
-					lotList.Add(new Lot((string)reader["Title"],
-								(string)((reader["Owner"]).ToString()),
-								(string)reader["Sity"],
-								(int)reader["Cost"],
-								(reader["Info"] == DBNull.Value ? String.Empty : (string)reader["Info"]),
-								(LotTypes)reader["Types"],
-								(DateTime)reader["PostDate"],
-								(Guid)reader["Id"],
-								boughtBy));
+						boughtBy = reader["BoughtBy"] == DBNull.Value ? string.Empty : (string)reader["BoughtBy"];
+
+						lotList.Add(new Lot((string)reader["Title"],
+									(string)((reader["Owner"]).ToString()),
+									(string)reader["Sity"],
+									(int)reader["Cost"],
+									(reader["Info"] == DBNull.Value ? String.Empty : (string)reader["Info"]),
+									(LotTypes)reader["Types"],
+									(DateTime)reader["PostDate"],
+									(Guid)reader["Id"],
+									boughtBy));
+					}
 				}
 			}
 
@@ -203,13 +200,13 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * " +
+				const string query = "select * " +
 						"from [dbo].[ImagesTable] " +
 						"where [LotId] = @LotId";
-				var command = new SqlCommand(query, connection);
-
-				switch (colorsheme) // read /Docs/read.me if u wanna know about this guids.
+				using (var command = new SqlCommand(query, connection))
 				{
+					switch (colorsheme) // read /Docs/read.me if u wanna know about this guids.
+					{
 					case "testing":
 						command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000000"));
 						break;
@@ -228,14 +225,15 @@
 
 					default:
 						break;
-				}
+					}
 
-				connection.Open();
-				var reader = command.ExecuteReader();
+					connection.Open();
+					var reader = command.ExecuteReader();
 
-				while (reader.Read())
-				{
-					return (byte[])reader["Image"];
+					while (reader.Read())
+					{
+						return (byte[])reader["Image"];
+					}
 				}
 			}
 
@@ -253,18 +251,20 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * " +
+				const string query = "select * " +
 						"from [dbo].[ImagesTable] " +
 						"where [LotId] = @LotId";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@LotId", id);
-
-				connection.Open();
-				var reader = command.ExecuteReader();
-
-				while (reader.Read())
+				using (var command = new SqlCommand(query, connection))
 				{
-					return (byte[])reader["Image"];
+					command.Parameters.AddWithValue("@LotId", id);
+
+					connection.Open();
+					var reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						return (byte[])reader["Image"];
+					}
 				}
 			}
 
@@ -281,26 +281,26 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "select * " +
+				const string query = "select * " +
 						"from [dbo].[ImagesTable] " +
 						"where [LotId] = @LotId";
-				var command = new SqlCommand(query, connection); // read /Docs/read.me if u wanna know about this guids.
-				command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000001"));
 
-				connection.Open();
-				var reader = command.ExecuteReader();
-
-				while (reader.Read())
+				// read /Docs/read.me if u wanna know about this guids.
+				using (var command = new SqlCommand(query, connection))
 				{
-					return (byte[])reader["Image"];
+					command.Parameters.AddWithValue("@LotId", Guid.Parse("00000000-0000-0000-0000-000000000001"));
+
+					connection.Open();
+					var reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						return (byte[])reader["Image"];
+					}
 				}
 			}
 
 			return new byte[] { };
-		}
-
-		void IDisposable.Dispose()
-		{
 		}
 
 		/// <summary>
@@ -314,13 +314,15 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "delete from [dbo].[LotTable] " +
+				const string query = "delete from [dbo].[LotTable] " +
 						"where [dbo].[LotTable].[Id] = @Id";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@Id", id);
+				using (var command = new SqlCommand(query, connection))
+				{
+					command.Parameters.AddWithValue("@Id", id);
 
-				connection.Open();
-				var reader = command.ExecuteNonQuery();
+					connection.Open();
+					var reader = command.ExecuteNonQuery();
+				}
 			}
 
 			return true;
@@ -336,13 +338,15 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "delete from [dbo].[ImagesTable] " +
+				const string query = "delete from [dbo].[ImagesTable] " +
 						"where [dbo].[LotTable].[LotId] = @LotId";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@LotId", id);
+				using (var command = new SqlCommand(query, connection))
+				{
+					command.Parameters.AddWithValue("@LotId", id);
 
-				connection.Open();
-				var reader = command.ExecuteNonQuery();
+					connection.Open();
+					var reader = command.ExecuteNonQuery();
+				}
 			}
 		}
 
@@ -356,7 +360,7 @@
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				var query = "update [dbo].[LotTable] " +
+				const string query = "update [dbo].[LotTable] " +
 						"set " +
 							"[BoughtBy] = @BoughtBy , " +
 							"[Cost] = @Cost , " +
@@ -368,20 +372,26 @@
 							"[Title] = @Title " +
 							"[Types] = @Types " +
 						"where [dbo].[LotTable].[Id] = @Id";
-				var command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@BoughtBy", lot.BoughtBy);
-				command.Parameters.AddWithValue("@Cost", lot.Cost);
-				command.Parameters.AddWithValue("@Id", lot.Id);
-				command.Parameters.AddWithValue("@Info", lot.Info);
-				command.Parameters.AddWithValue("@Owner", lot.Owner);
-				command.Parameters.AddWithValue("@PostDate", lot.PostDate);
-				command.Parameters.AddWithValue("@Sity", lot.Sity);
-				command.Parameters.AddWithValue("@Title", lot.Title);
-				command.Parameters.AddWithValue("@Types", lot.Types);
+				using (var command = new SqlCommand(query, connection))
+				{
+					command.Parameters.AddWithValue("@BoughtBy", lot.BoughtBy);
+					command.Parameters.AddWithValue("@Cost", lot.Cost);
+					command.Parameters.AddWithValue("@Id", lot.Id);
+					command.Parameters.AddWithValue("@Info", lot.Info);
+					command.Parameters.AddWithValue("@Owner", lot.Owner);
+					command.Parameters.AddWithValue("@PostDate", lot.PostDate);
+					command.Parameters.AddWithValue("@Sity", lot.Sity);
+					command.Parameters.AddWithValue("@Title", lot.Title);
+					command.Parameters.AddWithValue("@Types", lot.Types);
 
-				connection.Open();
-				var reader = command.ExecuteNonQuery();
+					connection.Open();
+					var reader = command.ExecuteNonQuery();
+				}
 			}
+		}
+
+		void IDisposable.Dispose() // TODO to ask
+		{
 		}
 	}
 }

@@ -188,7 +188,7 @@
 	function filter(e) {
 		var target = $(e.target),
 			action = target.parent().data("action");
-		
+
 		location.search = "filterby=" + action;
 	}
 
@@ -248,55 +248,6 @@
 	/*________________________________________*/
 
 	// TODO : this stuff to another file - to ask: how?
-	$(".add").click(add);
-
-	function add(e) {
-		var group = $(".checkbox").find(":input"),
-			form = $("form");
-		form.append('<input type="text" name="Types" value="">');
-		var i = 0,
-			type = form.children("[name=Types]"),
-			count = 0;
-
-		for (i = 0; i < group.length; ++i) {
-			if (group[i].checked) {
-				count += $(group[i]).data("enumvalue");
-			}
-		}
-
-		type.val(count);
-		form.submit();
-		type.remove();
-	}
-
-	$("[name=settheme]").click(settheme);
-
-	function settheme(e) {
-		var target = $(e.target),
-			group = $(".radiobox"),
-			i = 0,
-			datastr = "",
-			headimg;
-
-		for (i = 0; i < group.length; ++i) {
-			if (group[i].checked) {
-				break;
-			}
-		}
-
-		datastr = {
-			"Type": $(group[i]).data("shemename"),
-			"Login": target.siblings("ul").data("userlogin"),
-		};
-
-		$.ajax({
-			url: "/Pages/AJAX/ChangeTheme.cshtml",
-			type: "post",
-			data: datastr,
-		}).success(function (r) {
-			loadjscssfile("/Content/" + $(group[i]).data("shemename") + ".css", "css");
-		});
-	};
 
 	$(".costchoiseitem").click(calccost);
 
@@ -330,7 +281,7 @@
 			case "euro":
 				newcost = (oldcost - 0) / (rate.EURO - 0);
 				costitem.text(newcost.toFixed(2) + " €"); // euro
-				break;						// OMG, I hate MS so much.
+				break;
 			case "ruble":
 				newcost = oldcost;
 				costitem.text(newcost + " руб."); // rubles

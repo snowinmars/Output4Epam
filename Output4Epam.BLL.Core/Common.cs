@@ -6,7 +6,7 @@
 	internal class Common
 	{
 		public static string LoginRegex { get; } = @"[a-zA-Z_]";
-		public static long MaxImageSize { get; } = 7340032; // 7 MiB in bytes
+		public static long MaxImageSizeInBytes { get; } = 7340032; // 7 MiB in bytes
 		public static string PasswordRegex { get; } = @"[a-zA-Z0-9`~!@#$%^&*()-=_+\|/?.>,<':;]";
 		internal static ILotDao LotDao { get; } = new LotDao();
 		internal static int MaxInfoLength { get; } = 500;
