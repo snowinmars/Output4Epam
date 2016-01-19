@@ -19,23 +19,7 @@
 		/// <returns></returns>
 		public bool Add(Lot lot)
 		{
-			if ((lot.Cost <= 0) ||
-				(lot.Info.Length > Common.Common.MaxInfoLength) ||
-				(lot.Info.Length < Common.Common.MinInfoLength) ||
-
-				(lot.Owner.Length > Common.Common.MaxLoginLength) ||
-				(lot.Owner.Length < Common.Common.MinLoginLength) ||
-
-				(lot.PostDate > DateTime.Now) ||
-
-				(lot.Sity.Length > Common.Common.MaxSityLength) ||
-				(lot.Sity.Length < Common.Common.MinSityLength) ||
-
-				(lot.Title.Length > Common.Common.MaxTitleLength) ||
-				(lot.Title.Length < Common.Common.MinTitleLength))
-			{
-				throw new ArgumentException("Uncorrect parameters");
-			}
+			Validate.V_lot(lot);
 
 			return Common.Common.LotDao.Add(lot);
 		}
@@ -47,15 +31,10 @@
 		/// <param name="image"></param>
 		public void AddImage(Guid lotId, Stream image)
 		{
-			long length = image.Length;
-
-			if (length > 7340032) // 7 MiB in bytes
-			{
-				throw new ArgumentException("Too big file");
-			}
+			Validate.V_image(image);
 
 			// Use this, if u wanna to resize image
-			//Stream smallImage = new MemoryStream(this.ResizeImageFile(image.ToByteArray(), 100));
+			// Stream smallImage = new MemoryStream(this.ResizeImageFile(image.ToByteArray(), 100));
 
 			Common.Common.LotDao.AddImage(lotId, image);
 		}
@@ -67,6 +46,8 @@
 		/// <returns></returns>
 		public bool Buy(Guid id, string login)
 		{
+			Validate.V_login(login);
+
 			return Common.Common.LotDao.Buy(id, login);
 		}
 
@@ -96,6 +77,8 @@
 		/// <returns></returns>
 		public byte[] GetHeader(string colorsheme)
 		{
+			Validate.V_colorsheme(colorsheme);
+
 			return Common.Common.LotDao.GetHeader(colorsheme);
 		}
 
@@ -147,28 +130,20 @@
 		/// <param name="lot"></param>
 		public void Set(Lot lot)
 		{
-			if ((lot.Cost <= 0) ||
-				(lot.Info.Length > Common.Common.MaxInfoLength) ||
-				(lot.Info.Length < Common.Common.MinInfoLength) ||
+			Validate.V_lot(lot);
 
-				(lot.Owner.Length > Common.Common.MaxLoginLength) ||
-				(lot.Owner.Length < Common.Common.MinLoginLength) ||
-
-				(lot.PostDate > DateTime.Now) ||
-
-				(lot.Sity.Length > Common.Common.MaxSityLength) ||
-				(lot.Sity.Length < Common.Common.MinSityLength) ||
-
-				(lot.Title.Length > Common.Common.MaxTitleLength) ||
-				(lot.Title.Length < Common.Common.MinTitleLength))
-			{
-				throw new ArgumentException("Uncorrect parameters");
-			}
 			Common.Common.LotDao.Set(lot);
 		}
 
 		private Size CalculateDimensions(Size oldSize, int targetSize)
 		{
+			if (oldSize == null)
+			{
+				throw new NullReferenceException("old size is null");
+			}
+
+			Validate.V_positiveNumber(targetSize, canBeZero: false);
+
 			Size newSize = new Size();
 			if (oldSize.Height > oldSize.Width)
 			{
@@ -184,6 +159,13 @@
 
 		private byte[] ResizeImageFile(byte[] imageFile, int targetSize)
 		{
+			if (imageFile == null)
+			{
+				throw new NullReferenceException("image is null");
+			}
+
+			Validate.V_positiveNumber(targetSize, canBeZero: false);
+
 			using (Image oldImage = Image.FromStream(new MemoryStream(imageFile)))
 			{
 				Size newSize = CalculateDimensions(oldImage.Size, targetSize);

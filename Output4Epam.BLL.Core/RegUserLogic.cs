@@ -18,20 +18,12 @@
 		/// <returns></returns>
 		public bool Add(RegUser regUser)
 		{
-			string regexQuery = Common.Common.LoginRegex;
-			Regex regex = new Regex(regexQuery);
-			Match match = regex.Match(regUser.Login);
-
-			if ((regUser.Login.Length > Common.Common.MaxLoginLength) ||
-				(regUser.Login.Length < Common.Common.MinLoginLength) ||
-				(regUser.Money < 0) ||
-				(!match.Success))
-			{
-				throw new ArgumentException("Uncorrect parameters");
-			}
+			Validate.V_regUser(regUser);
 
 			return Common.Common.RegUserDao.Add(regUser);
 		}
+
+		
 
 		/// <summary>
 		/// Check, is there any user with this login and password.
@@ -41,6 +33,9 @@
 		/// <returns></returns>
 		public bool Auth(string login, string password)
 		{
+			Validate.V_login(login);
+			Validate.V_password(password);
+
 			byte[] pwd = Encoding.Unicode.GetBytes(password);
 			byte[] salt = CreateRandomSalt(7);
 			TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
@@ -95,6 +90,8 @@
 		/// <returns></returns>
 		public RegUser GetByLogin(string login)
 		{
+			Validate.V_login(login);
+
 			return Common.Common.RegUserDao.GetByLogin(login);
 		}
 
@@ -105,6 +102,8 @@
 		/// <returns></returns>
 		public string[] GetRolesForUser(string login)
 		{
+			Validate.V_login(login);
+
 			return Common.Common.RegUserDao.GetRolesForUser(login);
 		}
 
@@ -121,6 +120,9 @@
 		/// <returns></returns>
 		public bool IsUserInRole(string login, string roleName)
 		{
+			Validate.V_login(login);
+			Validate.V_role(roleName);
+
 			return Common.Common.RegUserDao.IsUserInRole(login, roleName);
 		}
 
@@ -153,7 +155,7 @@
 			// Check arguments.
 			if (buffer == null)
 			{
-				throw new ArgumentException("buffer");
+				throw new ArgumentException("buffer is null");
 			}
 
 			// Set each byte in the buffer to 0.
@@ -171,27 +173,8 @@
 		/// <returns></returns>
 		public bool Registrate(string login, string password)
 		{
-			string regexQuery = Common.Common.LoginRegex;
-			Regex regex = new Regex(regexQuery);
-			Match match = regex.Match(login);
-
-			if ((login.Length > Common.Common.MaxLoginLength) ||
-				(login.Length < Common.Common.MinLoginLength) ||
-				(!match.Success))
-			{
-				throw new ArgumentException("Uncorrect parameters");
-			}
-
-			regexQuery = Common.Common.PasswordRegex;
-			regex = new Regex(regexQuery);
-			match = regex.Match(password);
-
-			if ((password.Length > Common.Common.MaxPasswordLength) ||
-				(password.Length < Common.Common.MinPasswordLength) ||
-				(!match.Success))
-			{
-				throw new ArgumentException("Uncorrect parameters");
-			}
+			Validate.V_login(login);
+			Validate.V_password(password);
 
 			byte[] pwd = Encoding.Unicode.GetBytes(password);
 			byte[] salt = CreateRandomSalt(7);
@@ -230,6 +213,8 @@
 		/// <returns></returns>
 		public bool RemoveByLogin(string login)
 		{
+			Validate.V_login(login);
+
 			return Common.Common.RegUserDao.RemoveByLogin(login);
 		}
 
@@ -239,18 +224,8 @@
 		/// <param name="regUser"></param>
 		public void Set(RegUser regUser)
 		{
-			string regexQuery = Common.Common.LoginRegex;
-			Regex regex = new Regex(regexQuery);
-			Match match = regex.Match(regUser.Login);
-
-			if ((regUser.Login.Length > Common.Common.MaxLoginLength) ||
-				(regUser.Login.Length < Common.Common.MinLoginLength) ||
-				(regUser.Money < 0) ||
-				(!match.Success))
-			{
-				throw new ArgumentException("Uncorrect parameters");
-			}
-
+			Validate.V_regUser(regUser);
+			
 			Common.Common.RegUserDao.Set(regUser);
 		}
 
@@ -262,28 +237,37 @@
 		/// <returns></returns>
 		public bool ToggleRole(string login, RoleScroll role)
 		{
+			Validate.V_login(login);
+			Validate.V_role(role);
+
 			return Common.Common.RegUserDao.ToggleRole(login, role);
 		}
 
 		public int GetAdminCount()
 		{
-			var asd = from item in this.GetAll()
+			var admins = from item in this.GetAll()
 			where item.Roles.HasFlag(RoleScroll.Admin)
 			select item;
 
-			return asd.Count(); // TODO to ask
+			return admins.Count(); // TODO to ask
 		}
 
 		public bool AddMoney(string login, int summ)
 		{
-			if (Common.Common.RegUserDao.GetByLogin(login) == default(RegUser))
+			Validate.V_login(login);
+
+			Validate.V_positiveNumber(summ, canBeZero: false);
+
+			RegUser regUser = Common.Common.RegUserDao.GetByLogin(login);
+
+			if ( regUser == default(RegUser))
 			{
 				throw new ArgumentException("No such user");
 			}
 
-			if (summ <= 0)
+			if (summ + regUser.Money > Int32.MaxValue)
 			{
-				throw new ArgumentException("Summ must be positive");
+				throw new InvalidCastException("Can't do operation: Int32 overflow");
 			}
 
 			return Common.Common.RegUserDao.AddMoney(login, summ);
@@ -291,14 +275,20 @@
 
 		public bool SubMoney(string login, int summ)
 		{
-			if (Common.Common.RegUserDao.GetByLogin(login) == default(RegUser))
+			Validate.V_login(login);
+
+			Validate.V_positiveNumber(summ, canBeZero: false);
+
+			RegUser regUser = Common.Common.RegUserDao.GetByLogin(login);
+
+			if (regUser == default(RegUser))
 			{
 				throw new ArgumentException("No such user");
 			}
 
-			if (summ <= 0)
+			if (regUser.Money - summ < Int32.MinValue)
 			{
-				throw new ArgumentException("Summ must be positive");
+				throw new InvalidCastException("Can't do operation: Int32 overflow");
 			}
 
 			return Common.Common.RegUserDao.SubMoney(login, summ);
