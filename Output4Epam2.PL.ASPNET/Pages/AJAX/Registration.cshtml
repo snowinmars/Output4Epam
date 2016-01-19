@@ -4,8 +4,6 @@
 @{
 	if (IsPost)
 	{
-		try
-		{
 
 			string login = Request["login"];
 			string password = Request["password"];
@@ -18,15 +16,7 @@
 
 			LogicProvider.RegUserLogic.Registrate(login, password);
 			LoggerProvider.Log.Info($"{User.Identity.Name} added to database.");
-		}
-		catch (ArgumentException)
-		{
-			Response.Redirect("/Pages/ErrorPages/400.cshtml");
-		}
-		catch
-		{
-			Response.Redirect("/Pages/ErrorPages/Other.cshtml");
-		}
+		
 	}
 	Response.Redirect("/Pages/StructureElements/Index.cshtml");
 	return;

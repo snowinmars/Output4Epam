@@ -36,22 +36,21 @@
 					<li class="navbar-left" data-type="none"><a href="~/Pages/StructureElements/Register.cshtml">Registrate for more options</a></li>
 			}
 				<li class="navbar-left" data-type="statistic"><a href="/Pages/StructureElements/Statistic.cshtml">Statistic</a></li>
-				<li class="dropdown navbar-left" data-type="none">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filters<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						@foreach (var item in Enum.GetValues(typeof(LotTypes)))
-						{
-							if (@item.ToString() != "None")
+					<li class="dropdown navbar-left" data-type="none">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filters<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							@foreach (var item in Enum.GetValues(typeof(LotTypes)))
 							{
-								<li class="topbutton filter" data-action="@item"><a href="#">@item</a></li>
+								if (@item.ToString() != "None")
+								{
+									<li class="topbutton filter" data-action="@item"><a href="#">@item</a></li>
+								}
 							}
-						}
-					</ul>
-				</li>
-
+						</ul>
+					</li>
 				@if (User.Identity.IsAuthenticated)
 				{
-							<li class="navbar-right"><a href="~/Pages/AJAX/Dislogin.cshtml">Dislogin</a></li>
+					<li class="navbar-right"><a href="~/Pages/AJAX/Dislogin.cshtml">Dislogin</a></li>
 				}
 				else
 				{
