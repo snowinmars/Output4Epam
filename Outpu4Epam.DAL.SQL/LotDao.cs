@@ -391,9 +391,5 @@
 				}
 			}
 		}
-
-		void IDisposable.Dispose() // TODO to ask
-		{
-		}
 	}
 }

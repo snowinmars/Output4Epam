@@ -185,10 +185,5 @@
 				}
 			}
 		}
-
-		void IDisposable.Dispose()
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

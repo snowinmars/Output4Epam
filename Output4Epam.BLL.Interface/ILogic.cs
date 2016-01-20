@@ -3,7 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 
-	public interface ILogic<T> : ICRUD<T>, IDisposable
+	public interface ILogic<T> : ICRUD<T>
 	{
 		/// <summary>
 		/// Get all lots from database

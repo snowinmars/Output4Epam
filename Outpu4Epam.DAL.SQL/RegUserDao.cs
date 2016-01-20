@@ -355,10 +355,5 @@
 
 			return true;
 		}
-
-		void IDisposable.Dispose()
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

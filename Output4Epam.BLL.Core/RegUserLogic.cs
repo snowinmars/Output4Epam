@@ -300,10 +300,5 @@
 				return randBytes;
 			}
 		}
-
-		void IDisposable.Dispose()
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

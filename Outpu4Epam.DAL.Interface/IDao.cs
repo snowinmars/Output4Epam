@@ -3,7 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 
-	public interface IDao<T> : ICRUD<T>, IDisposable
+	public interface IDao<T> : ICRUD<T>
 	{
 		/// <summary>
 		/// Get all lots
