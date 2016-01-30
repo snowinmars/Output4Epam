@@ -1,6 +1,5 @@
 ﻿namespace Output4Epam.BLL.Core
 {
-	using System;
 	using System.IO;
 
 	public static class Extensions
@@ -9,7 +8,7 @@
 		{
 			if (stream == null)
 			{
-				throw new NullReferenceException("stream is null");
+				return null; // TODO to ask
 			}
 
 			byte[] f = new byte[stream.Length];

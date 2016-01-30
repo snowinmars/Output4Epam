@@ -3,7 +3,7 @@
 	using Outpu4Epam.DAL.Interface;
 	using Outpu4Epam.DAL.SQL;
 
-	internal class Common
+	internal static class Common
 	{
 		public static string LoginRegex { get; } = @"[a-zA-Z_]";
 

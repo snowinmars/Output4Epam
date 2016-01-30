@@ -1,6 +1,5 @@
 ﻿namespace Output4Epam.BLL.Interface
 {
-	using System;
 	using System.Collections.Generic;
 
 	public interface ILogic<T> : ICRUD<T>
@@ -10,7 +9,5 @@
 		/// </summary>
 		/// <returns></returns>
 		IEnumerable<T> GetAll();
-
-		// IEnumerable<T> Filter(string filter); // TODO filter method for ILogic
 	}
 }

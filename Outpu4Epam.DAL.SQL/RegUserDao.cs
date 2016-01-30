@@ -1,19 +1,19 @@
 ﻿namespace Outpu4Epam.DAL.SQL
 {
+	using Outpu4Epam.DAL.Interface;
+	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
-	using Outpu4Epam.DAL.Interface;
-	using Output4Epam.Entities;
 
 	public class RegUserDao : IRegUserDao
 	{
 		/// <summary>
 		/// Add user to database.
 		/// </summary>
-		/// <param name="regUser"></param>
+		/// <param name="item"></param>
 		/// <returns></returns>
-		public bool Add(RegUser regUser)
+		public bool Create(RegUser item)
 		{
 			string connectionString = Common.ConnectionString;
 
@@ -25,22 +25,22 @@
 				using (var command = new SqlCommand(Query, connection))
 				{
 					command.Parameters.AddWithValue("@Id", Guid.NewGuid());
-					command.Parameters.AddWithValue("@Login", regUser.Login);
-					command.Parameters.AddWithValue("@PasswordHash", regUser.PasswordHash);
-					command.Parameters.AddWithValue("@Role", regUser.Roles);
-					command.Parameters.AddWithValue("@Money", regUser.Money);
+					command.Parameters.AddWithValue("@Login", item.Login);
+					command.Parameters.AddWithValue("@PasswordHash", item.PasswordHash);
+					command.Parameters.AddWithValue("@Role", item.Roles);
+					command.Parameters.AddWithValue("@Money", item.Money);
 
-					if ((regUser.ColorSheme == String.Empty) || (regUser.ColorSheme == null))
+					if (String.IsNullOrEmpty(item.ColorSheme))
 					{
 						command.Parameters.AddWithValue("@ColorSheme", DBNull.Value);
 					}
 					else
 					{
-						command.Parameters.AddWithValue("@ColorSheme", regUser.ColorSheme);
+						command.Parameters.AddWithValue("@ColorSheme", item.ColorSheme);
 					}
 
 					connection.Open();
-					var reader = command.ExecuteNonQuery();
+					command.ExecuteNonQuery();
 				}
 			}
 
@@ -51,7 +51,7 @@
 		{
 			RegUser regUser = this.GetByLogin(login);
 			regUser.Money += summ;
-			this.Set(regUser);
+			this.Update(regUser);
 
 			return true;
 		}
@@ -61,7 +61,7 @@
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public RegUser Get(Guid id)
+		public RegUser Read(Guid id)
 		{
 			string connectionString = Common.ConnectionString;
 			RegUser regUser = default(RegUser);
@@ -84,7 +84,7 @@
 						regUser = new RegUser(
 								(string)reader["Login"],
 								(int)reader["PasswordHash"],
-								(RoleScroll)reader["Role"],
+								(RoleScrolls)reader["Role"],
 								(int)reader["Money"],
 								(string)reader["ColorSheme"]);
 					}
@@ -124,7 +124,7 @@
 						userList.Add(new RegUser(
 								(string)reader["Login"],
 								(int)reader["PasswordHash"],
-								(RoleScroll)reader["Role"],
+								(RoleScrolls)reader["Role"],
 								(int)reader["Money"],
 								colorSheme));
 					}
@@ -167,7 +167,7 @@
 						regUser = new RegUser(
 								(string)reader["Login"],
 								(int)reader["PasswordHash"],
-								(RoleScroll)reader["Role"],
+								(RoleScrolls)reader["Role"],
 								(int)reader["Money"],
 								colorSheme);
 					}
@@ -180,9 +180,9 @@
 		/// <summary>
 		/// Get all roles, that this user has.
 		/// </summary>
-		/// <param name="login"></param>
+		/// <param name="userName"></param>
 		/// <returns></returns>
-		public string[] GetRolesForUser(string login)
+		public string[] GetRolesForUser(string userName)
 		{
 			List<string> asd = new List<string>();
 
@@ -195,14 +195,14 @@
 						"where [dbo].[RegUserTable].[Login] = @Username";
 				using (var command = new SqlCommand(Query, connection))
 				{
-					command.Parameters.AddWithValue("@Username", login);
+					command.Parameters.AddWithValue("@Username", userName);
 
 					connection.Open();
 					var reader = command.ExecuteReader();
 
 					while (reader.Read())
 					{
-						RoleScroll x = (RoleScroll)reader["Role"];
+						RoleScrolls x = (RoleScrolls)reader["Role"];
 						foreach (var item in x.ToString().Split(','))
 						{
 							asd.Add(item.Trim());
@@ -217,10 +217,10 @@
 		/// <summary>
 		/// Checks, is there any user with this role.
 		/// </summary>
-		/// <param name="login"></param>
+		/// <param name="userName"></param>
 		/// <param name="roleName"></param>
 		/// <returns></returns>
-		public bool IsUserInRole(string login, string roleName)
+		public bool IsUserInRole(string userName, string roleName)
 		{
 			string connectionString = Common.ConnectionString;
 
@@ -231,15 +231,15 @@
 						"where [dbo].[RegUserTable].[Login] = @Username";
 				using (var command = new SqlCommand(Query, connection))
 				{
-					command.Parameters.AddWithValue("@Username", login);
+					command.Parameters.AddWithValue("@Username", userName);
 
 					connection.Open();
 					var reader = command.ExecuteReader();
 
 					while (reader.Read())
 					{
-						RoleScroll x = (RoleScroll)reader["Role"];
-						if (x.HasFlag((RoleScroll)Enum.Parse(typeof(RoleScroll), roleName)))
+						RoleScrolls x = (RoleScrolls)reader["Role"];
+						if (x.HasFlag((RoleScrolls)Enum.Parse(typeof(RoleScrolls), roleName)))
 						{
 							return true;
 						}
@@ -255,7 +255,7 @@
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public bool Remove(Guid id)
+		public bool Delete(Guid id)
 		{
 			string connectionString = Common.ConnectionString;
 
@@ -268,7 +268,7 @@
 					command.Parameters.AddWithValue("@Id", id);
 
 					connection.Open();
-					var reader = command.ExecuteNonQuery();
+					command.ExecuteNonQuery();
 				}
 			}
 
@@ -293,7 +293,7 @@
 					command.Parameters.AddWithValue("@Login", login);
 
 					connection.Open();
-					var reader = command.ExecuteNonQuery();
+					command.ExecuteNonQuery();
 				}
 			}
 
@@ -303,8 +303,8 @@
 		/// <summary>
 		/// Update user. Well, I don't know, what I wanna say with this. Not implemented yet
 		/// </summary>
-		/// <param name="regUser"></param>
-		public void Set(RegUser regUser)
+		/// <param name="item"></param>
+		public void Update(RegUser item)
 		{
 			string connectionString = Common.ConnectionString;
 
@@ -320,14 +320,14 @@
 						"where [dbo].[RegUserTable].[Login] = @Login";
 				using (var command = new SqlCommand(Query, connection))
 				{
-					command.Parameters.AddWithValue("@Login", regUser.Login);
-					command.Parameters.AddWithValue("@PasswordHash", regUser.PasswordHash);
-					command.Parameters.AddWithValue("@Role", regUser.Roles);
-					command.Parameters.AddWithValue("@Money", regUser.Money);
-					command.Parameters.AddWithValue("@ColorSheme", regUser.ColorSheme);
+					command.Parameters.AddWithValue("@Login", item.Login);
+					command.Parameters.AddWithValue("@PasswordHash", item.PasswordHash);
+					command.Parameters.AddWithValue("@Role", item.Roles);
+					command.Parameters.AddWithValue("@Money", item.Money);
+					command.Parameters.AddWithValue("@ColorSheme", item.ColorSheme);
 
 					connection.Open();
-					var reader = command.ExecuteNonQuery();
+					command.ExecuteNonQuery();
 				}
 			}
 		}
@@ -336,7 +336,7 @@
 		{
 			RegUser regUser = this.GetByLogin(login);
 			regUser.Money -= summ;
-			this.Set(regUser);
+			this.Update(regUser);
 
 			return true;
 		}
@@ -347,11 +347,11 @@
 		/// <param name="login"></param>
 		/// <param name="role"></param>
 		/// <returns></returns>
-		public bool ToggleRole(string login, RoleScroll role)
+		public bool ToggleRole(string login, RoleScrolls role)
 		{
 			RegUser regUser = this.GetByLogin(login);
 			regUser.Roles ^= role;
-			this.Set(regUser);
+			this.Update(regUser);
 
 			return true;
 		}

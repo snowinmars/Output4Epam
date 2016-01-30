@@ -1,5 +1,7 @@
 ﻿namespace Output4Epam.BLL.Core
 {
+	using Output4Epam.BLL.Interface;
+	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Drawing;
@@ -7,21 +9,19 @@
 	using System.Drawing.Imaging;
 	using System.IO;
 	using System.Linq;
-	using Output4Epam.BLL.Interface;
-	using Output4Epam.Entities;
 
 	public class LotLogic : ILotLogic
 	{
 		/// <summary>
 		/// Add item to database
 		/// </summary>
-		/// <param name="lot"></param>
+		/// <param name="item"></param>
 		/// <returns></returns>
-		public bool Add(Lot lot)
+		public bool Add(Lot item)
 		{
-			Validate.V_lot(lot);
+			Validate.V_lot(item);
 
-			return Common.Common.LotDao.Add(lot);
+			return Common.Common.LotDao.Create(item);
 		}
 
 		/// <summary>
@@ -59,7 +59,7 @@
 		/// <returns></returns>
 		public Lot Get(Guid id)
 		{
-			return Common.Common.LotDao.Get(id);
+			return Common.Common.LotDao.Read(id);
 		}
 
 		/// <summary>
@@ -107,7 +107,7 @@
 		/// <returns></returns>
 		public bool Remove(Guid id)
 		{
-			return Common.Common.LotDao.Remove(id);
+			return Common.Common.LotDao.Delete(id);
 		}
 
 		/// <summary>
@@ -123,12 +123,12 @@
 		/// <summary>
 		/// Update lot.
 		/// </summary>
-		/// <param name="lot"></param>
-		public void Set(Lot lot)
+		/// <param name="item"></param>
+		public void Set(Lot item)
 		{
-			Validate.V_lot(lot);
+			Validate.V_lot(item);
 
-			Common.Common.LotDao.Set(lot);
+			Common.Common.LotDao.Update(item);
 		}
 
 		private static Size CalculateDimensions(Size oldSize, int targetSize)
@@ -157,7 +157,7 @@
 		{
 			if (imageFile == null)
 			{
-				throw new NullReferenceException("image is null");
+				return null; // TODO to ask
 			}
 
 			Validate.V_positiveNumber(targetSize, canBeZero: false);

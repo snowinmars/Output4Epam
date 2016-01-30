@@ -5,7 +5,6 @@
 
 	public static class LogicProvider
 	{
-
 		public static ILotLogic LotLogic { get; } = new LotLogic();
 		public static IRegUserLogic RegUserLogic { get; } = new RegUserLogic();
 	}

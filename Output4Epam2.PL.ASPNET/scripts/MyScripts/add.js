@@ -92,8 +92,7 @@
 
 		type.val(count);
 
-		if (!$(".inputafter").filter(".correct").hasClass("hidden"))
-		{
+		if (!$(".inputafter").filter(".correct").hasClass("hidden")) {
 			form.submit();
 		}
 

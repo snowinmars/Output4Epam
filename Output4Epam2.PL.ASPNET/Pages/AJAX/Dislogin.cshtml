@@ -4,7 +4,7 @@
 
 		FormsAuthentication.SignOut();
 		LoggerProvider.Log.Info($"{User.Identity.Name} logged out.");
-	
+
 	Response.Redirect("/Pages/StructureElements/Index.cshtml");
 	return;
 }

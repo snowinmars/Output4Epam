@@ -17,28 +17,28 @@
 		public Lot(
 			string title,
 			string owner,
-			string sity,
+			string city,
 			int cost,
 			string info,
 			LotTypes types = LotTypes.Other,
-			DateTime postDate = default(DateTime),
-			Guid g = default(Guid),
+			DateTime postdate = default(DateTime),
+			Guid id = default(Guid),
 			string boughtBy = "")
 		{
 			this.Title = title;
 			this.Owner = owner;
-			this.Sity = sity;
+			this.City = city;
 			this.Cost = cost;
 			this.Types = types;
-			this.PostDate = postDate;
+			this.Postdate = postdate;
 			this.Info = info;
 			this.BoughtBy = boughtBy;
-			if (g == default(Guid))
+			if (id == default(Guid))
 			{
-				g = Guid.NewGuid();
+				id = Guid.NewGuid();
 			}
 
-			this.Id = g;
+			this.Id = id;
 		}
 
 		public string BoughtBy { get; set; }
@@ -51,9 +51,9 @@
 
 		public string Owner { get; set; }
 
-		public DateTime PostDate { get; set; }
+		public DateTime Postdate { get; set; }
 
-		public string Sity { get; set; }
+		public string City { get; set; }
 
 		public string Title { get; set; }
 

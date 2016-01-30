@@ -16,7 +16,7 @@
 
 			LogicProvider.RegUserLogic.Registrate(login, password);
 			LoggerProvider.Log.Info($"{User.Identity.Name} added to database.");
-		
+
 	}
 	Response.Redirect("/Pages/StructureElements/Index.cshtml");
 	return;

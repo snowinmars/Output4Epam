@@ -14,7 +14,7 @@
 				string login = Request["Login"];
 
 				LogicProvider.RegUserLogic.RemoveByLogin(login);
-			
+
 		}
 	}
 	Response.Redirect("/Pages/StructureElements/ShowAllUsers.cshtml");

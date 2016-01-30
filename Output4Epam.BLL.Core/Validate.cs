@@ -1,13 +1,12 @@
 ﻿namespace Output4Epam.BLL.Core
 {
+	using Output4Epam.Entities;
 	using System;
 	using System.IO;
 	using System.Text.RegularExpressions;
-	using Output4Epam.Entities;
 
 	internal static class Validate
 	{
-
 		internal static void V_colorsheme(string colorsheme)
 		{
 			// TODO
@@ -17,7 +16,7 @@
 		{
 			if (image == null)
 			{
-				throw new NullReferenceException("Image is null");
+				throw new ArgumentException("Image is null");
 			}
 
 			long length = image.Length;
@@ -30,12 +29,7 @@
 
 		internal static void V_login(string login)
 		{
-			if (login == null)
-			{
-				throw new NullReferenceException("Login is null");
-			}
-
-			if (login == String.Empty)
+			if (String.IsNullOrEmpty(login))
 			{
 				throw new ArgumentException("Login is empty");
 			}
@@ -64,7 +58,7 @@
 		{
 			if (lot == null)
 			{
-				throw new NullReferenceException("lot is null");
+				throw new ArgumentException("lot is null");
 			}
 
 			V_positiveNumber(lot.Cost, canBeZero: false);
@@ -83,17 +77,17 @@
 
 			DateTime dt = DateTime.Now;
 
-			if (lot.PostDate > dt)
+			if (lot.Postdate > dt)
 			{
-				throw new ArgumentException($"Time paradox: now is {dt}, and lot postdate is {lot.PostDate}");
+				throw new ArgumentException($"Time paradox: now is {dt}, and lot postdate is {lot.Postdate}");
 			}
 
-			if (lot.Sity.Length > Common.Common.MaxSityLength)
+			if (lot.City.Length > Common.Common.MaxSityLength)
 			{
 				throw new ArgumentException($"Lot sity name is too long: max length - {Common.Common.MaxSityLength}");
 			}
 
-			if (lot.Sity.Length < Common.Common.MinSityLength)
+			if (lot.City.Length < Common.Common.MinSityLength)
 			{
 				throw new ArgumentException($"Lot sity name is too short: min length - {Common.Common.MinSityLength}");
 			}
@@ -111,12 +105,7 @@
 
 		internal static void V_password(string password)
 		{
-			if (password == null)
-			{
-				throw new NullReferenceException("Login is null");
-			}
-
-			if (password == String.Empty)
+			if (String.IsNullOrEmpty(password))
 			{
 				throw new ArgumentException("Login is empty");
 			}
@@ -158,11 +147,12 @@
 				}
 			}
 		}
+
 		internal static void V_regUser(RegUser regUser)
 		{
 			if (regUser == null)
 			{
-				throw new NullReferenceException("regUser is null");
+				throw new ArgumentException("regUser is null");
 			}
 
 			V_login(regUser.Login);
@@ -175,22 +165,17 @@
 
 		internal static void V_role(string roleName)
 		{
-			if (roleName == null)
-			{
-				throw new NullReferenceException("Role is null");
-			}
-
-			if (roleName == String.Empty)
+			if (String.IsNullOrEmpty(roleName))
 			{
 				throw new ArgumentException("Role is empty");
 			}
 		}
 
-		internal static void V_role(RoleScroll role)
+		internal static void V_role(RoleScrolls role)
 		{
-			if (role == default(RoleScroll))
+			if (role == default(RoleScrolls))
 			{
-				throw new NullReferenceException("Role is empty");
+				throw new ArgumentException("Role is empty");
 			}
 		}
 	}

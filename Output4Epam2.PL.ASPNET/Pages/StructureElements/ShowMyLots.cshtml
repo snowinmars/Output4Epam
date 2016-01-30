@@ -12,7 +12,6 @@
 	bool isUser = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
 	bool isAdmin = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
 
-
 	string order = Request["orderby"];
 	string filter = Request["filterby"];
 	IEnumerable<Lot> myLotList = default(IEnumerable<Lot>);

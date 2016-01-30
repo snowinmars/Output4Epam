@@ -2,7 +2,7 @@
 @using Output4Epam.Providers
 
 @{
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.User.ToString());
 }
 @{
 	if (isUser)
@@ -11,28 +11,28 @@
 		if (IsPost)
 		{
 
-				string title = Request["Title"];
-				string sity = Request["Sity"];
-				int cost = Int32.Parse(Request["Cost"]);
-				string info = Request["Info"];
-				int type = Int32.Parse(Request["Types"]);
-				Guid lotId = Guid.NewGuid();
-				Stream photo = Request.Files["Photo"] == null ? default(Stream) : Request.Files["Photo"].InputStream;
+			string title = Request["Title"];
+			string sity = Request["Sity"];
+			int cost = Int32.Parse(Request["Cost"]);
+			string info = Request["Info"];
+			int type = Int32.Parse(Request["Types"] ?? "0");
+			Guid lotId = Guid.NewGuid();
+			Stream photo = Request.Files["Photo"] == null ? default(Stream) : Request.Files["Photo"].InputStream;
 
-				LogicProvider.LotLogic.Add(new Lot(title,
-									User.Identity.Name,
-									sity,
-									cost,
-									info,
-									(LotTypes)type,
-									DateTime.Now,
-									lotId));
+			LogicProvider.LotLogic.Add(new Lot(title,
+								User.Identity.Name,
+								sity,
+								cost,
+								info,
+								(LotTypes)type,
+								DateTime.Now,
+								lotId));
 
-				if (photo != default(Stream))
-				{
-					LogicProvider.LotLogic.AddImage(lotId, photo);
-				}
-					}
+			if (photo != default(Stream))
+			{
+				LogicProvider.LotLogic.AddImage(lotId, photo);
+			}
+		}
 	}
 
 	Response.Redirect("/Pages/StructureElements/Index.cshtml");

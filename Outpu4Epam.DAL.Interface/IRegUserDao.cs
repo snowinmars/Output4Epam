@@ -16,7 +16,7 @@
 		/// </summary>
 		/// <param name="login"></param>
 		/// <returns></returns>
-		string[] GetRolesForUser(string username);
+		string[] GetRolesForUser(string userName);
 
 		/// <summary>
 		/// Checks, is there any user with this role.
@@ -24,7 +24,7 @@
 		/// <param name="login"></param>
 		/// <param name="roleName"></param>
 		/// <returns></returns>
-		bool IsUserInRole(string username, string roleName);
+		bool IsUserInRole(string userName, string roleName);
 
 		/// <summary>
 		/// Remove user from database by its login
@@ -39,7 +39,7 @@
 		/// <param name="login"></param>
 		/// <param name="role"></param>
 		/// <returns></returns>
-		bool ToggleRole(string login, RoleScroll role);
+		bool ToggleRole(string login, RoleScrolls role);
 
 		/// <summary>
 		/// Add money to user

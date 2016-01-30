@@ -1,25 +1,25 @@
 ﻿namespace Output4Epam.BLL.Core
 {
+	using Output4Epam.BLL.Interface;
+	using Output4Epam.Entities;
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Security.Cryptography;
 	using System.Text;
-	using Output4Epam.BLL.Interface;
-	using Output4Epam.Entities;
 
 	public class RegUserLogic : IRegUserLogic
 	{
 		/// <summary>
 		/// Add item to database.
 		/// </summary>
-		/// <param name="regUser"></param>
+		/// <param name="item"></param>
 		/// <returns></returns>
-		public bool Add(RegUser regUser)
+		public bool Add(RegUser item)
 		{
-			Validate.V_regUser(regUser);
+			Validate.V_regUser(item);
 
-			return Common.Common.RegUserDao.Add(regUser);
+			return Common.Common.RegUserDao.Create(item);
 		}
 
 		/// <summary>
@@ -68,7 +68,7 @@
 				{
 					using (PasswordDeriveBytes pdb = new PasswordDeriveBytes(pwd, salt))
 					{
-						tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
+						tdes.Key = pdb.CryptDeriveKey(nameof(TripleDES), nameof(SHA1), 192, tdes.IV);
 						int hash = BitConverter.ToInt32(tdes.Key, 0);
 
 						foreach (var item in Common.Common.RegUserDao.GetAll())
@@ -98,13 +98,13 @@
 		/// <returns></returns>
 		public RegUser Get(Guid id)
 		{
-			return Common.Common.RegUserDao.Get(id);
+			return Common.Common.RegUserDao.Read(id);
 		}
 
 		public int GetAdminCount()
 		{
 			var admins = from item in this.GetAll()
-				     where item.Roles.HasFlag(RoleScroll.Admin)
+				     where item.Roles.HasFlag(RoleScrolls.Admin)
 				     select item;
 
 			return admins.Count(); // TODO to ask
@@ -134,27 +134,27 @@
 		/// <summary>
 		/// Get all roles, that this user has.
 		/// </summary>
-		/// <param name="login"></param>
+		/// <param name="userName"></param>
 		/// <returns></returns>
-		public string[] GetRolesForUser(string login)
+		public string[] GetRolesForUser(string userName)
 		{
-			Validate.V_login(login);
+			Validate.V_login(userName);
 
-			return Common.Common.RegUserDao.GetRolesForUser(login);
+			return Common.Common.RegUserDao.GetRolesForUser(userName);
 		}
 
 		/// <summary>
 		/// Checks, is there any user with this role.
 		/// </summary>
-		/// <param name="login"></param>
+		/// <param name="userName"></param>
 		/// <param name="roleName"></param>
 		/// <returns></returns>
-		public bool IsUserInRole(string login, string roleName)
+		public bool IsUserInRole(string userName, string roleName)
 		{
-			Validate.V_login(login);
+			Validate.V_login(userName);
 			Validate.V_role(roleName);
 
-			return Common.Common.RegUserDao.IsUserInRole(login, roleName);
+			return Common.Common.RegUserDao.IsUserInRole(userName, roleName);
 		}
 
 		/// <summary>
@@ -177,8 +177,8 @@
 				{
 					using (PasswordDeriveBytes pdb = new PasswordDeriveBytes(pwd, salt))
 					{
-						tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
-						regUser = new RegUser(login, BitConverter.ToInt32(tdes.Key, 0), RoleScroll.User, 0);
+						tdes.Key = pdb.CryptDeriveKey(nameof(TripleDES), nameof(SHA1), 192, tdes.IV);
+						regUser = new RegUser(login, BitConverter.ToInt32(tdes.Key, 0), RoleScrolls.User, 0);
 					}
 				}
 				finally
@@ -188,7 +188,7 @@
 					tdes.Clear();
 				}
 
-				return Common.Common.RegUserDao.Add(regUser);
+				return Common.Common.RegUserDao.Create(regUser);
 			}
 		}
 
@@ -199,7 +199,7 @@
 		/// <returns></returns>
 		public bool Remove(Guid id)
 		{
-			return Common.Common.RegUserDao.Remove(id);
+			return Common.Common.RegUserDao.Delete(id);
 		}
 
 		/// <summary>
@@ -217,12 +217,12 @@
 		/// <summary>
 		/// Update user.
 		/// </summary>
-		/// <param name="regUser"></param>
-		public void Set(RegUser regUser)
+		/// <param name="item"></param>
+		public void Set(RegUser item)
 		{
-			Validate.V_regUser(regUser);
+			Validate.V_regUser(item);
 
-			Common.Common.RegUserDao.Set(regUser);
+			Common.Common.RegUserDao.Update(item);
 		}
 
 		/// <summary>
@@ -258,7 +258,7 @@
 		/// <param name="login"></param>
 		/// <param name="role"></param>
 		/// <returns></returns>
-		public bool ToggleRole(string login, RoleScroll role)
+		public bool ToggleRole(string login, RoleScrolls role)
 		{
 			Validate.V_login(login);
 			Validate.V_role(role);
@@ -279,7 +279,6 @@
 			{
 				buffer[x] = 0;
 			}
-
 		}
 
 		private static byte[] CreateRandomSalt(int length)
@@ -292,7 +291,6 @@
 			// Create a new RNGCryptoServiceProvider.
 			using (RNGCryptoServiceProvider rand = new RNGCryptoServiceProvider())
 			{
-
 				// Fill the buffer with random bytes.
 				rand.GetBytes(randBytes);
 

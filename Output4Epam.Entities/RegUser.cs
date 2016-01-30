@@ -3,11 +3,11 @@
 	using System;
 
 	[Flags]
-	public enum RoleScroll
+	public enum RoleScrolls
 	{
 		None = 0,
 		User = 1,
-		VIP = 2,
+		Vip = 2,
 		Admin = 4,
 		Ban = 8,
 	}
@@ -17,7 +17,7 @@
 		public RegUser(
 			string login,
 			int passwordHash,
-			RoleScroll roles = RoleScroll.None,
+			RoleScrolls roles = RoleScrolls.None,
 			int money = 0,
 			string colorSheme = default(string))
 		{
@@ -36,6 +36,6 @@
 
 		public int PasswordHash { get; set; }
 
-		public RoleScroll Roles { get; set; }
+		public RoleScrolls Roles { get; set; }
 	}
 }
