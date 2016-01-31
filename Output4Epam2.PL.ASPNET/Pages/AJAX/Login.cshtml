@@ -8,6 +8,14 @@
 			string login = Request["login"];
 			string password = Request["password"];
 
+			// stopping response splitting
+			if ((login.Contains("\n")) || (password).Contains("\n") ||
+				(login.Contains(Environment.NewLine)) || (password).Contains(Environment.NewLine))
+			{
+				Response.Redirect("/Pages/StructureElements/Index.cshtml");
+				return;
+			}
+
 			if (LogicProvider.RegUserLogic.Auth(login, password))
 			{
 				FormsAuthentication.SetAuthCookie(login, createPersistentCookie: true);

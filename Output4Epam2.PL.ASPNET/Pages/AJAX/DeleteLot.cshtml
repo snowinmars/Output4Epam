@@ -2,7 +2,7 @@
 @using Output4Epam.Providers
 
 @{
-	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.Admin.ToString());
 
 	bool myLot = false;
 	foreach (var item in LogicProvider.LotLogic.GetAll())

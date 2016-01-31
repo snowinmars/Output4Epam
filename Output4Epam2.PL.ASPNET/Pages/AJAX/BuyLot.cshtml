@@ -2,7 +2,7 @@
 @using Output4Epam.Providers
 
 @{
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.User.ToString());
 }
 @{
 	if (isUser)

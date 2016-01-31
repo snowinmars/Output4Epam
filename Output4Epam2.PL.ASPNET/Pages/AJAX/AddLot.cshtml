@@ -19,14 +19,22 @@
 			Guid lotId = Guid.NewGuid();
 			Stream photo = Request.Files["Photo"] == null ? default(Stream) : Request.Files["Photo"].InputStream;
 
+			// stopping response splitting
+			if ((title.Contains("\n")) || sity.Contains("\n") || info.Contains("\n") ||
+				(title.Contains(Environment.NewLine)) || (sity).Contains(Environment.NewLine) || (info).Contains(Environment.NewLine))
+			{
+				Response.Redirect("/Pages/StructureElements/Index.cshtml");
+				return;
+			}
+
 			LogicProvider.LotLogic.Add(new Lot(title,
-								User.Identity.Name,
-								sity,
-								cost,
-								info,
-								(LotTypes)type,
-								DateTime.Now,
-								lotId));
+						User.Identity.Name,
+						sity,
+						cost,
+						info,
+						(LotTypes)type,
+						DateTime.Now,
+						lotId));
 
 			if (photo != default(Stream))
 			{

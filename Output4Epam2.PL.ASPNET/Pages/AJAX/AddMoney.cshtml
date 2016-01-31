@@ -2,13 +2,21 @@
 @using Output4Epam.Providers
 
 @{
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.User.ToString());
 }
 @{
 	if (isUser)
 	{
 		string login = Request["Login"];
 		int summ = Int32.Parse(Request["Summ"]);
+
+		// stopping response splitting
+		if ((login.Contains("\n")) || 
+			(login.Contains(Environment.NewLine)))
+		{
+			Response.Redirect("/Pages/StructureElements/Index.cshtml");
+			return;
+		}
 
 		LogicProvider.RegUserLogic.AddMoney(login, summ);
 	}
