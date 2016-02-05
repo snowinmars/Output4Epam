@@ -31,6 +31,7 @@
 		/// <param name="image"></param>
 		public void AddImage(Guid lotId, Stream image)
 		{
+			// TODO to ask how to check, if user has access to this lot
 			Validate.V_image(image);
 
 			//// Use this, if u wanna to resize image

@@ -19,11 +19,12 @@
 	{
 		if (IsPost)
 		{
+			Guid id = Guid.Parse(Request["Id"]);
 
-				Guid id = Guid.Parse(Request["Id"]);
-
+			if (LogicProvider.LotLogic.Get(id).Owner == User.Identity.Name)
+			{
 				LogicProvider.LotLogic.Remove(id);
-
+			}
 		}
 	}
 	Response.Redirect("/Pages/StructureElements/ShowMyLots.cshtml");

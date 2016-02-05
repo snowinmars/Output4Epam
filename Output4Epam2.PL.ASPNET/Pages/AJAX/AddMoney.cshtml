@@ -11,13 +11,17 @@
 		int summ = Int32.Parse(Request["Summ"]);
 
 		// stopping response splitting
-		if ((login.Contains("\n")) || 
+		if ((login.Contains("\n")) ||
 			(login.Contains(Environment.NewLine)))
 		{
 			Response.Redirect("/Pages/StructureElements/Index.cshtml");
 			return;
 		}
 
-		LogicProvider.RegUserLogic.AddMoney(login, summ);
+		if (login == User.Identity.Name)
+		{
+			LogicProvider.RegUserLogic.AddMoney(login, summ);
+		}
+
 	}
 }

@@ -18,6 +18,11 @@
 			return;
 		}
 
-		LogicProvider.RegUserLogic.SubMoney(login, summ);
+		if (login == User.Identity.Name)
+		{
+			LogicProvider.RegUserLogic.SubMoney(login, summ);
+		}
+
+
 	}
 }
