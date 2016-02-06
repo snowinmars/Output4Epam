@@ -2,7 +2,7 @@
 @using Output4Epam.Entities
 
 @{
-	bool isAdmin = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
+	bool isAdmin = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.Admin.ToString());
 }
 
 @{

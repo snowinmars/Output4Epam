@@ -9,7 +9,7 @@
 	Guid id = Guid.Parse(Request["id"]);
 	Lot item = LogicProvider.LotLogic.Get(id);
 	RegUser regUser = User.Identity.Name == String.Empty ? default(RegUser) : LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
-	bool isAdmin = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
+	bool isAdmin = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.Admin.ToString());
 
 }
 
@@ -31,11 +31,11 @@
 					<li class="costchoiseitem" data-type="ruble"><a href="#">Рубли</a></li>
 				</ul>
 			</div>
-			<p class="owner col-xs-offset-1">posted by @(item.Owner) from г. @item.Sity</p>
+			<p class="owner col-xs-offset-1">posted by @(item.Owner) from г. @item.City</p>
 		</div>
 		<p class="col-xs-6 col-sm-6 col-md-10">@item.Info</p>
 		<div class="col-xs-4 col-sm-2">
-			<p class="postDate toolatip" data-tooltip="format in dd.mm.yyyy">@item.PostDate</p>
+			<p class="postDate toolatip" data-tooltip="format in dd.mm.yyyy">@item.Postdate</p>
 		</div>
 		<div class="col-xs-4">
 			@if (item.BoughtBy == String.Empty)

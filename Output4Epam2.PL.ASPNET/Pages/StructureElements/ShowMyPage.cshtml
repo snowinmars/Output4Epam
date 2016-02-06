@@ -2,7 +2,7 @@
 @using Output4Epam.Providers
 
 @{
-	bool isUser = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isUser = User.Identity.Name == String.Empty ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.User.ToString());
 	RegUser item = User.Identity.Name == String.Empty ? default(RegUser) : LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
 }
 

@@ -8,8 +8,8 @@
 
 @{
 	RegUser regUser = User.Identity.Name == String.Empty ? default(RegUser) : LogicProvider.RegUserLogic.GetByLogin(User.Identity.Name);
-	bool isAdmin = regUser == default(RegUser) ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
-	bool isUser = regUser == default(RegUser) ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isAdmin = regUser == default(RegUser) ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.Admin.ToString());
+	bool isUser = regUser == default(RegUser) ? false : LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.User.ToString());
 
 	string order = Request["orderby"];
 	string filter = Request["filterby"];
@@ -32,7 +32,7 @@
 	{
 	case "orderByDate":
 		collection = from item in LogicProvider.LotLogic.GetAll() // dunno how to sort in another way
-			     orderby item.PostDate                             // yea, I know about method Filter(), but...
+			     orderby item.Postdate                             // yea, I know about method Filter(), but...
 			     select item;
 		break;
 	case "orderByName":
@@ -63,7 +63,7 @@
 				<div class="col-xs-6">
 					<p class="title col-xs-12 link">@item.Title</p>
 					<p class="info col-xs-12 col-sm-6 col-md-10">@item.Info</p>
-					<p class="col-xs-12 visible-md visible-lg postDate toolatip" data-tooltip="format in dd.mm.yyyy">@item.PostDate</p>
+					<p class="col-xs-12 visible-md visible-lg postDate toolatip" data-tooltip="format in dd.mm.yyyy">@item.Postdate</p>
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-12">
