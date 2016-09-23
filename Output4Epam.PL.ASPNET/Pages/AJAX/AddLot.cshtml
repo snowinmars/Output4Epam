@@ -5,9 +5,8 @@
 	{
 		try
 		{
-
 			string title = Request["Title"];
-			string sity = Request["Sity"];
+			string City = Request["City"];
 			int cost = Int32.Parse(Request["Cost"]);
 			string info = Request["Info"];
 			int type = Int32.Parse(Request["Types"]);
@@ -16,7 +15,7 @@
 
 			LogicProvider.LotLogic.Add(new Lot(title,
 								User.Identity.Name,
-								sity,
+								City,
 								cost,
 								info,
 								(LotTypes)type,

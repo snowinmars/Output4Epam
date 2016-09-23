@@ -9,18 +9,18 @@
 
 		string login = Request["Login"];
 		string action = Request["Action"];
-		RoleScroll role = RoleScroll.None;
+		RoleScrolls role = RoleScrolls.None;
 
 		switch (action)
 		{
 			case "ban":
-				role = RoleScroll.Ban;
+				role = RoleScrolls.Ban;
 				break;
 			case "togglevip":
-				role = RoleScroll.VIP;
+				role = RoleScrolls.Vip;
 				break;
 			case "toggleadmin":
-				role = RoleScroll.Admin;
+				role = RoleScrolls.Admin;
 				break;
 			default:
 				break;

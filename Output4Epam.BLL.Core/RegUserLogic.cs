@@ -57,7 +57,7 @@
 		/// <returns></returns>
 		public bool Auth(string login, string password)
 		{
-			Validate.V_login(login);
+            Validate.V_login(login);
 			Validate.V_password(password);
 
 			byte[] pwd = Encoding.Unicode.GetBytes(password);
@@ -126,7 +126,12 @@
 		/// <returns></returns>
 		public RegUser GetByLogin(string login)
 		{
-			Validate.V_login(login);
+            if (string.IsNullOrWhiteSpace(login))
+            {
+                return null;
+            }
+
+            Validate.V_login(login);
 
 			return Common.Common.RegUserDao.GetByLogin(login);
 		}
@@ -138,7 +143,12 @@
 		/// <returns></returns>
 		public string[] GetRolesForUser(string userName)
 		{
-			Validate.V_login(userName);
+            if (string.IsNullOrWhiteSpace(userName))
+		    {
+		        return new string[0];
+		    }
+
+            Validate.V_login(userName);
 
 			return Common.Common.RegUserDao.GetRolesForUser(userName);
 		}
@@ -151,6 +161,12 @@
 		/// <returns></returns>
 		public bool IsUserInRole(string userName, string roleName)
 		{
+		    if (string.IsNullOrWhiteSpace(userName) ||
+		        string.IsNullOrWhiteSpace(roleName))
+		    {
+		        return false;
+		    }
+
 			Validate.V_login(userName);
 			Validate.V_role(roleName);
 
@@ -165,7 +181,14 @@
 		/// <returns></returns>
 		public bool Registrate(string login, string password)
 		{
-			Validate.V_login(login);
+
+		    if (string.IsNullOrWhiteSpace(login) ||
+		        string.IsNullOrWhiteSpace(password))
+		    {
+		        return false;
+		    }
+
+            Validate.V_login(login);
 			Validate.V_password(password);
 
 			byte[] pwd = Encoding.Unicode.GetBytes(password);
@@ -260,7 +283,13 @@
 		/// <returns></returns>
 		public bool ToggleRole(string login, RoleScrolls role)
 		{
-			Validate.V_login(login);
+
+		    if (string.IsNullOrWhiteSpace(login))
+		    {
+		        return false;
+		    }
+
+            Validate.V_login(login);
 			Validate.V_role(role);
 
 			return Common.Common.RegUserDao.ToggleRole(login, role);

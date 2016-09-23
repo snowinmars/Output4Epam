@@ -11,7 +11,7 @@
 	@{
 		bool banned = false;
 
-		if (LogicProvider.RegUserLogic.GetRolesForUser(User.Identity.Name).Contains(RoleScroll.Ban.ToString()))
+		if (LogicProvider.RegUserLogic.GetRolesForUser(User.Identity.Name).Contains(RoleScrolls.Ban.ToString()))
 		{
 			banned = true;
 		}

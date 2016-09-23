@@ -9,7 +9,7 @@
 }
 
 @{
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.User.ToString());
 
 	string order = Request["orderby"];
 	string filter = Request["filterby"];
@@ -34,7 +34,7 @@
 		case "orderByDate":
 			myLotList = from item in LogicProvider.LotLogic.GetAll() // dunno how to sort in another way
 				    where item.Owner == User.Identity.Name
-				    orderby item.PostDate                             // yea, I know about method Filter(), but...
+				    orderby item.Postdate                             // yea, I know about method Filter(), but...
 				    select item;
 			break;
 		case "orderByName":
@@ -70,9 +70,9 @@
 					<p class="p"><img class="img" src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" /></p>
 					<p class="title">@item.Title.ToString()</p>
 					<p class="info">@item.Info</p>
-					<p class="city">г. @item.Sity</p>
+					<p class="city">г. @item.City</p>
 					<p class="cost">@(item.Cost) руб.</p>
-					<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.PostDate.ToString("dd.MM.yyyy")</p>
+					<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.Postdate.ToString("dd.MM.yyyy")</p>
 					<p class="owner">posted by @(item.Owner)</p>
 					<p class="button delete" id="@item.Id">Удалить</p>
 						<p class="categories">

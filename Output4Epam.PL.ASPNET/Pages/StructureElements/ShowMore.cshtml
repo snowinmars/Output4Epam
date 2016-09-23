@@ -16,9 +16,9 @@
 			<p class="p"><img class="img" src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" /></p>
 			<p class="title">@item.Title.ToString()</p>
 			<p class="info">@item.Info</p>
-			<p class="city">г. @item.Sity</p>
+			<p class="city">г. @item.City</p>
 			<p class="cost">@(item.Cost) руб.</p>
-			<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.PostDate.ToString("dd.MM.yyyy")</p>
+			<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.Postdate.ToString("dd.MM.yyyy")</p>
 			<p class="owner">posted by @(item.Owner)</p>
 			@foreach (var type in @item.Types.ToString().Split(','))
 			{

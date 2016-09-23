@@ -4,8 +4,8 @@
 @{
 	Layout = "~/Pages/Index.cshtml";
 
-	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.Admin.ToString());
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.User.ToString());
 
 	string order = Request["orderby"];
 	string filter = Request["filterby"];
@@ -28,7 +28,7 @@
 	{
 		case "orderByDate":
 			collection = from item in LogicProvider.LotLogic.GetAll() // dunno how to sort in another way
-				     orderby item.PostDate                             // yea, I know about method Filter(), but...
+				     orderby item.Postdate                             // yea, I know about method Filter(), but...
 				     select item;
 			break;
 		case "orderByName":
@@ -60,14 +60,14 @@
 				<p class="p"><img class="img" src="/Pages/AJAX/GetImage.cshtml?id=@item.Id" alt="image" /></p>
 				<p class="title">@item.Title.ToString()</p>
 				<p class="info">@item.Info</p>
-				<p class="city">г. @item.Sity</p>
+				<p class="city">г. @item.City</p>
 				<p class="cost" tabindex="2" data-cost="@(item.Cost)">@(item.Cost) руб.</p>  <!-- data-cost always in rubles -->
 				<ul class="costchoise">
 					<li class="costchoiseitem" data-type="dollar">Баксы</li>
 					<li class="costchoiseitem" data-type="euro">Евро</li>
 					<li class="costchoiseitem" data-type="ruble">Рубли</li>
 				</ul>
-				<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.PostDate.ToString("dd.MM.yyyy")</p>
+				<p class="postDate tooltip" data-tooltip="format in dd.mm.yyyy">@item.Postdate.ToString("dd.MM.yyyy")</p>
 				<p class="owner">posted by @(item.Owner)</p>
 				@if (isUser)
 				{

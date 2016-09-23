@@ -3,7 +3,7 @@
 
 @{
 	Layout = "~/Pages/Index.cshtml";
-	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.Admin.ToString());
+	bool isAdmin = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.Admin.ToString());
 }
 
 @if (isAdmin)

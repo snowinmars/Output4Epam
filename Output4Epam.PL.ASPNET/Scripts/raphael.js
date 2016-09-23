@@ -1095,7 +1095,7 @@
      > Parameters
      - h (number) hue
      - s (number) saturation
-     - l (number) luminosity
+     - l (number) luminoCity
      = (object) RGB object in format:
      o {
      o     r (number) red,
@@ -1175,7 +1175,7 @@
      o {
      o     h (number) hue
      o     s (number) saturation
-     o     l (number) luminosity
+     o     l (number) luminoCity
      o }
     \*/
     R.rgb2hsl = function (r, g, b) {
@@ -1364,7 +1364,7 @@
      > Parameters
      - h (number) hue
      - s (number) saturation
-     - l (number) luminosity
+     - l (number) luminoCity
      = (string) hex representation of the colour.
     \*/
     R.hsl = cacher(function (h, s, l) {

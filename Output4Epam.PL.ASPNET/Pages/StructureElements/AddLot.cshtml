@@ -3,7 +3,7 @@
 
 @{
 	Layout = "~/Pages/Index.cshtml";
-	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScroll.User.ToString());
+	bool isUser = LogicProvider.RegUserLogic.IsUserInRole(User.Identity.Name, RoleScrolls.User.ToString());
 }
 
 @if (isUser)
@@ -29,7 +29,7 @@
 		<form enctype="multipart/form-data" method="post" action="~/Pages/AJAX/AddLot.cshtml">
 			Title: <input type="text" name="Title" value="" />
 			Photo: <input type="file" name="Photo" accept="image/png" />
-			Sity: <input type="text" name="Sity" value="" />
+			City: <input type="text" name="City" value="" />
 			Cost: <input type="text" name="Cost" value="" />
 			Info: <input type="text" name="Info" value="" />
 		</form>
